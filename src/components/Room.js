@@ -1,7 +1,18 @@
 import React from 'react';
 import Message from './Message';
+import io from 'socket.io-client'
 
 export default class Room extends React.Component {
+    componentWillMount() {
+        console.log("CONNECTING!")
+        let socket = io.connect("https://keima.herokuapp.com/?app=(your keima key here)");
+        socket.emit("subscribe", "as-(room id)");
+        socket.on("message_create", (channel, data) => {
+            var obj = JSON.parse(data);
+            console.log(obj);
+        });
+    }
+
     render() {
         let messages = this.props.messages;
         return (
