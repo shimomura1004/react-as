@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const API_SERVER = 'https://asakusa-satellite.herokuapp.com';
 const LIST_ENDPOINT = '/api/v1/message/list.json';
+const POST_ENDPOINT = '/api/v1/message.json';
 
 // action creators
 export const GET_MESSAGES_REQUEST = 'GET_MESSAGES_REQUEST';
@@ -51,3 +52,45 @@ export const getMessages = (api_key, room_id, options) => {
         }
     }
 };
+
+
+export const POST_MESSAGE_REQUEST = 'POST_MESSAGE_REQUEST';
+const postMessageRequest = (message) => {
+    return {
+        type: POST_MESSAGE_REQUEST,
+        message,
+    }
+};
+
+export const POST_MESSAGE_SUCCESS = 'POST_MESSAGE_SUCCESS';
+const postMessageSuccess = () => {  
+    return {
+        type: POST_MESSAGE_SUCCESS
+    }
+};
+
+export const POST_MESSAGE_FAILURE = 'POST_MESSAGE_FAILURE';
+const postMessageFailure = (error) => {
+    return {
+        type: POST_MESSAGE_FAILURE,
+        error
+    }
+};
+
+export const postMessage = (api_key, room_id, message) => {
+    return async (dispatch) => {
+        dispatch(postMessageRequest());
+
+        try {
+            let result = await axios.post(`${API_SERVER}${POST_ENDPOINT}`, {
+                params: { api_key, room_id, message }
+            });
+
+            console.log(result);
+            dispatch(postMessageSuccess());
+        }
+        catch (error) {
+            dispatch(postMessageFailure(error));
+        }
+    }
+}
