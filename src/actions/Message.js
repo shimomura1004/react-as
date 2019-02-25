@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-const API_SERVER = 'https://asakusa-satellite.herokuapp.com';
 const LIST_ENDPOINT = '/api/v1/message/list.json';
 const POST_ENDPOINT = '/api/v1/message.json';
 
@@ -33,7 +32,7 @@ export const getMessages = (api_key, room_id, options) => {
         dispatch(getMessagesRequest());
 
         try {
-            let messages = await axios.get(`${API_SERVER}${LIST_ENDPOINT}`, {
+            let messages = await axios.get(`${document.as['API_SERVER']}${LIST_ENDPOINT}`, {
                 params: { api_key, room_id, ...options }
             });
 
@@ -82,7 +81,7 @@ export const postMessage = (api_key, room_id, message) => {
         dispatch(postMessageRequest());
 
         try {
-            let result = await axios.post(`${API_SERVER}${POST_ENDPOINT}`, {
+            let result = await axios.post(`${document.as['API_SERVER']}${POST_ENDPOINT}`, {
                 params: { api_key, room_id, message }
             });
 

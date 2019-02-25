@@ -1,13 +1,10 @@
 import { List, Map, fromJS } from 'immutable';
-import {GET_MESSAGES_REQUEST, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILURE} from './actions/Message';
-import {GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE} from './actions/Room';
+import { GET_MESSAGES_REQUEST, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILURE } from './actions/Message';
+import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE } from './actions/Room';
 import { merge, combine } from './helpers/Message';
 
 const initialState = Map({
 	api_key: '(your api key here)',
-	keima_url: 'https://keima.herokuapp.com',
-	// keima_key is used for Keima.app
-	keima_key: '(your keima key here)',
 
 	message_loading: false,
 	room_loading: false,

@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-const API_SERVER = 'https://asakusa-satellite.herokuapp.com';
 const ROOM_ENDPOINT = '/api/v1/room/list.json';
 
 // action creators
@@ -32,7 +31,7 @@ export const getRooms = (api_key) => {
         dispatch(getRoomsRequest());
 
         try {
-            let rooms = await axios.get(`${API_SERVER}${ROOM_ENDPOINT}`, {
+            let rooms = await axios.get(`${document.as['API_SERVER']}${ROOM_ENDPOINT}`, {
                 params: { api_key }
             });
             dispatch(getRoomsSuccess((rooms.data)));

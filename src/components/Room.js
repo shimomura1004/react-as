@@ -6,7 +6,7 @@ import '../styles/room.css';
 export default class Room extends React.Component {
     componentWillMount() {
         console.log("CONNECTING!")
-        let socket = io.connect("https://keima.herokuapp.com/?app=(your keima key here)");
+        let socket = io.connect(`${document.as['PUSHER_SERVER']}/?app=${document.as['PUSHER_APP_KEY']}`);
         socket.emit("subscribe", "as-(room id)");
         socket.on("message_create", (channel, data) => {
             var obj = JSON.parse(data);

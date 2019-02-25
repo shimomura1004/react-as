@@ -3,7 +3,7 @@ import Room from '../components/Room.js';
 import { getMessages, postMessage } from '../actions/Message';
 import { find_room } from '../helpers/Room';
 
-// todo: shoud we have to pass the api_key to the view?
+// todo: should we have to pass the api_key to the view?
 const mapStateToProps = state => ({
     api_key: state.get('api_key'),
 
