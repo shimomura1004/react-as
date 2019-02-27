@@ -4,6 +4,8 @@ const path = require("path");
 
 const app = express();
 
+app.use(express.json())
+
 app.use(express.static(path.join(__dirname, "build"), {
   setHeaders: (res, path, stat) => {
     // use cookie to pass environment variables to react app
@@ -23,7 +25,7 @@ const LIST_ENDPOINT = '/api/v1/message/list.json';
 const ROOM_ENDPOINT = '/api/v1/room/list.json';
 const POST_ENDPOINT = '/api/v1/message.json';
 
-const createRoute = (endpoint) => {
+const createGetRoute = (endpoint) => {
   app.get(endpoint, async (req, res) => {
     try {
       let response = await axios.get(API_SERVER + endpoint, {params: req.query});
@@ -37,7 +39,23 @@ const createRoute = (endpoint) => {
   });
 };
 
-createRoute(LIST_ENDPOINT);
-createRoute(ROOM_ENDPOINT);
+createGetRoute(LIST_ENDPOINT);
+createGetRoute(ROOM_ENDPOINT);
+
+const createPostRoute = (endpoint) => {
+  app.post(endpoint, async (req, res) => {
+    try {
+      let response = await axios.post(API_SERVER + endpoint, req.body);
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(response.data));
+    }
+    catch (error) {
+      console.log(error)
+      res.send(error);
+    }
+  });
+};
+
+createPostRoute(POST_ENDPOINT);
 
 app.listen(process.env.PORT || 8080);

@@ -54,6 +54,7 @@ export default class Room extends React.Component {
                 <div className="footer">
                     <TextField
                         label={`Message #${this.props.room && this.props.room.name}`}
+                        value={this.props.textfield}
                         multiline
                         rowsMax="3"
                         style={{
