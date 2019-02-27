@@ -82,10 +82,8 @@ export const postMessage = (api_key, room_id, message) => {
 
         try {
             let result = await axios.post(`${document.as['API_SERVER']}${POST_ENDPOINT}`, {
-                params: { api_key, room_id, message }
+                api_key, room_id, message
             });
-
-            console.log(result);
             dispatch(postMessageSuccess());
         }
         catch (error) {

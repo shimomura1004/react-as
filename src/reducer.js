@@ -1,6 +1,6 @@
 import { List, Map, fromJS } from 'immutable';
 import { GET_MESSAGES_REQUEST, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILURE } from './actions/Message';
-import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE } from './actions/Room';
+import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE, UPDATE_TEXTFIELD } from './actions/Room';
 import { merge, combine } from './helpers/Message';
 
 const initialState = Map({
@@ -9,6 +9,7 @@ const initialState = Map({
 	message_loading: false,
 	room_loading: false,
 	room_id: 'as',
+	textfield: "",
 	messages: List([]),
 	combined_messages: List([]),
 	rooms: List([]),
@@ -42,6 +43,10 @@ export default (state = initialState, action) => {
 	case GET_ROOMS_FAILURE:
 		console.log(action.error);
 		return state.set('room_loading', false);
+
+	case UPDATE_TEXTFIELD:
+		return state
+		.set('textfield', action.text);
 
 	default:
 		return state;

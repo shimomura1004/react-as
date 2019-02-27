@@ -41,3 +41,13 @@ export const getRooms = (api_key) => {
         }
     }
 };
+
+export const UPDATE_TEXTFIELD = 'UPDATE_TEXTFIELD';
+export const updateTextField = (text) => {
+    return  (dispatch) => {
+        dispatch({
+            type: UPDATE_TEXTFIELD,
+            text
+        })
+    }
+};

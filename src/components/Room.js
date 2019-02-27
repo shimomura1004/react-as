@@ -1,5 +1,8 @@
 import React from 'react';
 import io from 'socket.io-client'
+import TextField from '@material-ui/core/TextField';
+import IconButton from '@material-ui/core/IconButton';
+import SendIcon from '@material-ui/icons/Send';
 import Message from './Message';
 import '../styles/room.css';
 
@@ -22,12 +25,11 @@ export default class Room extends React.Component {
         });
     }
 
-    // todo: use nice UI toolkit for text field
     render() {
         let messages = this.props.messages;
         return (
             <div>
-                <div onClick={() =>
+                <div className="chat-body" onClick={() =>
                     this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room.id, messages[0][0].id)
                 }>
                     <p>{this.props.room && this.props.room.name}</p>
@@ -36,7 +38,30 @@ export default class Room extends React.Component {
                         {messages.map((message) => <Message key={message[0].id} message={message} />)}
                     </div>
                 </div>
-                <textarea autoFocus="autofocus" placeholder="Input message here"></textarea>
+                <div className="footer">
+                    <TextField
+                        label={`Message #${this.props.room && this.props.room.name}`}
+                        multiline
+                        rowsMax="3"
+                        style={{
+                            "margin": 0,
+                            "backgroundColor": "white",
+                            "width": "90%",
+                        }}
+                        variant="filled"
+                        onChange={(e) => {
+                            let text = e.currentTarget.value;
+                            this.props.updateTextField(text);
+                        }}
+                    />
+                    <div className="send-button">
+                    <IconButton aria-label="Send" onClick={(e) => {
+                        this.props.postMessage(this.props.api_key, this.props.room.id, this.props.textfield);
+                    }}>
+                        <SendIcon />
+                    </IconButton>
+                    </div>
+                </div>
             </div>
         );
     }
