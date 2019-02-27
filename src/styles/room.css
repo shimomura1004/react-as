@@ -1,3 +1,25 @@
+.root {
+  flex-grow: 1;
+}
+
+.root div {
+  padding: 0px;
+}
+
+.grow {
+  flex-grow: 1;
+}
+
+.menuButton {
+  margin-left: -12;
+  margin-right: 20;
+}
+
+.chat-body {
+  margin-top: 3.5em;
+  margin-bottom: 3em;
+}
+
 .footer {
   display: flex;
   position: fixed;
@@ -9,10 +31,6 @@
   border-top: 1px solid gray;
   background-color: white;
  }
-
-.chat-body {
-  margin-bottom: 3em;
-}
 
 .send-button {
   width: 10%;
