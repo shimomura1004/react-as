@@ -26,7 +26,6 @@ const mapDispatchToProps = (dispatch) => ({
     postMessage: (api_key, room_id, message) => {
         if (message !== "") {
             postMessage(api_key, room_id, message)(dispatch);
-            updateTextField("")(dispatch);
         }
     },
 });

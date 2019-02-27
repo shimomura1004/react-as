@@ -1,5 +1,5 @@
 import { List, Map, fromJS } from 'immutable';
-import { GET_MESSAGES_REQUEST, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILURE } from './actions/Message';
+import { GET_MESSAGES_REQUEST, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILURE, POST_MESSAGE_SUCCESS } from './actions/Message';
 import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE, UPDATE_TEXTFIELD } from './actions/Room';
 import { merge, combine } from './helpers/Message';
 
@@ -45,8 +45,10 @@ export default (state = initialState, action) => {
 		return state.set('room_loading', false);
 
 	case UPDATE_TEXTFIELD:
-		return state
-		.set('textfield', action.text);
+		return state.set('textfield', action.text);
+
+	case POST_MESSAGE_SUCCESS:
+		return state.set('textfield', '');
 
 	default:
 		return state;
