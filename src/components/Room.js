@@ -28,7 +28,7 @@ export default class Room extends React.Component {
         return (
             <div>
                 <div onClick={() =>
-                    this.props.loadMessages(this.props.api_key, this.props.room.id, messages[0][0].id)
+                    this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room.id, messages[0][0].id)
                 }>
                     <p>{this.props.room && this.props.room.name}</p>
                     <p>{this.props.loading ? 'LOADING' : 'LOADED'}</p>

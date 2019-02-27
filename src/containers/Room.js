@@ -13,8 +13,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    loadMessages: (api_key, room_id, message_id) => {
-        getMessages(api_key, room_id, {until_id: message_id, count: 20})(dispatch);
+    loadMessages: (loading, api_key, room_id, message_id) => {
+        if (!loading) {
+            getMessages(api_key, room_id, {until_id: message_id, count: 20})(dispatch);
+        }
     },
     postMessage: (api_key, room_id, message) => {
         console.log("sending!", message);

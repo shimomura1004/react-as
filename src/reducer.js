@@ -25,7 +25,6 @@ export default (state = initialState, action) => {
 		let messages = fromJS(action.messages);
 		const merged_messages = merge(state.get('messages'), messages);
 		const combined_messages = combine(merged_messages);
-
 		return state
 			.set('message_loading', false)
 			.set('messages', merged_messages)
