@@ -37,7 +37,7 @@ export const merge = (current_messages, new_messages) => {
     let message = undefined;
     let last_message = undefined;
 
-    while(current_messages.size > 0 && new_messages.size > 0) {
+    while (current_messages.size > 0 && new_messages.size > 0) {
         const time1 = parseDateTime(current_messages.getIn([0, "created_at"]));
         const time2 = parseDateTime(new_messages.getIn([0, "created_at"]));
 
@@ -57,4 +57,13 @@ export const merge = (current_messages, new_messages) => {
     }
 
     return merged_messages.concat(current_messages).concat(new_messages);
+}
+
+export const update = (message, messages) => {
+    let message_id = message.get("id");
+    return messages.map(mes => (mes.get("id") === message_id) ? message : mes);
+}
+
+export const remove = (id, messages) => {
+    return messages.filter(message => message.get("id") !== id);
 }

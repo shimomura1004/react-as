@@ -1,5 +1,6 @@
 import React from 'react';
-import io from 'socket.io-client'
+import io from 'socket.io-client';
+import hash from 'object-hash';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -16,16 +17,16 @@ export default class Room extends React.Component {
         let socket = io.connect(`${document.as['PUSHER_SERVER']}/?app=${document.as['PUSHER_APP_KEY']}`);
         socket.emit("subscribe", "as-(room id)");
         socket.on("message_create", (channel, data) => {
-            var obj = JSON.parse(data);
-            console.log("CREATED", obj);
+            let message = JSON.parse(data).content;
+            this.props.appendMessage(message);
         });
         socket.on("message_update", (channel, data) => {
-            var obj = JSON.parse(data);
-            console.log("UPDATED", obj);
+            let message = JSON.parse(data).content;
+            this.props.updateMessage(message);
         });
         socket.on("message_delete", (channel, data) => {
-            var obj = JSON.parse(data);
-            console.log("DELETED", obj);
+            var id = JSON.parse(data).content.id;
+            this.props.deleteMessage(id);
         });
     }
 
@@ -48,7 +49,7 @@ export default class Room extends React.Component {
                 }>
                     <p>{this.props.loading ? 'LOADING' : 'LOADED'}</p>
                     <div>
-                        {messages.map((message) => <Message key={message[0].id} message={message} />)}
+                        {messages.map(message => <Message key={hash(message)} message={message} />)}
                     </div>
                 </div>
                 <div className="footer">

@@ -81,7 +81,7 @@ export const postMessage = (api_key, room_id, message) => {
         dispatch(postMessageRequest());
 
         try {
-            let result = await axios.post(`${document.as['API_SERVER']}${POST_ENDPOINT}`, {
+            await axios.post(`${document.as['API_SERVER']}${POST_ENDPOINT}`, {
                 api_key, room_id, message
             });
             dispatch(postMessageSuccess());

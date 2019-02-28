@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import Room from '../components/Room.js';
 import { getMessages, postMessage } from '../actions/Message';
-import { updateTextField } from '../actions/Room';
+import { updateTextField, appendMessage, updateMessage, deleteMessage } from '../actions/Room';
 import { find_room } from '../helpers/Room';
 
 // todo: should we have to pass the api_key to the view?
@@ -28,6 +28,15 @@ const mapDispatchToProps = (dispatch) => ({
             postMessage(api_key, room_id, message)(dispatch);
         }
     },
+    appendMessage: (message) => {
+        appendMessage(message)(dispatch);
+    },
+    updateMessage: (message) => {
+        updateMessage(message)(dispatch);
+    },
+    deleteMessage: (id) => {
+        deleteMessage(id)(dispatch);
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);

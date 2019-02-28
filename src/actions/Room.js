@@ -44,10 +44,40 @@ export const getRooms = (api_key) => {
 
 export const UPDATE_TEXTFIELD = 'UPDATE_TEXTFIELD';
 export const updateTextField = (text) => {
-    return  (dispatch) => {
+    return (dispatch) => {
         dispatch({
             type: UPDATE_TEXTFIELD,
             text
+        })
+    }
+};
+
+export const APPEND_MESSAGE = 'APPEND_MESSAGE';
+export const appendMessage = (message) => {
+    return (dispatch) => {
+        dispatch({
+            type: APPEND_MESSAGE,
+            message
+        })
+    }
+};
+
+export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+export const updateMessage = (message) => {
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_MESSAGE,
+            message
+        })
+    }
+};
+
+export const DELETE_MESSAGE = 'DELETE_MESSAGE';
+export const deleteMessage = (id) => {
+    return (dispatch) => {
+        dispatch({
+            type: DELETE_MESSAGE,
+            id
         })
     }
 };

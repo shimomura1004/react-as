@@ -1,4 +1,5 @@
 import React from 'react';
+import hash from 'object-hash';
 import '../styles/message.css';
 
 export default class Message extends React.Component {
@@ -17,7 +18,7 @@ export default class Message extends React.Component {
                         <span className="user-name">{this.first_message.name}</span>
                         <span className="time">{this.first_message.created_at}</span>
                     </div>
-                    { this.messages.map((message) => <p key={message.id} className="body" dangerouslySetInnerHTML={{__html: message.html_body}}></p>) }
+                    { this.messages.map((message) => <p key={hash(message)} className="body" dangerouslySetInnerHTML={{__html: message.html_body}}></p>) }
                 </div>
                 <span className="clear"></span>
             </div>
