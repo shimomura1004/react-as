@@ -73,7 +73,7 @@ export default class Room extends React.Component {
                         <IconButton aria-label="Send" onClick={(e) => {
                             this.props.postMessage(this.props.api_key, this.props.room.id, this.props.textfield);
                         }}>
-                            <SendIcon />
+                            <SendIcon color="secondary" />
                         </IconButton>
                     </div>
                 </div>
