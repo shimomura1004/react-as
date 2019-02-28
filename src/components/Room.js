@@ -1,6 +1,5 @@
 import React from 'react';
 import io from 'socket.io-client';
-import hash from 'object-hash';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -45,11 +44,13 @@ export default class Room extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <div className="chat-body" onClick={() =>
-                    this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room.id, messages[0][0].id)
+                    this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room.id, messages[0][1][0].id)
                 }>
                     <p>{this.props.loading ? 'LOADING' : 'LOADED'}</p>
                     <div>
-                        {messages.map(message => <Message key={hash(message)} message={message} />)}
+                        {messages.map(timestamp_message =>
+                            <Message key={timestamp_message[0] + timestamp_message[1][0].id} message={timestamp_message[1]} />
+                        )}
                     </div>
                 </div>
                 <div className="footer">

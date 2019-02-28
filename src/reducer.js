@@ -25,6 +25,7 @@ export default (state = initialState, action) => {
 	}
 	case GET_MESSAGES_SUCCESS: {
 		let messages = fromJS(action.messages);
+		messages = messages.map(m => m.set("timestamp", action.timestamp));
 		const merged_messages = merge(state.get('messages'), messages);
 		const combined_messages = combine(merged_messages);
 		return state
@@ -59,6 +60,7 @@ export default (state = initialState, action) => {
 	}
 
 	case APPEND_MESSAGE: {
+		action.message.timestamp = action.timestamp;
 		const merged_messages = merge(state.get('messages'), fromJS([action.message]));
 		const combined_messages = combine(merged_messages);
 		return state
@@ -66,6 +68,7 @@ export default (state = initialState, action) => {
 			.set('combined_messages', combined_messages);
 	}
 	case UPDATE_MESSAGE: {
+		action.message.timestamp = action.timestamp;
 		const messages = update(fromJS(action.message), state.get('messages'));
 		const combined_messages = combine(messages);
 		return state

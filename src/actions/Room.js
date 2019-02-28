@@ -57,7 +57,8 @@ export const appendMessage = (message) => {
     return (dispatch) => {
         dispatch({
             type: APPEND_MESSAGE,
-            message
+            message,
+            timestamp: Date.now()
         })
     }
 };
@@ -67,7 +68,8 @@ export const updateMessage = (message) => {
     return (dispatch) => {
         dispatch({
             type: UPDATE_MESSAGE,
-            message
+            message,
+            timestamp: Date.now()
         })
     }
 };

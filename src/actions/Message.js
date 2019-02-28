@@ -16,6 +16,7 @@ const getMessagesSuccess = (messages) => {
     return {
         type: GET_MESSAGES_SUCCESS,
         messages,
+        timestamp: Date.now()
     }
 };
 

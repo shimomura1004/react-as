@@ -15,13 +15,17 @@ export const combine = (messages) => {
             buffer = buffer.push(message);
         }
         else {
-            combined_messages = combined_messages.push(buffer);
+            let key = buffer.map(m => m.get("id") + m.get("timestamp"));
+            let tuple = List([key, buffer]);
+            combined_messages = combined_messages.push(tuple);
             buffer = List([message]);
             screen_name = message.get("screen_name");
         }
     });
 
-    return combined_messages.push(buffer);
+    let key = buffer.map(m => m.get("id") + m.get("timestamp"));
+    let tuple = List([key, buffer]);
+    return combined_messages.push(tuple);
 };
 
 const parseDateTime = (datetime) => {
