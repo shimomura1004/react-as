@@ -29,6 +29,19 @@ export default class Room extends React.Component {
         });
     }
 
+    componentDidUpdate(prevProp) {
+        let messages = document.querySelectorAll(".message");
+        if (messages.length === 0) {
+            return;
+        }
+        if (JSON.stringify(prevProp.messages) === JSON.stringify(this.props.messages)) {
+            return;
+        }
+
+        let index = messages.length;
+        messages[index - 1].scrollIntoView();
+    }
+
     render() {
         let messages = this.props.messages;
         return (
