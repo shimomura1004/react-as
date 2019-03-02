@@ -1,29 +1,15 @@
-import React, { Component } from 'react';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
-import red from '@material-ui/core/colors/red';
-import blue from '@material-ui/core/colors/blue';
-import Room from '../containers/Room.js';
+import {connect} from 'react-redux';
+import App from '../components/App';
+import { setApiKey } from '../actions/App';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: red,
-    secondary: blue,
-  },
-  typography: {
-    useNextVariants: true,
-  },
+const mapStateToProps = state => ({
+  api_key: state.get('api_key'),
 });
 
-class App extends Component {
-  render() {
-    return (
-      <MuiThemeProvider theme={theme}>
-        <div className="App">
-          <Room />
-        </div>
-      </MuiThemeProvider>
-    );
+const mapDispatchToProps = dispatch => ({
+  setApiKey: (api_key) => {
+    setApiKey(api_key)(dispatch);
   }
-}
+});
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -91,4 +91,4 @@ export const postMessage = (api_key, room_id, message) => {
             dispatch(postMessageFailure(error));
         }
     }
-}
+};

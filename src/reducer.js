@@ -1,4 +1,5 @@
 import { List, Map, fromJS } from 'immutable';
+import { SET_API_KEY } from './actions/App';
 import { GET_MESSAGES_REQUEST, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILURE, POST_MESSAGE_SUCCESS } from './actions/Message';
 import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE, UPDATE_TEXTFIELD, APPEND_MESSAGE, UPDATE_MESSAGE, DELETE_MESSAGE } from './actions/Room';
 import { merge, combine, update, remove } from './helpers/Message';
@@ -19,6 +20,10 @@ export default (state = initialState, action) => {
 	switch(action.type) {
 	// case 'CHANGE_ROOM':
 	// 	return state.set('room_id', action.room_id);
+
+	case SET_API_KEY: {
+		return state.set('api_key', action.api_key);
+	}
 
 	case GET_MESSAGES_REQUEST: {
 		return state.set('message_loading', true);
