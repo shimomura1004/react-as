@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 
     loading: state.room.message_loading || state.room.room_loading,
     // todo: remove room
-    room: find_room(state.room.rooms, state.room.room_id),
+    room: find_room(state.room.rooms, state.app.room_id),
     messages: state.room.combined_messages,
     text_field: state.room.text_field,
 });

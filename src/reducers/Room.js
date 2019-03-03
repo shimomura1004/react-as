@@ -1,11 +1,11 @@
 import { GET_MESSAGES_REQUEST, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILURE, POST_MESSAGE_SUCCESS } from '../actions/Message';
-import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE, UPDATE_TEXTFIELD, APPEND_MESSAGE, UPDATE_MESSAGE, DELETE_MESSAGE } from '../actions/Room';
+import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE, UPDATE_TEXT_FIELD, APPEND_MESSAGE, UPDATE_MESSAGE, DELETE_MESSAGE } from '../actions/Room';
 import { merge, combine, update, remove } from '../helpers/Message';
 
 const initialState = {
 	message_loading: false,
 	room_loading: false,
-	textfield: "",
+	text_field: "",
 	messages: [],
 	combined_messages: [],
 	rooms: [],
@@ -43,12 +43,12 @@ export default (state = initialState, action) => {
 		return {...state, room_loading: false};
 	}
 
-	case UPDATE_TEXTFIELD: {
-		return {...state, textfield: action.text};
+	case UPDATE_TEXT_FIELD: {
+		return {...state, text_field: action.text};
 	}
 
 	case POST_MESSAGE_SUCCESS: {
-		return {...state, textfield: ''};
+		return {...state, text_field: ''};
 	}
 
 	case APPEND_MESSAGE: {
