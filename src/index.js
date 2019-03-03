@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import './styles/index.css';
 import App from './containers/App';
-import rootReducers from './reducers/reducers'
+import rootReducer from './reducers/reducers'
 import * as serviceWorker from './serviceWorker';
 
 // setup environment
@@ -20,11 +22,22 @@ document.as['API_SERVER'] = process.env['REACT_APP_API_SERVER'] || cookie["api_s
 document.as['PUSHER_SERVER'] = process.env['REACT_APP_PUSHER_SERVER'] || cookie["pusher_server"];
 document.as['PUSHER_APP_KEY'] = process.env['REACT_APP_PUSHER_APP_KEY'] || cookie["pusher_app_key"];
 
-const store = createStore(rootReducers, applyMiddleware(thunk));
+// persistent settings
+const persistConfig = {
+  key: 'primary',
+  storage,
+  whitelist: ['app']
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+const store = createStore(persistedReducer);
+const persistor = persistStore(store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );
