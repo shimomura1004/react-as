@@ -12,7 +12,9 @@ import '../styles/room.css';
 
 export default class Room extends React.Component {
     componentWillMount() {
-        console.log("CONNECTING!")
+        this.props.getRooms(this.props.room_id);
+        this.props.getMessages(this.props.api_key, this.props.room_id);
+
         let socket = io.connect(`${document.as['PUSHER_SERVER']}/?app=${document.as['PUSHER_APP_KEY']}`);
         socket.emit("subscribe", "as-(room id)");
         socket.on("message_create", (channel, data) => {
@@ -57,7 +59,7 @@ export default class Room extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <div className="chat-body" onClick={() =>
-                    this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room.id, messages[0][1][0].id)
+                    this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id)
                 }>
                     <p>{this.props.loading ? 'LOADING' : 'LOADED'}</p>
                     <div>
@@ -69,7 +71,7 @@ export default class Room extends React.Component {
                 <div className="footer">
                     <TextField
                         label={`Message #${this.props.room && this.props.room.name}`}
-                        value={this.props.textfield}
+                        value={this.props.text_field}
                         multiline
                         rowsMax="3"
                         style={{
@@ -86,7 +88,7 @@ export default class Room extends React.Component {
                     <div className="send-button">
                         <IconButton aria-label="Send" type="submit"
                             onClick={(e) => {
-                                this.props.postMessage(this.props.api_key, this.props.room.id, this.props.textfield);
+                                this.props.postMessage(this.props.api_key, this.props.room.id, this.props.text_field);
                         }}>
                             <SendIcon color="secondary" />
                         </IconButton>

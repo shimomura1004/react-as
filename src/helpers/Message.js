@@ -1,34 +1,33 @@
-import { List } from 'immutable';
-
-export const combine = (messages) => {
+export const combine = messages => {
     if (messages.size === 0) {
-        return List([]);
+        return [];
     }
 
-    let screen_name = messages.getIn([0, "screen_name"]);
-    let buffer = List([messages.first()]);
-    messages = messages.shift();
-    let combined_messages = List([]);
+    let screen_name = messages[0].screen_name;
+    let buffer = [messages[0]];
+    messages.shift();
+    let combined_messages = [];
 
-    messages.forEach((message) => {
-        if (message.get("screen_name") === screen_name) {
-            buffer = buffer.push(message);
+    messages.forEach(message => {
+        if (message.screen_name === screen_name) {
+            buffer.push(message);
         }
         else {
-            let key = buffer.map(m => m.get("id") + m.get("timestamp"));
-            let tuple = List([key, buffer]);
-            combined_messages = combined_messages.push(tuple);
-            buffer = List([message]);
-            screen_name = message.get("screen_name");
+            let key = buffer.map(m => m.id + m.timestamp);
+            let tuple = [key, buffer];
+            combined_messages.push(tuple);
+            buffer = [message];
+            screen_name = message.screen_name;
         }
     });
 
-    let key = buffer.map(m => m.get("id") + m.get("timestamp"));
-    let tuple = List([key, buffer]);
-    return combined_messages.push(tuple);
+    let key = buffer.map(m => m.id + m.timestamp);
+    let tuple = [key, buffer];
+    combined_messages.push(tuple);
+    return combined_messages;
 };
 
-const parseDateTime = (datetime) => {
+const parseDateTime = datetime => {
     let result = datetime.match(/(\d\d\d\d-\d\d-\d\d) (\d\d:\d\d:\d\d)/);
     if (result === null) {
         return new Date(0);
@@ -37,25 +36,23 @@ const parseDateTime = (datetime) => {
 }
 
 export const merge = (current_messages, new_messages) => {
-    let merged_messages = List([]);
+    let merged_messages = [];
     let message = undefined;
     let last_message = undefined;
 
-    while (current_messages.size > 0 && new_messages.size > 0) {
-        const time1 = parseDateTime(current_messages.getIn([0, "created_at"]));
-        const time2 = parseDateTime(new_messages.getIn([0, "created_at"]));
+    while (current_messages.length > 0 && new_messages.length > 0) {
+        const time1 = parseDateTime(current_messages[0].created_at);
+        const time2 = parseDateTime(new_messages[0].created_at);
 
         if (time1 < time2) {
-            message = current_messages.first();
-            current_messages = current_messages.shift();
+            message = current_messages.shift();
         }
         else {
-            message = new_messages.first();
-            new_messages = new_messages.shift();
+            message = new_messages.shift();
         }
 
-        if ((last_message === undefined) || last_message.get("id") !== message.get("id")) {
-            merged_messages = merged_messages.push(message);
+        if ((last_message === undefined) || last_message.id !== message.id) {
+            merged_messages.push(message);
             last_message = message;
         }
     }
@@ -64,10 +61,10 @@ export const merge = (current_messages, new_messages) => {
 }
 
 export const update = (message, messages) => {
-    let message_id = message.get("id");
-    return messages.map(mes => (mes.get("id") === message_id) ? message : mes);
+    let message_id = message.id;
+    return messages.map(mes => (mes.id === message_id) ? message : mes);
 }
 
 export const remove = (id, messages) => {
-    return messages.filter(message => message.get("id") !== id);
+    return messages.filter(message => message.id !== id);
 }

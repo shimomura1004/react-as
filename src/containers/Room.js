@@ -1,20 +1,28 @@
 import {connect} from 'react-redux';
 import Room from '../components/Room.js';
+import { getRooms } from '../actions/Room';
 import { getMessages, postMessage } from '../actions/Message';
 import { updateTextField, appendMessage, updateMessage, deleteMessage } from '../actions/Room';
 import { find_room } from '../helpers/Room';
 
-// todo: should we have to pass the api_key to the view?
 const mapStateToProps = state => ({
-    api_key: state.get('api_key'),
+    api_key: state.app.api_key,
+    room_id: state.app.room_id,
 
-    loading: state.get('message_loading') || state.get('room_loading'),
-    room: find_room(state.get('rooms'), state.get('room_id')),
-    messages: state.get('combined_messages').toJS(),
-    textfield: state.get('textfield'),
+    loading: state.room.message_loading || state.room.room_loading,
+    // todo: remove room
+    room: find_room(state.room.rooms, state.room.room_id),
+    messages: state.room.combined_messages,
+    text_field: state.room.text_field,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    getRooms: (api_key) => {
+        getRooms(api_key)(dispatch);
+    },
+    getMessages: (api_key, room_id) => {
+        getMessages(api_key, room_id)(dispatch);
+    },
     loadMessages: (loading, api_key, room_id, message_id) => {
         if (!loading) {
             getMessages(api_key, room_id, {until_id: message_id, count: 20})(dispatch);

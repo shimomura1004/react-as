@@ -34,7 +34,7 @@ export const getRooms = (api_key) => {
             let rooms = await axios.get(`${document.as['API_SERVER']}${ROOM_ENDPOINT}`, {
                 params: { api_key }
             });
-            dispatch(getRoomsSuccess((rooms.data)));
+            dispatch(getRoomsSuccess(rooms.data));
         }
         catch(err) {
             dispatch(getRoomsFailure(err));

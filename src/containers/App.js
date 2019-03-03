@@ -3,7 +3,7 @@ import App from '../components/App';
 import { setApiKey } from '../actions/App';
 
 const mapStateToProps = state => ({
-  api_key: state.get('api_key'),
+  api_key: state.app.api_key,
 });
 
 const mapDispatchToProps = dispatch => ({
