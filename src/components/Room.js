@@ -12,7 +12,7 @@ import '../styles/room.css';
 
 export default class Room extends React.Component {
     componentWillMount() {
-        this.props.getRooms(this.props.room_id);
+        this.props.getRooms(this.props.api_key);
         this.props.getMessages(this.props.api_key, this.props.room_id);
 
         let socket = io.connect(`${document.as['PUSHER_SERVER']}/?app=${document.as['PUSHER_APP_KEY']}`);

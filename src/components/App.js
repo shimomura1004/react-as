@@ -16,7 +16,7 @@ const theme = createMuiTheme({
 
 export default class App extends Component {
   render() {
-    let account_url = `${document.as['API_SERVER']}/account/index`;
+    let account_url = `${document.as['ORIGINAL_API_SERVER']}/account/index`;
     return (
       <MuiThemeProvider theme={theme}>
         <div className="App">

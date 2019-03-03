@@ -11,6 +11,7 @@ app.use(express.static(path.join(__dirname, "build"), {
     // use cookie to pass environment variables to react app
     // let react app to access this express server as api server
     res.cookie('api_server', '.');
+    res.cookie('original_api_server', process.env.REACT_APP_API_SERVER);
     res.cookie('pusher_server', process.env.REACT_APP_PUSHER_SERVER);
     res.cookie('pusher_app_key', process.env.REACT_APP_PUSHER_APP_KEY);
   }
