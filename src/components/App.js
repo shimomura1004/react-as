@@ -16,6 +16,7 @@ const theme = createMuiTheme({
 
 export default class App extends Component {
   render() {
+    let account_url = `${document.as['API_SERVER']}/account/index`;
     return (
       <MuiThemeProvider theme={theme}>
         <div className="App">
@@ -23,7 +24,8 @@ export default class App extends Component {
           (this.props.api_key)
             ? <Room />
             : <div>
-                <p>Input your API key</p>
+                <p>Access your account and get API key</p>
+                <p><a href={account_url}>{account_url}</a></p>
                 <form onSubmit={ e => {
                   e.preventDefault();
                   this.props.setApiKey(document.api_key);

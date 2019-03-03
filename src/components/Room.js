@@ -84,6 +84,12 @@ export default class Room extends React.Component {
                             let text = e.currentTarget.value;
                             this.props.updateTextField(text);
                         }}
+                        onKeyDown={ e => {
+                            if (e.keyCode === 13 && !e.shiftKey) {
+                                e.preventDefault();
+                                this.props.postMessage(this.props.api_key, this.props.room_id, this.props.text_field);
+                            }
+                        }}
                     />
                     <div className="send-button">
                         <IconButton aria-label="Send" type="submit"
