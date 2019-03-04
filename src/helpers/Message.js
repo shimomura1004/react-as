@@ -28,11 +28,7 @@ export const combine = messages => {
 };
 
 const parseDateTime = datetime => {
-    let result = datetime.match(/(\d\d\d\d-\d\d-\d\d) (\d\d:\d\d:\d\d)/);
-    if (result === null) {
-        return new Date(0);
-    }
-    return new Date(result[1] + "T" + result[2]);
+    return new Date(datetime.replace(/(\d)-/g, "$1/"));
 }
 
 export const merge = (current_messages, new_messages) => {

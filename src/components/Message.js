@@ -9,13 +9,21 @@ export default class Message extends React.Component {
     }
 
     render() {
+        let date = new Date(this.first_message.created_at.replace(/(\d)-/g, "$1/"));
+        let yyyy = date.getFullYear();
+        let MM = ("0" + date.getMonth()).slice(-2);
+        let dd = ("0" + date.getDate()).slice(-2);
+        let hh = ("0" + date.getHours()).slice(-2);
+        let mm = ("0" + date.getMinutes()).slice(-2);
+        let time_string = `${yyyy}/${MM}/${dd} ${hh}:${mm}`;
+
         return (
             <div className="message">
                 <img className="icon" src={this.first_message.profile_image_url} alt={this.first_message.name} />
                 <div className="content">
                     <div className="profile">
                         <span className="user-name">{this.first_message.name}</span>
-                        <span className="time">{this.first_message.created_at}</span>
+                        <span className="time">{time_string}</span>
                     </div>
                     { this.messages.map((message) => <p key={message.id + message.timestamp} className="body" dangerouslySetInnerHTML={{__html: message.html_body}}></p>) }
                 </div>

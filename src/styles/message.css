@@ -34,7 +34,9 @@
 }
 
 .time {
-  color: rgb(160, 160, 160)
+  color: rgb(160, 160, 160);
+  font-size: 0.8em;
+  margin-left: auto;
 }
 
 .clear {
