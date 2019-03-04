@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuIcon from '@material-ui/icons/Menu';
 import SendIcon from '@material-ui/icons/Send';
 import Message from './Message';
@@ -58,10 +59,16 @@ export default class Room extends React.Component {
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <div className="chat-body" onClick={() =>
-                    this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id)
-                }>
-                    <p>{this.props.loading ? 'LOADING' : 'LOADED'}</p>
+                <div className="chat-body">
+                    <div className="messages-header" onClick={() =>
+                        this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id)
+                    }>
+                        {
+                            this.props.loading
+                                ? <CircularProgress />
+                                : <p>Load messages</p>
+                        }
+                    </div>
                     <div>
                         {messages.map(timestamp_message =>
                             <Message key={timestamp_message[0] + timestamp_message[1][0].id} message={timestamp_message[1]} />

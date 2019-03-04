@@ -20,6 +20,15 @@
   margin-bottom: 3em;
 }
 
+.messages-header {
+  height: 3.5em;
+  display: flex;
+}
+
+.messages-header * {
+  margin: auto;
+}
+
 .footer {
   display: flex;
   position: fixed;
