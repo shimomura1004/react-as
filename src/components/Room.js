@@ -1,13 +1,8 @@
 import React from 'react';
 import io from 'socket.io-client';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import MenuIcon from '@material-ui/icons/Menu';
-import SendIcon from '@material-ui/icons/Send';
+import RoomMenu from './RoomMenu';
+import RoomTextField from './RoomTextField';
 import Message from './Message';
 import '../styles/room.css';
 
@@ -49,16 +44,8 @@ export default class Room extends React.Component {
         let messages = this.props.messages;
         return (
             <div>
-                <AppBar className="root" position="fixed" color="primary">
-                    <Toolbar>
-                        <IconButton className="menuButton" color="inherit" aria-label="Menu">
-                            <MenuIcon />
-                        </IconButton>
-                        <Typography className="grow" variant="h6" color="inherit">
-                            {this.props.room && this.props.room.name}
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
+                <RoomMenu room={this.props.room} />
+
                 <div className="chat-body">
                     <div className="messages-header" onClick={() =>
                         this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id)
@@ -75,38 +62,8 @@ export default class Room extends React.Component {
                         )}
                     </div>
                 </div>
-                <div className="footer">
-                    <TextField
-                        label={`Message #${this.props.room && this.props.room.name}`}
-                        value={this.props.text_field}
-                        multiline
-                        rowsMax="3"
-                        style={{
-                            "margin": 0,
-                            "backgroundColor": "white",
-                            "width": "90%",
-                        }}
-                        variant="filled"
-                        onChange={(e) => {
-                            let text = e.currentTarget.value;
-                            this.props.updateTextField(text);
-                        }}
-                        onKeyDown={ e => {
-                            if (e.keyCode === 13 && !e.shiftKey) {
-                                e.preventDefault();
-                                this.props.postMessage(this.props.api_key, this.props.room_id, this.props.text_field);
-                            }
-                        }}
-                    />
-                    <div className="send-button">
-                        <IconButton aria-label="Send" type="submit"
-                            onClick={(e) => {
-                                this.props.postMessage(this.props.api_key, this.props.room_id, this.props.text_field);
-                        }}>
-                            <SendIcon color="secondary" />
-                        </IconButton>
-                    </div>
-                </div>
+
+                <RoomTextField />
             </div>
         );
     }
