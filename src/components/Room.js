@@ -5,11 +5,12 @@ import RoomMenu from './RoomMenu';
 import RoomTextField from './RoomTextField';
 import Message from './Message';
 import '../styles/room.css';
-import { find_room } from '../helpers/Room';
 
 export default class Room extends React.Component {
     componentWillMount() {
-        this.props.getMessages(this.props.api_key, this.props.room_id);
+        if (this.props.room_id !== '') {
+            this.props.getMessages(this.props.api_key, this.props.room_id);
+        }
 
         // todo: stop and reconnect when room_id changes
         console.log("!!! connect websocket !!!")
@@ -55,31 +56,36 @@ export default class Room extends React.Component {
             <div>
                 <RoomMenu room_id={this.props.room_id} room_name={room_name} rooms={this.props.rooms} setRoomId={this.props.setRoomId} logout={this.props.logout} />
 
-                <div className="chat-body">
-                    <div className="messages-header" onClick={() => 
-                        (messages.length > 0)
-                            ? this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id)
-                            : this.props.getMessages(this.props.api_key, this.props.room_id)
-                    }>
-                        {
-                            this.props.loading
-                                ? <CircularProgress />
-                                : <p>Load messages</p>
-                        }
-                    </div>
-                    <div>
-                        {messages.map(timestamp_message =>
-                            <Message key={timestamp_message[0] + timestamp_message[1][0].id} message={timestamp_message[1]} />
-                        )}
-                    </div>
-                </div>
+                { this.props.room_id === ''
+                    ? <p>select a room in a menu</p>
+                    : <div>
+                        <div className="chat-body">
+                            <div className="messages-header" onClick={() => 
+                                (messages.length > 0)
+                                    ? this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id)
+                                    : this.props.getMessages(this.props.api_key, this.props.room_id)
+                            }>
+                                {
+                                    this.props.loading
+                                        ? <CircularProgress />
+                                        : <p>Load messages</p>
+                                }
+                            </div>
+                            <div>
+                                {messages.map(timestamp_message =>
+                                    <Message key={timestamp_message[0] + timestamp_message[1][0].id} message={timestamp_message[1]} />
+                                )}
+                            </div>
+                        </div>
 
-                <RoomTextField
-                    api_key={this.props.api_key}
-                    room_id={this.props.room_id}
-                    room_name={room_name}
-                    postMessage={this.props.postMessage}
-                />
+                        <RoomTextField
+                            api_key={this.props.api_key}
+                            room_id={this.props.room_id}
+                            room_name={room_name}
+                            postMessage={this.props.postMessage}
+                        />
+                    </div>
+                }
             </div>
         );
     }

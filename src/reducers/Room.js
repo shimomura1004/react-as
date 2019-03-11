@@ -12,7 +12,7 @@ const initialState = {
 	room_loading: false,
 	rooms: {},
 };
-  
+
 export default (state = initialState, action) => {
 	switch(action.type) {
 	case GET_ROOMS_REQUEST: {

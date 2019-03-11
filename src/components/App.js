@@ -33,17 +33,11 @@ export default class App extends Component {
                 <form onSubmit={ e => {
                   e.preventDefault();
                   const api_key = document.getElementById("api_key").value;
-                  const room_id = document.getElementById("room_id").value;
                   this.props.setApiKey(api_key);
-                  this.props.setRoomId(room_id);
                 }}>
                   <div>
                     <label>API Key</label>
                     <input id="api_key" type="text" />
-                  </div>
-                  <div>
-                    <label>Room ID</label>
-                    <input id="room_id" type="text" />
                   </div>
                   <input type="submit" value="set" />
                 </form>

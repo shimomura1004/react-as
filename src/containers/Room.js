@@ -2,7 +2,6 @@ import {connect} from 'react-redux';
 import Room from '../components/Room.js';
 import { getMessages, postMessage } from '../actions/Message';
 import { appendMessage, updateMessage, deleteMessage } from '../actions/Room';
-import { find_room } from '../helpers/Room';
 import { logout, setRoomId } from '../actions/App';
 
 const mapStateToProps = state => {
@@ -16,14 +15,16 @@ const mapStateToProps = state => {
         };
     }
 
+    let message_loading = state.app.room_id === '' ? false : state.room.rooms[state.app.room_id].message_loading;
+    let combined_messages = state.app.room_id === '' ? [] : state.room.rooms[state.app.room_id].combined_messages;
     return {
         api_key: state.app.api_key,
         room_id: state.app.room_id,
 
-        loading: state.room.rooms[state.app.room_id].message_loading,
+        loading: message_loading,
         rooms: Object.values(state.room.rooms),
         room: state.room.rooms[state.app.room_id],
-        messages: state.room.rooms[state.app.room_id].combined_messages,
+        messages: combined_messages,
     };
 };
 
