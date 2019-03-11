@@ -4,7 +4,7 @@ import { getRooms } from '../actions/Room';
 import { getMessages, postMessage } from '../actions/Message';
 import { appendMessage, updateMessage, deleteMessage } from '../actions/Room';
 import { find_room } from '../helpers/Room';
-import { logout } from '../actions/App';
+import { logout, setRoomId } from '../actions/App';
 
 const mapStateToProps = state => ({
     api_key: state.app.api_key,
@@ -42,6 +42,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     deleteMessage: (id) => {
         deleteMessage(id)(dispatch);
+    },
+    setRoomId: (id) => {
+        setRoomId(id)(dispatch);
     },
     logout: () => {
         logout()(dispatch);

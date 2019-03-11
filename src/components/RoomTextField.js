@@ -10,7 +10,7 @@ export default class Room extends React.Component {
             <div className="footer">
                 <TextField
                     id="text_field"
-                    label={`Message #${this.props.room && this.props.room.name}`}
+                    label={`Message #${this.props.room_name}`}
                     multiline
                     rowsMax="3"
                     style={{
@@ -23,7 +23,7 @@ export default class Room extends React.Component {
                         if (e.keyCode === 13 && !e.shiftKey) {
                             e.preventDefault();
                             const text = document.getElementById("text_field").value;
-                            this.props.postMessage(this.props.api_key, this.props.room.id, text);
+                            this.props.postMessage(this.props.api_key, this.props.room_id, text);
                         }
                     }}
                 />
@@ -31,7 +31,7 @@ export default class Room extends React.Component {
                     <IconButton aria-label="Send" type="submit"
                         onClick={(e) => {
                             const text = document.getElementById("text_field").value;
-                            this.props.postMessage(this.props.api_key, this.props.room.id, text);
+                            this.props.postMessage(this.props.api_key, this.props.room_id, text);
                     }}>
                         <SendIcon color="secondary" />
                     </IconButton>

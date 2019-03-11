@@ -5,6 +5,7 @@ import RoomMenu from './RoomMenu';
 import RoomTextField from './RoomTextField';
 import Message from './Message';
 import '../styles/room.css';
+import { find_room } from '../helpers/Room';
 
 export default class Room extends React.Component {
     componentWillMount() {
@@ -12,6 +13,7 @@ export default class Room extends React.Component {
         this.props.getMessages(this.props.api_key, this.props.room_id);
 
         // todo: stop and reconnect when room_id changes
+        console.log("!!! connect websocket !!!")
         let socket = io.connect(`${document.as['PUSHER_SERVER']}/?app=${document.as['PUSHER_APP_KEY']}`);
         socket.emit("subscribe", `as-${this.props.room_id}`);
         socket.on("message_create", (channel, data) => {
@@ -43,10 +45,13 @@ export default class Room extends React.Component {
 
     render() {
         let messages = this.props.messages;
+        let room = find_room(this.props.rooms, this.props.room_id);
+        let room_name = room && room.name;
+
         return (
             <div>
                 {/* todo: remove room */}
-                <RoomMenu room={this.props.room} rooms={this.props.rooms} logout={this.props.logout} />
+                <RoomMenu room_id={this.props.room_id} room_name={room_name} rooms={this.props.rooms} setRoomId={this.props.setRoomId} logout={this.props.logout} />
 
                 <div className="chat-body">
                     <div className="messages-header" onClick={() =>
@@ -67,7 +72,8 @@ export default class Room extends React.Component {
 
                 <RoomTextField
                     api_key={this.props.api_key}
-                    room={this.props.room}
+                    room_id={this.props.room_id}
+                    room_name={room_name}
                     postMessage={this.props.postMessage}
                 />
             </div>

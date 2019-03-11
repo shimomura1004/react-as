@@ -30,8 +30,10 @@ export default class Room extends React.Component {
         this.setState({open: false});
     }
 
-    onRoomSelected = () => {
+    onRoomSelected = (room) => {
         this.setState({open: false});
+        console.log(room);
+        this.props.setRoomId(room.id);
     }
 
     handleDrawerOpen = () => {
@@ -55,7 +57,7 @@ export default class Room extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography className="grow" variant="h6" color="inherit">
-                            {this.props.room && this.props.room.name}
+                            {this.props.room_name}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -72,7 +74,7 @@ export default class Room extends React.Component {
                     <Divider />
                     <List>
                         {this.props.rooms.map(room => (
-                            <ListItem button key={room.id} onClick={this.onRoomSelected}>
+                            <ListItem button key={room.id} onClick={() => this.onRoomSelected(room)}>
                                 <ListItemIcon>
                                     { room.user === null ? <ChatIcon /> : <LockIcon /> }
                                 </ListItemIcon>
