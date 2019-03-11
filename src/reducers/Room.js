@@ -61,32 +61,34 @@ export default (state = initialState, action) => {
 
 	case APPEND_MESSAGE: {
 		action.message.timestamp = action.timestamp;
-		const merged_messages = merge(state.messages, [action.message]);
+
+		let room = state.rooms[action.message.room.id];
+		const merged_messages = merge(room.merged_messages, [action.message]);
 		const combined_messages = combine(merged_messages);
-		return {
-			...state,
-			messages: merged_messages,
-			combined_messages: combined_messages,
-		};
+
+		room.merged_messages = merged_messages;
+		room.combined_messages = combined_messages;
+		return {...state};
 	}
 	case UPDATE_MESSAGE: {
 		action.message.timestamp = action.timestamp;
-		const messages = update(action.message, state.messages);
-		const combined_messages = combine(messages);
-		return {
-			...state,
-			messages: messages,
-			combined_messages: combined_messages,
-		}
+
+		let room = state.rooms[action.message.room.id];
+		const merged_messages = update(action.message, room.merged_messages);
+		const combined_messages = combine(merged_messages);
+
+		room.merged_messages = merged_messages;
+		room.combined_messages = combined_messages;
+		return {...state};
 	}
 	case DELETE_MESSAGE: {
-		const messages = remove(action.id, state.messages);
-		const combined_messages = combine(messages);
-		return {
-			...state,
-			messages: messages,
-			combined_messages: combined_messages
-		};
+		let room = state.rooms[action.room_id];
+		const merged_messages = remove(action.message_id, room.merged_messages);
+		const combined_messages = combine(merged_messages);
+
+		room.merged_messages = merged_messages;
+		room.combined_messages = combined_messages;
+		return {...state};
 	}
 
 	default:

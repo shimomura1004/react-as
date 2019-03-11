@@ -48,8 +48,8 @@ const mapDispatchToProps = (dispatch) => ({
     updateMessage: (message) => {
         updateMessage(message)(dispatch);
     },
-    deleteMessage: (id) => {
-        deleteMessage(id)(dispatch);
+    deleteMessage: (message_id, room_id) => {
+        deleteMessage(message_id, room_id)(dispatch);
     },
     setRoomId: (id) => {
         setRoomId(id)(dispatch);

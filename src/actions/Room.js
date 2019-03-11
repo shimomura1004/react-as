@@ -65,11 +65,12 @@ export const updateMessage = (message) => {
 };
 
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
-export const deleteMessage = (id) => {
+export const deleteMessage = (message_id, room_id) => {
     return (dispatch) => {
         dispatch({
             type: DELETE_MESSAGE,
-            id
+            message_id,
+            room_id,
         })
     }
 };
