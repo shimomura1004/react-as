@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import Room from '../components/Room.js';
 import { getRooms } from '../actions/Room';
 import { getMessages, postMessage } from '../actions/Message';
-import { updateTextField, appendMessage, updateMessage, deleteMessage } from '../actions/Room';
+import { appendMessage, updateMessage, deleteMessage } from '../actions/Room';
 import { find_room } from '../helpers/Room';
 
 const mapStateToProps = state => ({
@@ -13,7 +13,6 @@ const mapStateToProps = state => ({
     // todo: remove room
     room: find_room(state.room.rooms, state.app.room_id),
     messages: state.room.combined_messages,
-    text_field: state.room.text_field,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -27,9 +26,6 @@ const mapDispatchToProps = (dispatch) => ({
         if (!loading) {
             getMessages(api_key, room_id, {until_id: message_id, count: 20})(dispatch);
         }
-    },
-    updateTextField: (text) => {
-        updateTextField(text)(dispatch);
     },
     postMessage: (api_key, room_id, message) => {
         if (message !== "") {

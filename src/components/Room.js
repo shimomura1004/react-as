@@ -64,7 +64,11 @@ export default class Room extends React.Component {
                     </div>
                 </div>
 
-                <RoomTextField />
+                <RoomTextField
+                    api_key={this.props.api_key}
+                    room={this.props.room}
+                    postMessage={this.props.postMessage}
+                />
             </div>
         );
     }

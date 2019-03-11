@@ -9,8 +9,8 @@ export default class Room extends React.Component {
         return (
             <div className="footer">
                 <TextField
+                    id="text_field"
                     label={`Message #${this.props.room && this.props.room.name}`}
-                    value={this.props.text_field}
                     multiline
                     rowsMax="3"
                     style={{
@@ -19,21 +19,19 @@ export default class Room extends React.Component {
                         "width": "90%",
                     }}
                     variant="filled"
-                    onChange={(e) => {
-                        let text = e.currentTarget.value;
-                        this.props.updateTextField(text);
-                    }}
                     onKeyDown={ e => {
                         if (e.keyCode === 13 && !e.shiftKey) {
                             e.preventDefault();
-                            this.props.postMessage(this.props.api_key, this.props.room_id, this.props.text_field);
+                            const text = document.getElementById("text_field").value;
+                            this.props.postMessage(this.props.api_key, this.props.room.id, text);
                         }
                     }}
                 />
                 <div className="send-button">
                     <IconButton aria-label="Send" type="submit"
                         onClick={(e) => {
-                            this.props.postMessage(this.props.api_key, this.props.room_id, this.props.text_field);
+                            const text = document.getElementById("text_field").value;
+                            this.props.postMessage(this.props.api_key, this.props.room.id, text);
                     }}>
                         <SendIcon color="secondary" />
                     </IconButton>
