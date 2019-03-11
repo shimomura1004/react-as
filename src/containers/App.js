@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import App from '../components/App';
-import { setApiKey } from '../actions/App';
+import { setApiKey, setRoomId } from '../actions/App';
 
 const mapStateToProps = state => ({
   api_key: state.app.api_key,
@@ -9,6 +9,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setApiKey: (api_key) => {
     setApiKey(api_key)(dispatch);
+  },
+  setRoomId: (room_id) => {
+    setRoomId(room_id)(dispatch);
   }
 });
 

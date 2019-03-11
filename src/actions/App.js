@@ -7,3 +7,13 @@ export const setApiKey = (api_key) => {
         })
     }
 }
+
+export const SET_ROOM_ID = 'SET_ROOM_ID';
+export const setRoomId = (room_id) => {
+    return (dispatch) => {
+        dispatch({
+            type: SET_ROOM_ID,
+            room_id
+        })
+    }
+}

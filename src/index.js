@@ -33,6 +33,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = createStore(persistedReducer);
 const persistor = persistStore(store);
+// persistor.purge()
 
 ReactDOM.render(
   <Provider store={store}>

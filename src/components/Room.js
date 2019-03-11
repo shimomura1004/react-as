@@ -11,8 +11,9 @@ export default class Room extends React.Component {
         this.props.getRooms(this.props.api_key);
         this.props.getMessages(this.props.api_key, this.props.room_id);
 
+        // todo: stop and reconnect when room_id changes
         let socket = io.connect(`${document.as['PUSHER_SERVER']}/?app=${document.as['PUSHER_APP_KEY']}`);
-        socket.emit("subscribe", "as-(room id)");
+        socket.emit("subscribe", `as-${this.props.room_id}`);
         socket.on("message_create", (channel, data) => {
             let message = JSON.parse(data).content;
             this.props.appendMessage(message);

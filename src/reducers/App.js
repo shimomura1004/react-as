@@ -1,4 +1,4 @@
-import { SET_API_KEY } from '../actions/App';
+import { SET_API_KEY, SET_ROOM_ID } from '../actions/App';
 
 const initialState = {
 	api_key: '',
@@ -7,12 +7,12 @@ const initialState = {
   
 export default (state = initialState, action) => {
 	switch(action.type) {
-	// case 'CHANGE_ROOM':
-	// 	return state.set('room_id', action.room_id);
-
-	// make it persistent
 	case SET_API_KEY: {
 		return {...state, api_key: action.api_key};
+	}
+
+	case SET_ROOM_ID: {
+		return {...state, room_id: action.room_id};
 	}
 
 	default:
