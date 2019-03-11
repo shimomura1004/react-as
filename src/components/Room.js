@@ -45,7 +45,8 @@ export default class Room extends React.Component {
         let messages = this.props.messages;
         return (
             <div>
-                <RoomMenu room={this.props.room} />
+                {/* todo: remove room */}
+                <RoomMenu room={this.props.room} rooms={this.props.rooms} logout={this.props.logout} />
 
                 <div className="chat-body">
                     <div className="messages-header" onClick={() =>

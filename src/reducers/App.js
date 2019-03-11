@@ -1,8 +1,8 @@
-import { SET_API_KEY, SET_ROOM_ID } from '../actions/App';
+import { SET_API_KEY, SET_ROOM_ID, LOGOUT } from '../actions/App';
 
 const initialState = {
 	api_key: '',
-	room_id: '(room id here)',
+	room_id: '',
 };
   
 export default (state = initialState, action) => {
@@ -13,6 +13,10 @@ export default (state = initialState, action) => {
 
 	case SET_ROOM_ID: {
 		return {...state, room_id: action.room_id};
+	}
+
+	case LOGOUT: {
+		return initialState;
 	}
 
 	default:

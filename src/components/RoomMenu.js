@@ -11,8 +11,9 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import ChatIcon from '@material-ui/icons/Chat';
+import LockIcon from '@material-ui/icons/Lock';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import '../styles/room.css';
 
 export default class Room extends React.Component {
@@ -24,6 +25,15 @@ export default class Room extends React.Component {
         };
     }
 
+    onLogout = () => {
+        this.props.logout();
+        this.setState({open: false});
+    }
+
+    onRoomSelected = () => {
+        this.setState({open: false});
+    }
+
     handleDrawerOpen = () => {
         this.setState({open: true});
     };
@@ -33,6 +43,7 @@ export default class Room extends React.Component {
     };
 
     render() {
+        // todo: swipeable drawer
         return (
             <div>
                 <AppBar className="root" position="fixed" color="primary">
@@ -50,7 +61,6 @@ export default class Room extends React.Component {
                 </AppBar>
 
                 <Drawer
-                    variant="persistent"
                     anchor="left"
                     open={this.state.open}
                 >
@@ -61,21 +71,21 @@ export default class Room extends React.Component {
                     </div>
                     <Divider />
                     <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
+                        {this.props.rooms.map(room => (
+                            <ListItem button key={room.id} onClick={this.onRoomSelected}>
+                                <ListItemIcon>
+                                    { room.user === null ? <ChatIcon /> : <LockIcon /> }
+                                </ListItemIcon>
+                                <ListItemText primary={room.name} />
+                            </ListItem>
                         ))}
                     </List>
                     <Divider />
                     <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                        <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                            <ListItemText primary={text} />
+                        <ListItem button key="logout" onClick={this.onLogout}>
+                            <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+                            <ListItemText primary="Logout" />
                         </ListItem>
-                        ))}
                     </List>
                 </Drawer>
             </div>

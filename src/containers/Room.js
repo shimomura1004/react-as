@@ -4,6 +4,7 @@ import { getRooms } from '../actions/Room';
 import { getMessages, postMessage } from '../actions/Message';
 import { appendMessage, updateMessage, deleteMessage } from '../actions/Room';
 import { find_room } from '../helpers/Room';
+import { logout } from '../actions/App';
 
 const mapStateToProps = state => ({
     api_key: state.app.api_key,
@@ -11,6 +12,7 @@ const mapStateToProps = state => ({
 
     loading: state.room.message_loading || state.room.room_loading,
     // todo: remove room
+    rooms: state.room.rooms,
     room: find_room(state.room.rooms, state.app.room_id),
     messages: state.room.combined_messages,
 });
@@ -40,6 +42,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     deleteMessage: (id) => {
         deleteMessage(id)(dispatch);
+    },
+    logout: () => {
+        logout()(dispatch);
     }
 });
 

@@ -17,3 +17,12 @@ export const setRoomId = (room_id) => {
         })
     }
 }
+
+export const LOGOUT = 'LOGOUT';
+export const logout = () => {
+    return (dispatch) => {
+        dispatch({
+            type: LOGOUT
+        })
+    }
+}
