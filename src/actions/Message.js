@@ -5,17 +5,19 @@ const POST_ENDPOINT = '/api/v1/message.json';
 
 // action creators
 export const GET_MESSAGES_REQUEST = 'GET_MESSAGES_REQUEST';
-const getMessagesRequest = () => {
+const getMessagesRequest = (room_id) => {
     return {
-        type: GET_MESSAGES_REQUEST
+        type: GET_MESSAGES_REQUEST,
+        room_id,
     }
 };
 
 export const GET_MESSAGES_SUCCESS = 'GET_MESSAGES_SUCCESS';
-const getMessagesSuccess = (messages) => {  
+const getMessagesSuccess = (messages, room_id) => {  
     return {
         type: GET_MESSAGES_SUCCESS,
         messages,
+        room_id,
         timestamp: Date.now()
     }
 };
@@ -30,7 +32,7 @@ const getMessagesFailure = (error) => {
 
 export const getMessages = (api_key, room_id, options) => {
     return async (dispatch) => {
-        dispatch(getMessagesRequest());
+        dispatch(getMessagesRequest(room_id));
 
         try {
             let messages = await axios.get(`${document.as['API_SERVER']}${LIST_ENDPOINT}`, {
@@ -45,7 +47,7 @@ export const getMessages = (api_key, room_id, options) => {
                 messages.data.pop();
             }
 
-            dispatch(getMessagesSuccess(messages.data));
+            dispatch(getMessagesSuccess(messages.data, room_id));
         }
         catch(err) {
             dispatch(getMessagesFailure(err));

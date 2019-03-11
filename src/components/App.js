@@ -15,6 +15,10 @@ const theme = createMuiTheme({
 });
 
 export default class App extends Component {
+  componentWillMount() {
+    this.props.getRooms(this.props.api_key);
+  }
+
   render() {
     let account_url = `${document.as['ORIGINAL_API_SERVER']}/account/index`;
     return (

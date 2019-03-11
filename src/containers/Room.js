@@ -1,26 +1,33 @@
 import {connect} from 'react-redux';
 import Room from '../components/Room.js';
-import { getRooms } from '../actions/Room';
 import { getMessages, postMessage } from '../actions/Message';
 import { appendMessage, updateMessage, deleteMessage } from '../actions/Room';
 import { find_room } from '../helpers/Room';
 import { logout, setRoomId } from '../actions/App';
 
-const mapStateToProps = state => ({
-    api_key: state.app.api_key,
-    room_id: state.app.room_id,
+const mapStateToProps = state => {
+    if (state.room.rooms === undefined || Object.keys(state.room.rooms).length === 0) {
+        return {
+            api_key: state.app.api_key,
+            room_id: state.app.room_id,
+            room: {},
+            rooms: [],
+            messages: [],
+        };
+    }
 
-    loading: state.room.message_loading || state.room.room_loading,
-    // todo: remove room
-    rooms: state.room.rooms,
-    room: find_room(state.room.rooms, state.app.room_id),
-    messages: state.room.combined_messages,
-});
+    return {
+        api_key: state.app.api_key,
+        room_id: state.app.room_id,
+
+        loading: state.room.rooms[state.app.room_id].message_loading,
+        rooms: Object.values(state.room.rooms),
+        room: state.room.rooms[state.app.room_id],
+        messages: state.room.rooms[state.app.room_id].combined_messages,
+    };
+};
 
 const mapDispatchToProps = (dispatch) => ({
-    getRooms: (api_key) => {
-        getRooms(api_key)(dispatch);
-    },
     getMessages: (api_key, room_id) => {
         getMessages(api_key, room_id)(dispatch);
     },

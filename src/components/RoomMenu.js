@@ -32,7 +32,6 @@ export default class Room extends React.Component {
 
     onRoomSelected = (room) => {
         this.setState({open: false});
-        console.log(room);
         this.props.setRoomId(room.id);
     }
 

@@ -1,11 +1,11 @@
 export const combine = messages => {
+    messages = [...messages];
     if (messages.size === 0) {
         return [];
     }
 
     let screen_name = messages[0].screen_name;
-    let buffer = [messages[0]];
-    messages.shift();
+    let buffer = [messages.shift()];
     let combined_messages = [];
 
     messages.forEach(message => {
@@ -36,15 +36,23 @@ export const merge = (current_messages, new_messages) => {
     let message = undefined;
     let last_message = undefined;
 
-    while (current_messages.length > 0 && new_messages.length > 0) {
-        const time1 = parseDateTime(current_messages[0].created_at);
-        const time2 = parseDateTime(new_messages[0].created_at);
-
-        if (time1 < time2) {
+    while (current_messages.length > 0 || new_messages.length > 0) {
+        if(current_messages.length === 0) {
+            message = new_messages.shift();
+        }
+        else if (new_messages.length === 0) {
             message = current_messages.shift();
         }
         else {
-            message = new_messages.shift();
+            const time1 = parseDateTime(current_messages[0].created_at);
+            const time2 = parseDateTime(new_messages[0].created_at);
+
+            if (time1 < time2) {
+                message = current_messages.shift();
+            }
+            else {
+                message = new_messages.shift();
+            }
         }
 
         if ((last_message === undefined) || last_message.id !== message.id) {
@@ -53,7 +61,7 @@ export const merge = (current_messages, new_messages) => {
         }
     }
 
-    return merged_messages.concat(current_messages).concat(new_messages);
+    return merged_messages;
 }
 
 export const update = (message, messages) => {

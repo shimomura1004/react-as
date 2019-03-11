@@ -9,7 +9,6 @@ import { find_room } from '../helpers/Room';
 
 export default class Room extends React.Component {
     componentWillMount() {
-        this.props.getRooms(this.props.api_key);
         this.props.getMessages(this.props.api_key, this.props.room_id);
 
         // todo: stop and reconnect when room_id changes
@@ -31,6 +30,10 @@ export default class Room extends React.Component {
     }
 
     componentDidUpdate(prevProp) {
+        if (prevProp.room_id !== this.props.room_id) {
+            this.props.getMessages(this.props.api_key, this.props.room_id);
+        }
+
         let messages = document.querySelectorAll(".message");
         if (messages.length === 0) {
             return;
@@ -45,17 +48,18 @@ export default class Room extends React.Component {
 
     render() {
         let messages = this.props.messages;
-        let room = find_room(this.props.rooms, this.props.room_id);
+        let room = this.props.room;
         let room_name = room && room.name;
 
         return (
             <div>
-                {/* todo: remove room */}
                 <RoomMenu room_id={this.props.room_id} room_name={room_name} rooms={this.props.rooms} setRoomId={this.props.setRoomId} logout={this.props.logout} />
 
                 <div className="chat-body">
-                    <div className="messages-header" onClick={() =>
-                        this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id)
+                    <div className="messages-header" onClick={() => 
+                        (messages.length > 0)
+                            ? this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id)
+                            : this.props.getMessages(this.props.api_key, this.props.room_id)
                     }>
                         {
                             this.props.loading
