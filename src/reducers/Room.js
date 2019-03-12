@@ -3,13 +3,13 @@ import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE, APPEND_MESSAGE
 import { merge, combine, update, remove } from '../helpers/Message';
 
 const initialRoomState = {
-	message_loading: false,
 	merged_messages: [],
 	combined_messages: [],
 };
 
 const initialState = {
 	room_loading: false,
+	message_loading: {},
 	rooms: {},
 };
 
@@ -31,9 +31,7 @@ export default (state = initialState, action) => {
 	}
 
 	case GET_MESSAGES_REQUEST: {
-		if (state.rooms[action.room_id]) {
-			state.rooms[action.room_id].message_loading = true;
-		}
+		state.message_loading[action.room_id] = true;
 		return {...state};
 	}
 	case GET_MESSAGES_SUCCESS: {
@@ -43,7 +41,7 @@ export default (state = initialState, action) => {
 		const merged_messages = merge(room.merged_messages, messages);
 		const combined_messages = combine(merged_messages);
 
-		room.message_loading = false;
+		state.message_loading[action.room_id] = false;
 		room.merged_messages = merged_messages;
 		room.combined_messages = combined_messages;
 
@@ -51,7 +49,8 @@ export default (state = initialState, action) => {
 	}
 	case GET_MESSAGES_FAILURE: {
 		console.log(action.error);
-		return {...state, message_loading: false};
+		state.message_loading[action.room_id] = false;
+		return {...state};
 	}
 
 	case POST_MESSAGE_SUCCESS: {

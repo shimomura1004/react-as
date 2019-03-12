@@ -15,7 +15,7 @@ const mapStateToProps = state => {
         };
     }
 
-    let message_loading = state.app.room_id === '' ? false : state.room.rooms[state.app.room_id].message_loading;
+    let message_loading = state.app.room_id === '' ? false : state.room.message_loading[state.app.room_id];
     let combined_messages = state.app.room_id === '' ? [] : state.room.rooms[state.app.room_id].combined_messages;
     return {
         api_key: state.app.api_key,
