@@ -1,5 +1,4 @@
 import React from 'react';
-import io from 'socket.io-client';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import RoomMenu from './RoomMenu';
 import RoomTextField from './RoomTextField';
@@ -8,35 +7,14 @@ import '../styles/room.css';
 
 export default class Room extends React.Component {
     componentWillMount() {
-        console.log("MOUNT!")
         if (this.props.room_id !== '') {
             this.props.getMessages(this.props.api_key, this.props.room_id);
-            this.prepareWebsocket(this.props.room_id);
         }
-    }
-
-    prepareWebsocket(room_id) {
-        console.log("!!! connect websocket !!!", room_id)
-        let socket = io.connect(`${document.as['PUSHER_SERVER']}/?app=${document.as['PUSHER_APP_KEY']}`);
-        socket.emit("subscribe", `as-${room_id}`);
-        socket.on("message_create", (channel, data) => {
-            let message = JSON.parse(data).content;
-            this.props.appendMessage(message);
-        });
-        socket.on("message_update", (channel, data) => {
-            let message = JSON.parse(data).content;
-            this.props.updateMessage(message);
-        });
-        socket.on("message_delete", (channel, data) => {
-            var message_id = JSON.parse(data).content.id;
-            this.props.deleteMessage(message_id, room_id);
-        });
     }
 
     componentDidUpdate(prevProp) {
         if (prevProp.room_id !== this.props.room_id) {
             this.props.getMessages(this.props.api_key, this.props.room_id);
-            this.prepareWebsocket(this.props.room_id);
         }
 
         let messages = document.querySelectorAll(".message");
