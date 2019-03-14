@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
 import Room from '../components/Room.js';
+import { getRooms, appendMessage, updateMessage, deleteMessage } from '../actions/Room';
 import { getMessages, postMessage } from '../actions/Message';
 import { logout, setRoomId } from '../actions/App';
 
@@ -28,6 +29,19 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    getRooms: (api_key) => {
+        getRooms(api_key)(dispatch);
+    },
+    appendMessage: (message) => {
+        appendMessage(message)(dispatch);
+    },
+    updateMessage: (message) => {
+        updateMessage(message)(dispatch);
+    },
+    deleteMessage: (message_id, room_id) => {
+        deleteMessage(message_id, room_id)(dispatch);
+    },
+
     getMessages: (api_key, room_id) => {
         getMessages(api_key, room_id)(dispatch);
     },
