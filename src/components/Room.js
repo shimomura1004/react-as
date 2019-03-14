@@ -1,19 +1,15 @@
 import React from 'react';
-import io from 'socket.io-client';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import RoomMenu from './RoomMenu';
 import RoomTextField from './RoomTextField';
 import Message from './Message';
+import AsSocket from '../helpers/AsSocket';
 import '../styles/room.css';
 
 export default class Room extends React.Component {
     constructor(props) {
         super(props);
-    
-        this.state = {
-            socket: io.connect(`${document.as['PUSHER_SERVER']}/?app=${document.as['PUSHER_APP_KEY']}`),
-            channels: [],
-        }
+        this.socket = new AsSocket(this.props.appendMessage, this.props.updateMessage, this.props.deleteMessage);
       }
 
     componentWillMount() {
@@ -21,14 +17,14 @@ export default class Room extends React.Component {
 
         if (this.props.room_id !== '') {
             this.props.getMessages(this.props.api_key, this.props.room_id);
-            this.prepareWebsocket(this.props.room_id);
+            this.socket.subscribe(this.props.room_id);
         }
     }
 
     componentDidUpdate(prevProp) {
         if (prevProp.room_id !== this.props.room_id) {
             this.props.getMessages(this.props.api_key, this.props.room_id);
-            this.prepareWebsocket(this.props.room_id);
+            this.socket.subscribe(this.props.room_id);
         }
 
         let messages = document.querySelectorAll(".message");
@@ -41,28 +37,6 @@ export default class Room extends React.Component {
 
         let index = messages.length;
         messages[index - 1].scrollIntoView();
-    }
-
-    // todo: create websocket helper
-    prepareWebsocket(room_id) {
-        if (this.state.channels.indexOf(room_id) === -1) {
-            console.log("connect to " + room_id)
-            this.state.channels.push(room_id);
-
-            this.state.socket.emit("subscribe", `as-${room_id}`);
-            this.state.socket.on("message_create", (channel, data) => {
-                let message = JSON.parse(data).content;
-                this.props.appendMessage(message);
-            });
-            this.state.socket.on("message_update", (channel, data) => {
-                let message = JSON.parse(data).content;
-                this.props.updateMessage(message);
-            });
-            this.state.socket.on("message_delete", (channel, data) => {
-                var message_id = JSON.parse(data).content.id;
-                this.props.deleteMessage(message_id, room_id);
-            });
-        }
     }
 
     render() {
