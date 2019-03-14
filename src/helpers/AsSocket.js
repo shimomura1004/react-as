@@ -5,7 +5,7 @@ export default class AsSocket {
         this.appendMessage = appendMessage;
         this.updateMessage = updateMessage;
         this.deleteMessage = deleteMessage;
-        this.socket = io.connect(`${document.as['PUSHER_SERVER']}/?app=${document.as['PUSHER_APP_KEY']}`);
+        this.socket = io.connect(`${window.as['PUSHER_SERVER']}/?app=${window.as['PUSHER_APP_KEY']}`);
         this.channels = [];
     }
 

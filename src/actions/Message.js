@@ -35,7 +35,7 @@ export const getMessages = (api_key, room_id, options) => {
         dispatch(getMessagesRequest(room_id));
 
         try {
-            let messages = await axios.get(`${document.as['API_SERVER']}${LIST_ENDPOINT}`, {
+            let messages = await axios.get(`${window.as['API_SERVER']}${LIST_ENDPOINT}`, {
                 params: { api_key, room_id, ...options }
             });
 
@@ -84,7 +84,7 @@ export const postMessage = (api_key, room_id, message) => {
         dispatch(postMessageRequest());
 
         try {
-            await axios.post(`${document.as['API_SERVER']}${POST_ENDPOINT}`, {
+            await axios.post(`${window.as['API_SERVER']}${POST_ENDPOINT}`, {
                 api_key, room_id, message
             });
             dispatch(postMessageSuccess());

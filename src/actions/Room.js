@@ -31,7 +31,7 @@ export const getRooms = (api_key) => {
         dispatch(getRoomsRequest());
 
         try {
-            let rooms = await axios.get(`${document.as['API_SERVER']}${ROOM_ENDPOINT}`, {
+            let rooms = await axios.get(`${window.as['API_SERVER']}${ROOM_ENDPOINT}`, {
                 params: { api_key }
             });
             dispatch(getRoomsSuccess(rooms.data));

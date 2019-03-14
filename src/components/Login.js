@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class Login extends React.Component {
     render() {
-        let account_url = `${document.as['ORIGINAL_API_SERVER']}/account/index`;
+        let account_url = `${window.as['ORIGINAL_API_SERVER']}/account/index`;
         return (
             <div>
                 <p>Access your account and get API key</p>

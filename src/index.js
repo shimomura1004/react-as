@@ -17,11 +17,11 @@ document.cookie.split("; ")
   .map(c => c.split("="))
   .forEach(kv => cookie[kv[0]] = decodeURIComponent(kv[1]));
 
-document.as = {};
-document.as['API_SERVER'] = process.env['REACT_APP_API_SERVER'] || cookie["api_server"];
-document.as['ORIGINAL_API_SERVER'] = process.env['REACT_APP_API_SERVER'] || cookie["original_api_server"];
-document.as['PUSHER_SERVER'] = process.env['REACT_APP_PUSHER_SERVER'] || cookie["pusher_server"];
-document.as['PUSHER_APP_KEY'] = process.env['REACT_APP_PUSHER_APP_KEY'] || cookie["pusher_app_key"];
+window.as = {};
+window.as['API_SERVER'] = process.env['REACT_APP_API_SERVER'] || cookie["api_server"];
+window.as['ORIGINAL_API_SERVER'] = process.env['REACT_APP_API_SERVER'] || cookie["original_api_server"];
+window.as['PUSHER_SERVER'] = process.env['REACT_APP_PUSHER_SERVER'] || cookie["pusher_server"];
+window.as['PUSHER_APP_KEY'] = process.env['REACT_APP_PUSHER_APP_KEY'] || cookie["pusher_app_key"];
 
 // persistent settings
 const persistConfig = {
@@ -47,4 +47,4 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+serviceWorker.register();
