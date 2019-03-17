@@ -10,12 +10,12 @@ export default class Message extends React.Component {
 
     render() {
         let date = new Date(this.first_message.created_at.replace(/(\d)-/g, "$1/"));
-        let yyyy = date.getFullYear();
+        //let yyyy = date.getFullYear();
         let MM = ("0" + date.getMonth()).slice(-2);
         let dd = ("0" + date.getDate()).slice(-2);
         let hh = ("0" + date.getHours()).slice(-2);
         let mm = ("0" + date.getMinutes()).slice(-2);
-        let time_string = `${yyyy}/${MM}/${dd} ${hh}:${mm}`;
+        let time_string = `${MM}/${dd} ${hh}:${mm}`;
 
         return (
             <div className="message">

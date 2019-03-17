@@ -37,6 +37,7 @@
   color: rgb(160, 160, 160);
   font-size: 0.8em;
   margin-left: auto;
+  float: right;
 }
 
 .clear {
