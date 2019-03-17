@@ -32,6 +32,7 @@ export default class Room extends React.Component {
 
     onRoomSelected = (room) => {
         this.setState({open: false});
+        this.props.setScrollPosition(this.props.room_id, window.pageYOffset);
         this.props.setRoomId(room.id);
     }
 

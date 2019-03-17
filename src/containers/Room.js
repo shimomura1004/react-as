@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import Room from '../components/Room.js';
-import { getRooms, appendMessage, updateMessage, deleteMessage } from '../actions/Room';
+import { getRooms, setScrollPosition, appendMessage, updateMessage, deleteMessage } from '../actions/Room';
 import { getMessages, postMessage } from '../actions/Message';
 import { logout, setRoomId } from '../actions/App';
 
@@ -14,6 +14,7 @@ const mapStateToProps = state => {
             room: {},
             rooms: [],
             messages: [],
+            scroll_position: 0,
         };
     }
 
@@ -22,6 +23,7 @@ const mapStateToProps = state => {
     let loading = state.app.room_id === '' ? false : room.loading;
     let posting = state.app.room_id === '' ? false : room.posting;
     let messages = state.app.room_id === '' ? [] : room.combined_messages;
+    let scroll_position = state.app.room_id === '' ? 0 : room.scroll_position;
 
     return {
         api_key: state.app.api_key,
@@ -31,6 +33,7 @@ const mapStateToProps = state => {
         room,
         rooms,
         messages,
+        scroll_position,
     };
 };
 
@@ -61,8 +64,11 @@ const mapDispatchToProps = (dispatch) => ({
             postMessage(api_key, room_id, message)(dispatch);
         }
     },
-    setRoomId: (id) => {
-        setRoomId(id)(dispatch);
+    setRoomId: (room_id) => {
+        setRoomId(room_id)(dispatch);
+    },
+    setScrollPosition: (room_id, scroll_position) => {
+        setScrollPosition(room_id, scroll_position)(dispatch);
     },
     logout: () => {
         logout()(dispatch);

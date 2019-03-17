@@ -42,6 +42,17 @@ export const getRooms = (api_key) => {
     }
 };
 
+export const SET_SCROLL_POSITION = 'SET_SCROLL_POSITION';
+export const setScrollPosition = (room_id, scroll_position) => {
+    return (dispatch) => {
+        dispatch({
+            type: SET_SCROLL_POSITION,
+            room_id,
+            scroll_position,
+        })
+    }
+}
+
 export const APPEND_MESSAGE = 'APPEND_MESSAGE';
 export const appendMessage = (message) => {
     return (dispatch) => {

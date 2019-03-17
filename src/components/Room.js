@@ -22,21 +22,26 @@ export default class Room extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        // load messages and subscribe channel
-        if (prevProps.room_id !== this.props.room_id) {
+        const switching_room = prevProps.room_id !== this.props.room_id;
+        const first_time = prevProps.messages.length === 0 && this.props.messages.length > 0;
+        const message_changed = JSON.stringify(prevProps.messages) !== JSON.stringify(this.props.messages);
+
+        if (switching_room) {
             this.props.getMessages(this.props.api_key, this.props.room_id);
             this.socket.subscribe(this.props.room_id);
+            window.scrollTo(0, this.props.scroll_position);
         }
 
         // scroll to bottom when opening a room first time
-        if (prevProps.messages.length === 0 && this.props.messages.length > 0) {
-            let messages = document.querySelectorAll(".message");
+        if (first_time) {
+            let messages = document.querySelectorAll("div.content p.body");
             messages[messages.length - 1].scrollIntoView();
         }
 
-        // scroll if the last message is in viewport
-        if (JSON.stringify(prevProps.messages) !== JSON.stringify(this.props.messages)) {
-            let messages = document.querySelectorAll(".message");
+        // scroll to view the latest message when receiving new messages
+        // if the previous last message is in viewport
+        if (message_changed) {
+            let messages = document.querySelectorAll("div.content p.body");
 
             if (messages.length >= 2) {
                 let prev_latest_message = messages[messages.length - 2];
@@ -56,7 +61,7 @@ export default class Room extends React.Component {
 
         return (
             <div>
-                <RoomMenu room_name={room_name} rooms={this.props.rooms} setRoomId={this.props.setRoomId} logout={this.props.logout} />
+                <RoomMenu room_id={this.props.room_id} room_name={room_name} rooms={this.props.rooms} setRoomId={this.props.setRoomId} setScrollPosition={this.props.setScrollPosition} logout={this.props.logout} />
 
                 { this.props.room_id === ''
                     ? <p>select a room in a menu</p>
