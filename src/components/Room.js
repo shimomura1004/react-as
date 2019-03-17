@@ -57,11 +57,10 @@ export default class Room extends React.Component {
     render() {
         let messages = this.props.messages;
         let room = this.props.room;
-        let room_name = room && room.name;
 
         return (
             <div>
-                <RoomMenu room_id={this.props.room_id} room_name={room_name} rooms={this.props.rooms} setRoomId={this.props.setRoomId} setScrollPosition={this.props.setScrollPosition} logout={this.props.logout} />
+                <RoomMenu room={room} rooms={this.props.rooms} setRoomId={this.props.setRoomId} setScrollPosition={this.props.setScrollPosition} logout={this.props.logout} />
 
                 { this.props.room_id === ''
                     ? <p>select a room in a menu</p>

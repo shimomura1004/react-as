@@ -2,6 +2,7 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
@@ -33,7 +34,7 @@ export default class Room extends React.Component {
 
     onRoomSelected = (room) => {
         this.setState({open: false});
-        this.props.setScrollPosition(this.props.room_id, window.pageYOffset);
+        this.props.setScrollPosition(this.props.room.id, window.pageYOffset);
         this.props.setRoomId(room.id);
     }
 
@@ -46,6 +47,11 @@ export default class Room extends React.Component {
     };
 
     render() {
+        let room = this.props.room;
+        let room_id = room && room.id;
+        let room_name = room && room.name;
+        let loading = room_id !== undefined ? room.loading : false;
+
         // todo: swipeable drawer
         return (
             <div>
@@ -58,9 +64,11 @@ export default class Room extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography className="grow" variant="h6" color="inherit">
-                            {this.props.room_name}
+                            {room_name}
                         </Typography>
                     </Toolbar>
+
+                    { loading ? <LinearProgress /> : <div /> }
                 </AppBar>
 
                 <Drawer
