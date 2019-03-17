@@ -30,8 +30,10 @@
 }
 
 .footer {
-  display: flex;
   position: fixed;
+  overflow: hidden;
+
+  display: flex;
   left: 0;
   bottom: 0;
   width: 100%;
@@ -41,7 +43,17 @@
   background-color: white;
  }
 
+.text-field {
+  float: left;
+  width: 100%;
+  margin: 0px -50px 0px 0px;
+  padding: 0px 50px 0px 0px;
+  box-sizing: border-box;
+  background-color: #dddddd;
+}
+
 .send-button {
-  width: 10%;
+  width: 50px;
+  float: right;
   text-align: center;
 }

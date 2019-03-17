@@ -10,17 +10,12 @@ export default class Room extends React.Component {
         return (
             <div className="footer">
                 <TextField
-                    id="text_field"
-                    label={`Message #${this.props.room_name}`}
+                    className="text-field"
+                    placeholder={`Message #${this.props.room_name}`}
                     multiline
-                    rowsMax="3"
-                    style={{
-                        "margin": 0,
-                        "backgroundColor": "white",
-                        "width": "90%",
-                    }}
                     variant="filled"
-                    onChange={ (e) => this.props.updateTextField(this.props.room_id, e.currentTarget.value) }
+                    rowsMax="3"
+                    onChange={ e => this.props.updateTextField(this.props.room_id, e.currentTarget.value) }
                     onKeyDown={ e => {
                         if (e.keyCode === 13 && !e.shiftKey && !this.props.posting) {
                             e.preventDefault();
