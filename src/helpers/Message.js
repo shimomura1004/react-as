@@ -14,24 +14,23 @@ export const combine = messages => {
             buffer.push(message);
         }
         else {
-            let key = buffer.map(m => m.id + m.timestamp);
+            let key = buffer.map(m => m.id + m.timestamp).join();
             let tuple = [key, buffer];
             combined_messages.push(tuple);
+
             buffer = [message];
             screen_name = message.screen_name;
         }
     });
 
-    let key = buffer.map(m => m.id + m.timestamp);
+    let key = buffer.map(m => m.id + m.timestamp).join();
     let tuple = [key, buffer];
     combined_messages.push(tuple);
 
     return combined_messages;
 };
 
-const parseDateTime = datetime => {
-    return new Date(datetime.replace(/(\d)-/g, "$1/"));
-}
+const parseDateTime = datetime => new Date(datetime.replace(/(\d)-/g, "$1/"))
 
 export const merge = (current_messages, new_messages) => {
     current_messages = JSON.parse(JSON.stringify(current_messages));

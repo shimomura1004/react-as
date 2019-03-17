@@ -140,8 +140,8 @@ export default (state = initialState, action) => {
 			...state,
 			rooms: {
 				...state.rooms,
-				[action.room_id]: {
-					...state.rooms[action.room_id],
+				[action.message.room.id]: {
+					...state.rooms[action.message.room.id],
 					merged_messages,
 					combined_messages,
 				}
@@ -159,8 +159,8 @@ export default (state = initialState, action) => {
 			...state,
 			rooms: {
 				...state.rooms,
-				[action.room_id]: {
-					...state.rooms[action.room_id],
+				[action.message.room.id]: {
+					...state.rooms[action.message.room.id],
 					merged_messages,
 					combined_messages,
 				}

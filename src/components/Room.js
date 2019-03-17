@@ -64,8 +64,8 @@ export default class Room extends React.Component {
                                 }
                             </div>
                             <div>
-                                {messages.map(timestamp_message =>
-                                    <Message key={timestamp_message[0] + timestamp_message[1][0].id} message={timestamp_message[1]} />
+                                {messages.map(key_message =>
+                                    <Message key={key_message[0]} message={key_message[1]} />
                                 )}
                             </div>
                         </div>
