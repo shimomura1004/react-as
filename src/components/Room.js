@@ -21,22 +21,32 @@ export default class Room extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProp) {
-        if (prevProp.room_id !== this.props.room_id) {
+    componentDidUpdate(prevProps) {
+        // load messages and subscribe channel
+        if (prevProps.room_id !== this.props.room_id) {
             this.props.getMessages(this.props.api_key, this.props.room_id);
             this.socket.subscribe(this.props.room_id);
         }
 
-        let messages = document.querySelectorAll(".message");
-        if (messages.length === 0) {
-            return;
-        }
-        if (JSON.stringify(prevProp.messages) === JSON.stringify(this.props.messages)) {
-            return;
+        // scroll to bottom when opening a room first time
+        if (prevProps.messages.length === 0 && this.props.messages.length > 0) {
+            let messages = document.querySelectorAll(".message");
+            messages[messages.length - 1].scrollIntoView();
         }
 
-        let index = messages.length;
-        messages[index - 1].scrollIntoView();
+        // scroll if the last message is in viewport
+        if (JSON.stringify(prevProps.messages) !== JSON.stringify(this.props.messages)) {
+            let messages = document.querySelectorAll(".message");
+
+            if (messages.length >= 2) {
+                let prev_latest_message = messages[messages.length - 2];
+                let latest_message = messages[messages.length - 1];
+                let rect = prev_latest_message.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    latest_message.scrollIntoView({behavior: "smooth"});
+                }
+            }
+        }
     }
 
     render() {
