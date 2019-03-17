@@ -1,5 +1,6 @@
 import { GET_MESSAGES_REQUEST, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILURE, POST_MESSAGE_REQUEST, POST_MESSAGE_SUCCESS, POST_MESSAGE_FAILURE } from '../actions/Message';
 import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE, APPEND_MESSAGE, UPDATE_MESSAGE, DELETE_MESSAGE } from '../actions/Room';
+import { TEXT_FIELD_UPDATE } from '../actions/RoomTextField';
 import { merge, combine, update, remove } from '../helpers/Message';
 
 let createInitialRoomState = () => ({
@@ -7,6 +8,7 @@ let createInitialRoomState = () => ({
 	posting: false,
 	merged_messages: [],
 	combined_messages: [],
+	text_field: "",
 });	
 
 const initialState = {
@@ -91,6 +93,19 @@ export default (state = initialState, action) => {
 		};
 	}
 
+	case TEXT_FIELD_UPDATE: {
+		return {
+			...state,
+			rooms: {
+				...state.rooms,
+				[action.room_id]: {
+					...state.rooms[action.room_id],
+					text_field: action.text_field,
+				}
+			}
+		};
+	}
+
 	case POST_MESSAGE_REQUEST: {
 		return {
 			...state,
@@ -104,7 +119,6 @@ export default (state = initialState, action) => {
 		};
 	}
 	case POST_MESSAGE_SUCCESS: {
-		document.getElementById("text_field").value = "";
 		return {
 			...state,
 			rooms: {
@@ -112,6 +126,7 @@ export default (state = initialState, action) => {
 				[action.room_id]: {
 					...state.rooms[action.room_id],
 					posting: false,
+					text_field: "",
 				}
 			}
 		};

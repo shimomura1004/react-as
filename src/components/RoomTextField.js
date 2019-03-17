@@ -20,13 +20,14 @@ export default class Room extends React.Component {
                         "width": "90%",
                     }}
                     variant="filled"
+                    onChange={ (e) => this.props.updateTextField(this.props.room_id, e.currentTarget.value) }
                     onKeyDown={ e => {
-                        if (e.keyCode === 13 && !e.shiftKey) {
+                        if (e.keyCode === 13 && !e.shiftKey && !this.props.posting) {
                             e.preventDefault();
-                            const text = document.getElementById("text_field").value;
-                            this.props.postMessage(this.props.api_key, this.props.room_id, text);
+                            this.props.postMessage(this.props.api_key, this.props.room_id, this.props.text_field);
                         }
                     }}
+                    value={this.props.text_field}
                 />
                 <div className="send-button">
                     {
@@ -34,8 +35,7 @@ export default class Room extends React.Component {
                             ? <CircularProgress />
                             : <IconButton aria-label="Send" type="submit"
                                 onClick={(e) => {
-                                    const text = document.getElementById("text_field").value;
-                                    this.props.postMessage(this.props.api_key, this.props.room_id, text);
+                                    this.props.postMessage(this.props.api_key, this.props.room_id, this.props.text_field);
                               }}>
                                 <SendIcon color="secondary" />
                             </IconButton>
