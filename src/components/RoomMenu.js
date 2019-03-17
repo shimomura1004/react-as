@@ -68,7 +68,7 @@ export default class Room extends React.Component {
                 >
                     <List subheader={<ListSubheader component="div">Rooms</ListSubheader>}>
                         {this.props.rooms.map(room => (
-                            <ListItem button key={room.id} onClick={() => this.onRoomSelected(room)}>
+                            <ListItem button key={room.id || 123} onClick={() => this.onRoomSelected(room)}>
                                 <ListItemIcon>
                                     { room.user === null ? <ChatIcon /> : <LockIcon /> }
                                 </ListItemIcon>

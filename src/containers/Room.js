@@ -5,26 +5,32 @@ import { getMessages, postMessage } from '../actions/Message';
 import { logout, setRoomId } from '../actions/App';
 
 const mapStateToProps = state => {
-    if (state.room.rooms === undefined || Object.keys(state.room.rooms).length === 0) {
+    if (state.app.room_id === '' || Object.keys(state.room.rooms).length === 0) {
         return {
             api_key: state.app.api_key,
             room_id: state.app.room_id,
+            loading: false,
+            posting: false,
             room: {},
             rooms: [],
             messages: [],
         };
     }
 
-    let message_loading = state.app.room_id === '' ? false : state.room.message_loading[state.app.room_id];
-    let combined_messages = state.app.room_id === '' ? [] : state.room.rooms[state.app.room_id].combined_messages;
+    let room = state.room.rooms[state.app.room_id];
+    let rooms = Object.keys(state.room.rooms).sort().map(id => state.room.rooms[id]);
+    let loading = state.app.room_id === '' ? false : room.loading;
+    let posting = state.app.room_id === '' ? false : room.posting;
+    let messages = state.app.room_id === '' ? [] : room.combined_messages;
+
     return {
         api_key: state.app.api_key,
         room_id: state.app.room_id,
-
-        loading: message_loading,
-        rooms: Object.values(state.room.rooms),
-        room: state.room.rooms[state.app.room_id],
-        messages: combined_messages,
+        loading,
+        posting,
+        room,
+        rooms,
+        messages,
     };
 };
 

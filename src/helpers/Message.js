@@ -1,6 +1,7 @@
 export const combine = messages => {
-    messages = [...messages];
-    if (messages.size === 0) {
+    messages = JSON.parse(JSON.stringify(messages))
+
+    if (messages.length === 0) {
         return [];
     }
 
@@ -24,6 +25,7 @@ export const combine = messages => {
     let key = buffer.map(m => m.id + m.timestamp);
     let tuple = [key, buffer];
     combined_messages.push(tuple);
+
     return combined_messages;
 };
 
@@ -32,6 +34,9 @@ const parseDateTime = datetime => {
 }
 
 export const merge = (current_messages, new_messages) => {
+    current_messages = JSON.parse(JSON.stringify(current_messages));
+    new_messages = JSON.parse(JSON.stringify(new_messages));
+
     let merged_messages = [];
     let message = undefined;
     let last_message = undefined;

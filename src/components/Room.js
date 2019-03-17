@@ -1,7 +1,7 @@
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import RoomMenu from './RoomMenu';
-import RoomTextField from './RoomTextField';
+import RoomTextField from '../containers/RoomTextField';
 import Message from './Message';
 import AsSocket from '../helpers/AsSocket';
 import '../styles/room.css';
@@ -10,7 +10,7 @@ export default class Room extends React.Component {
     constructor(props) {
         super(props);
         this.socket = new AsSocket(this.props.appendMessage, this.props.updateMessage, this.props.deleteMessage);
-      }
+    }
 
     componentWillMount() {
         this.props.getRooms(this.props.api_key);
@@ -46,7 +46,7 @@ export default class Room extends React.Component {
 
         return (
             <div>
-                <RoomMenu room_id={this.props.room_id} room_name={room_name} rooms={this.props.rooms} setRoomId={this.props.setRoomId} logout={this.props.logout} />
+                <RoomMenu room_name={room_name} rooms={this.props.rooms} setRoomId={this.props.setRoomId} logout={this.props.logout} />
 
                 { this.props.room_id === ''
                     ? <p>select a room in a menu</p>
@@ -70,12 +70,7 @@ export default class Room extends React.Component {
                             </div>
                         </div>
 
-                        <RoomTextField
-                            api_key={this.props.api_key}
-                            room_id={this.props.room_id}
-                            room_name={room_name}
-                            postMessage={this.props.postMessage}
-                        />
+                        <RoomTextField />
                     </div>
                 }
             </div>
