@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import '../styles/room.css';
 
 export default class Room extends React.Component {
@@ -28,13 +29,17 @@ export default class Room extends React.Component {
                     }}
                 />
                 <div className="send-button">
-                    <IconButton aria-label="Send" type="submit"
-                        onClick={(e) => {
-                            const text = document.getElementById("text_field").value;
-                            this.props.postMessage(this.props.api_key, this.props.room_id, text);
-                    }}>
-                        <SendIcon color="secondary" />
-                    </IconButton>
+                    {
+                        this.props.posting
+                            ? <CircularProgress />
+                            : <IconButton aria-label="Send" type="submit"
+                                onClick={(e) => {
+                                    const text = document.getElementById("text_field").value;
+                                    this.props.postMessage(this.props.api_key, this.props.room_id, text);
+                              }}>
+                                <SendIcon color="secondary" />
+                            </IconButton>
+                    }
                 </div>
             </div>
         );

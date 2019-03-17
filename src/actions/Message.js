@@ -23,10 +23,11 @@ const getMessagesSuccess = (messages, room_id) => {
 };
 
 export const GET_MESSAGES_FAILURE = 'GET_MESSAGES_FAILURE';
-const getMessagesFailure = (error) => {
+const getMessagesFailure = (error, room_id) => {
     return {
         type: GET_MESSAGES_FAILURE,
-        error
+        error,
+        room_id,
     }
 };
 
@@ -50,47 +51,49 @@ export const getMessages = (api_key, room_id, options) => {
             dispatch(getMessagesSuccess(messages.data, room_id));
         }
         catch(err) {
-            dispatch(getMessagesFailure(err));
+            dispatch(getMessagesFailure(err, room_id));
         }
     }
 };
 
 
 export const POST_MESSAGE_REQUEST = 'POST_MESSAGE_REQUEST';
-const postMessageRequest = (message) => {
+const postMessageRequest = (room_id) => {
     return {
         type: POST_MESSAGE_REQUEST,
-        message,
+        room_id,
     }
 };
 
 export const POST_MESSAGE_SUCCESS = 'POST_MESSAGE_SUCCESS';
-const postMessageSuccess = () => {  
+const postMessageSuccess = (room_id) => {  
     return {
-        type: POST_MESSAGE_SUCCESS
+        type: POST_MESSAGE_SUCCESS,
+        room_id,
     }
 };
 
 export const POST_MESSAGE_FAILURE = 'POST_MESSAGE_FAILURE';
-const postMessageFailure = (error) => {
+const postMessageFailure = (error, room_id) => {
     return {
         type: POST_MESSAGE_FAILURE,
-        error
+        error,
+        room_id,
     }
 };
 
 export const postMessage = (api_key, room_id, message) => {
     return async (dispatch) => {
-        dispatch(postMessageRequest());
+        dispatch(postMessageRequest(room_id));
 
         try {
             await axios.post(`${window.as['API_SERVER']}${POST_ENDPOINT}`, {
                 api_key, room_id, message
             });
-            dispatch(postMessageSuccess());
+            dispatch(postMessageSuccess(room_id));
         }
         catch (error) {
-            dispatch(postMessageFailure(error));
+            dispatch(postMessageFailure(error, room_id));
         }
     }
 };

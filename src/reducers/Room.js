@@ -111,7 +111,7 @@ export default (state = initialState, action) => {
 				...state.rooms,
 				[action.room_id]: {
 					...state.rooms[action.room_id],
-					posting: true,
+					posting: false,
 				}
 			}
 		};

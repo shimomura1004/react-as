@@ -8,7 +8,7 @@ const mapStateToProps = state => {
         api_key: state.app.api_key,
         room_id: state.app.room_id,
         room_name: room && room.name,
-        loading: state.room.loading,
+        posting: room && room.posting,
     };
 };
 
