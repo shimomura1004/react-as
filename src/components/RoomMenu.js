@@ -14,6 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ChatIcon from '@material-ui/icons/Chat';
 import LockIcon from '@material-ui/icons/Lock';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Edit from '@material-ui/icons/Edit';
 import '../styles/room.css';
 
 export default class Room extends React.Component {
@@ -71,7 +72,11 @@ export default class Room extends React.Component {
                         {this.props.rooms.map(room => (
                             <ListItem button key={room.id || 123} onClick={() => this.onRoomSelected(room)}>
                                 <ListItemIcon>
-                                    { room.user === null ? <ChatIcon /> : <LockIcon /> }
+                                    {
+                                        room.text_field === ""
+                                            ? (room.user === null ? <ChatIcon /> : <LockIcon />)
+                                            : <Edit />
+                                    }
                                 </ListItemIcon>
                                 <ListItemText primary={room.name} />
                             </ListItem>
