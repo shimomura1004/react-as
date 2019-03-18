@@ -6,7 +6,15 @@ export default class AsSocket {
         this.updateMessage = updateMessage;
         this.deleteMessage = deleteMessage;
         this.socket = io.connect(`${window.as['PUSHER_SERVER']}/?app=${window.as['PUSHER_APP_KEY']}`);
+        this.socket.on('connect', () => console.log('connected'));
+        this.socket.on('disconnect', () => console.log('disconnected'));
         this.channels = [];
+
+        setInterval((socket => () => {
+            if (socket.disconnected) {
+                socket.connect();
+            }
+        })(this.socket), 3000);
     }
 
     subscribe(room_id) {
