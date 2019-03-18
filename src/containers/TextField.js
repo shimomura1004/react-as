@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
-import RoomTextField from '../components/RoomTextField';
-import { updateTextField } from '../actions/RoomTextField';
+import TextField from '../components/TextField';
+import { updateTextField } from '../actions/TextField';
 import { postMessage } from '../actions/Message';
 
 const mapStateToProps = state => {
@@ -25,4 +25,4 @@ const mapDispatchToProps = (dispatch) => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoomTextField);
+export default connect(mapStateToProps, mapDispatchToProps)(TextField);

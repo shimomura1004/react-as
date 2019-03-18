@@ -1,6 +1,6 @@
 import { GET_MESSAGES_REQUEST, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILURE, POST_MESSAGE_REQUEST, POST_MESSAGE_SUCCESS, POST_MESSAGE_FAILURE } from '../actions/Message';
 import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE, SET_SCROLL_POSITION, APPEND_MESSAGE, UPDATE_MESSAGE, DELETE_MESSAGE } from '../actions/Room';
-import { TEXT_FIELD_UPDATE } from '../actions/RoomTextField';
+import { TEXT_FIELD_UPDATE } from '../actions/TextField';
 import { merge, combine, update, remove } from '../helpers/Message';
 
 let createInitialRoomState = () => ({

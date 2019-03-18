@@ -1,6 +1,6 @@
 import React from 'react';
 import Menu from '../containers/Menu';
-import RoomTextField from '../containers/RoomTextField';
+import TextField from '../containers/TextField';
 import Message from './Message';
 import AsSocket from '../helpers/AsSocket';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -80,7 +80,7 @@ export default class Room extends React.Component {
                             </div>
                         </div>
 
-                        <RoomTextField />
+                        <TextField />
                     </div>
                 }
             </div>
