@@ -16,7 +16,8 @@ export default (state = initialState, action) => {
 	}
 
 	case LOGOUT: {
-		return initialState;
+		// todo: remove state.room.*
+		return {...initialState};
 	}
 
 	default:

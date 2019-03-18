@@ -28,10 +28,18 @@ export default (state = initialState, action) => {
 	case GET_ROOMS_SUCCESS: {
 		let rooms = {};
 		action.rooms.forEach(room => {
-			rooms[room.id] = {
-				...createInitialRoomState(),
-				...room,
-			};
+			if (state.rooms[room.id]) {
+				rooms[room.id] = {
+					...room,
+					...state.rooms[room.id],
+				};
+			}
+			else {
+				rooms[room.id] = {
+					...createInitialRoomState(),
+					...room,
+				};
+			}
 		});
 		return {
 			...state,

@@ -27,6 +27,10 @@ export default class Room extends React.Component {
         };
     }
 
+    componentWillMount() {
+        this.props.getRooms(this.props.api_key);
+    }
+
     onLogout = () => {
         this.props.logout();
         this.setState({open: false});
@@ -34,7 +38,10 @@ export default class Room extends React.Component {
 
     onRoomSelected = (room) => {
         this.setState({open: false});
-        this.props.setScrollPosition(this.props.room.id, window.pageYOffset);
+
+        if (this.props.room !== undefined) {
+            this.props.setScrollPosition(this.props.room.id, window.pageYOffset);
+        }
         this.props.setRoomId(room.id);
     }
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import RoomMenu from './RoomMenu';
+import Menu from '../containers/Menu';
 import RoomTextField from '../containers/RoomTextField';
 import Message from './Message';
 import AsSocket from '../helpers/AsSocket';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import '../styles/room.css';
 
 export default class Room extends React.Component {
@@ -13,8 +13,6 @@ export default class Room extends React.Component {
     }
 
     componentWillMount() {
-        this.props.getRooms(this.props.api_key);
-
         if (this.props.room_id !== '') {
             this.props.getMessages(this.props.api_key, this.props.room_id);
             this.socket.subscribe(this.props.room_id);
@@ -56,12 +54,10 @@ export default class Room extends React.Component {
 
     render() {
         let messages = this.props.messages;
-        let room = this.props.room;
 
         return (
             <div>
-                <RoomMenu room={room} rooms={this.props.rooms} setRoomId={this.props.setRoomId} setScrollPosition={this.props.setScrollPosition} logout={this.props.logout} />
-
+                <Menu />
                 { this.props.room_id === ''
                     ? <p>select a room in a menu</p>
                     : <div>

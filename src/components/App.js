@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import red from '@material-ui/core/colors/red';
 import blue from '@material-ui/core/colors/blue';
-import Room from '../containers/Room.js';
+import Room from '../containers/Room';
 import Login from '../containers/Login';
 
 const theme = createMuiTheme({
@@ -70,11 +70,11 @@ export default class App extends Component {
   render() {
     return (
       <MuiThemeProvider theme={theme}>
-      <p style={{"position": "fixed", "bottom":"3em", "right":"0", "color":"red"}}>{this.state.info}</p>
+        <p style={{"position": "fixed", "bottom":"3em", "right":"0", "color":"red"}}>{this.state.info}</p>
         <div className="App" onTouchMove={this.onTouchMove} onTouchEnd={this.onTouchEnd}>
-        {
-          (this.props.api_key) ? <Room /> : <Login />
-        }
+          {
+            (this.props.api_key) ? <Room /> : <Login />
+          }
         </div>
       </MuiThemeProvider>
     );
