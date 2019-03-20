@@ -6,9 +6,17 @@ export default class AsSocket {
         this.updateMessage = updateMessage;
         this.deleteMessage = deleteMessage;
         this.socket = io.connect(`${window.as['PUSHER_SERVER']}/?app=${window.as['PUSHER_APP_KEY']}`);
-        this.socket.on('connect', websocketConnected);
-        this.socket.on('disconnect', websocketDisconnected);
         this.channels = [];
+
+        let self = this;
+        this.socket.on('connect', () => {
+            for (var i=0; i < this.channels.length; i++) {
+                console.log(`reconnecting as-${self.channels[i]}`)
+                self.socket.emit("subscribe", `as-${self.channels[i]}`);
+            }
+            websocketConnected();
+        });
+        this.socket.on('disconnect', websocketDisconnected);
 
         setInterval((socket => () => {
             if (socket.disconnected) {
