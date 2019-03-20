@@ -8,6 +8,7 @@ const mapStateToProps = state => {
     return {
         api_key: state.app.api_key,
         room_id: state.app.room_id,
+        websocket_connected: state.room.websocket_connected,
         room_name: room && room.name,
         posting: room && room.posting,
         text_field: room && room.text_field,

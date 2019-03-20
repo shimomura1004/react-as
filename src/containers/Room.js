@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import Room from '../components/Room.js';
-import { setScrollPosition, appendMessage, updateMessage, deleteMessage } from '../actions/Room';
+import { setScrollPosition, appendMessage, updateMessage, deleteMessage, websocketConnected, websocketDisconnected } from '../actions/Room';
 import { getMessages, postMessage } from '../actions/Message';
 import { logout, setRoomId } from '../actions/App';
 
@@ -44,6 +44,13 @@ const mapDispatchToProps = (dispatch) => ({
     },
     deleteMessage: (message_id, room_id) => {
         deleteMessage(message_id, room_id)(dispatch);
+    },
+
+    websocketConnected: () => {
+        websocketConnected()(dispatch);
+    },
+    websocketDisconnected: () => {
+        websocketDisconnected()(dispatch);
     },
 
     getMessages: (api_key, room_id) => {

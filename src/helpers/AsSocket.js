@@ -1,13 +1,13 @@
 import io from 'socket.io-client';
 
 export default class AsSocket {
-    constructor(appendMessage, updateMessage, deleteMessage) {
+    constructor(appendMessage, updateMessage, deleteMessage, websocketConnected, websocketDisconnected) {
         this.appendMessage = appendMessage;
         this.updateMessage = updateMessage;
         this.deleteMessage = deleteMessage;
         this.socket = io.connect(`${window.as['PUSHER_SERVER']}/?app=${window.as['PUSHER_APP_KEY']}`);
-        this.socket.on('connect', () => console.log('connected'));
-        this.socket.on('disconnect', () => console.log('disconnected'));
+        this.socket.on('connect', websocketConnected);
+        this.socket.on('disconnect', websocketDisconnected);
         this.channels = [];
 
         setInterval((socket => () => {
