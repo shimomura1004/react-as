@@ -7,14 +7,21 @@ export default class AsSocket {
         this.deleteMessage = deleteMessage;
         this.socket = io.connect(`${window.as['PUSHER_SERVER']}/?app=${window.as['PUSHER_APP_KEY']}`);
         this.channels = [];
+        this.once_connected = false;
 
         let self = this;
         this.socket.on('connect', () => {
+            websocketConnected();
+
+            if (!self.once_connected) {
+                self.once_connected = true;
+                return;
+            }
+
             for (var i=0; i < this.channels.length; i++) {
                 console.log(`reconnecting as-${self.channels[i]}`)
                 self.socket.emit("subscribe", `as-${self.channels[i]}`);
             }
-            websocketConnected();
         });
         this.socket.on('disconnect', websocketDisconnected);
 
@@ -22,7 +29,7 @@ export default class AsSocket {
             if (socket.disconnected) {
                 socket.connect();
             }
-        })(this.socket), 3000);
+        })(this.socket), 1000);
     }
 
     subscribe(room_id) {

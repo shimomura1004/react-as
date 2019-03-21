@@ -9,7 +9,16 @@ import '../styles/room.css';
 export default class Room extends React.Component {
     constructor(props) {
         super(props);
-        this.socket = new AsSocket(this.props.appendMessage, this.props.updateMessage, this.props.deleteMessage, this.props.websocketConnected, this.props.websocketDisconnected);
+        this.socket = new AsSocket(
+            this.props.appendMessage,
+            this.props.updateMessage,
+            this.props.deleteMessage,
+            () => {
+                this.props.websocketConnected();
+                this.props.getMessages(this.props.api_key, this.props.room_id);
+            },
+            this.props.websocketDisconnected
+        );
     }
 
     componentWillMount() {
