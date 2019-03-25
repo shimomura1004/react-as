@@ -112,7 +112,14 @@ export default class Room extends React.Component {
 
                         <TextField />
 
-                        <EditDialog open={this.state.open} message={this.state.message} handleClose={this.handleClose} />
+                        <EditDialog
+                            open={this.state.open}
+                            screen_name={this.props.screen_name}
+                            message={this.state.message}
+                            handleClose={this.handleClose}
+                            updateMessage={this.props.updateMessage}
+                            deleteMessage={this.props.deleteMessage}
+                        />
                     </div>
                 }
             </div>

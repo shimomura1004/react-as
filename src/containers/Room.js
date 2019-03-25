@@ -8,6 +8,7 @@ const mapStateToProps = state => {
     if (state.app.room_id === '' || Object.keys(state.room.rooms).length === 0) {
         return {
             api_key: state.app.api_key,
+            screen_name: state.app.screen_name,
             room_id: state.app.room_id,
             loading: false,
             posting: false,
@@ -26,6 +27,7 @@ const mapStateToProps = state => {
 
     return {
         api_key: state.app.api_key,
+        screen_name: state.app.screen_name,
         room_id: state.app.room_id,
         loading,
         posting,

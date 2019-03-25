@@ -3,15 +3,37 @@ import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
+import DeleteIcon from '@material-ui/icons/Delete';
+import SaveIcon from '@material-ui/icons/Save';
 
 function Transition(props) {
     return <Slide direction="up" {...props} />;
 }
 
 export default class EditDialog extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    handleUpdate() {
+        // todo: connect to server!
+        // this.props.updateMessage(this.props.message);
+        this.props.handleClose();
+    }
+
+    handleDelete(message_id) {
+        // this.props.deleteMessage(this.props.message.id, this.props.message.room.id);
+        this.props.handleClose();
+    }
+
     render() {
         let message = this.props.message;
 
@@ -44,8 +66,29 @@ export default class EditDialog extends React.Component {
                                         dangerouslySetInnerHTML={{__html: message.html_body}}
                                     >
                                     </p>
-                                    <br/>
-                                    <p>{message.body}</p>
+                                    {
+                                        this.props.screen_name === message.screen_name
+                                            // ? <p>{message.body}</p>
+                                            ?  <div>
+                                                <TextField
+                                                    placeholder="Placeholder"
+                                                    multiline
+                                                    fullWidth
+                                                    rows="3"
+                                                    margin="normal"
+                                                    variant="filled"
+                                                />
+                                                <Button variant="contained" color="primary" size="small" onClick={this.handleDelete}>
+                                                    Delete
+                                                    <DeleteIcon />
+                                                </Button>
+                                                <Button variant="contained" color="secondary" size="small" onClick={this.handleUpdate}>
+                                                    Save
+                                                    <SaveIcon />
+                                                </Button>
+                                            </div>
+                                            : <div />
+                                    }
                                 </div>
                             </div>
                         :   <div />
