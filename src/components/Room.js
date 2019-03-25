@@ -2,6 +2,7 @@ import React from 'react';
 import Menu from '../containers/Menu';
 import TextField from '../containers/TextField';
 import Message from './Message';
+import EditDialog from './EditDialog';
 import AsSocket from '../helpers/AsSocket';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import '../styles/room.css';
@@ -9,6 +10,7 @@ import '../styles/room.css';
 export default class Room extends React.Component {
     constructor(props) {
         super(props);
+
         this.socket = new AsSocket(
             this.props.appendMessage,
             this.props.updateMessage,
@@ -19,6 +21,22 @@ export default class Room extends React.Component {
             },
             this.props.websocketDisconnected
         );
+
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+
+        this.state = {
+            open: false,
+            message: undefined,
+        };
+    }
+
+    handleClick(message) {
+        this.setState({open: true, message});
+    }
+
+    handleClose() {
+        this.setState({open: false, message: undefined});
     }
 
     componentWillMount() {
@@ -84,12 +102,14 @@ export default class Room extends React.Component {
                             </div>
                             <div>
                                 {messages.map(key_message =>
-                                    <Message key={key_message[0]} message={key_message[1]} />
+                                    <Message key={key_message[0]} message={key_message[1]} handleClick={this.handleClick} />
                                 )}
                             </div>
                         </div>
 
                         <TextField />
+
+                        <EditDialog open={this.state.open} message={this.state.message} handleClose={this.handleClose} />
                     </div>
                 }
             </div>

@@ -4,6 +4,7 @@ import '../styles/message.css';
 export default class Message extends React.Component {
     constructor(props) {
         super(props);
+
         this.messages = props.message;
         this.first_message = this.messages[0];
     }
@@ -25,7 +26,18 @@ export default class Message extends React.Component {
                         <span className="user-name">{this.first_message.name}</span>
                         <span className="time">{time_string}</span>
                     </div>
-                    { this.messages.map((message) => <p key={message.id + message.timestamp} className="body" dangerouslySetInnerHTML={{__html: message.html_body}}></p>) }
+                    {
+                        this.messages.map(message => (
+                            <div key={message.id + message.timestamp}>
+                                <p
+                                    className="body"
+                                    dangerouslySetInnerHTML={{__html: message.html_body}}
+                                    onClick={() => this.props.handleClick(message)}
+                                >
+                                </p>
+                            </div>
+                        ))
+                    }
                 </div>
                 <span className="clear"></span>
             </div>
