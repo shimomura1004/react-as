@@ -53,6 +53,7 @@ const mapDispatchToProps = (dispatch) => ({
         websocketDisconnected()(dispatch);
     },
 
+    // todo: skip if already getting messages
     getMessages: (api_key, room_id) => {
         getMessages(api_key, room_id)(dispatch);
     },

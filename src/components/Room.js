@@ -17,11 +17,14 @@ export default class Room extends React.Component {
             this.props.deleteMessage,
             () => {
                 this.props.websocketConnected();
-                this.props.getMessages(this.props.api_key, this.props.room_id);
+                if (this.props.room_id) {
+                    this.props.getMessages(this.props.api_key, this.props.room_id);
+                }
             },
             this.props.websocketDisconnected
         );
 
+        // todo: move these functions to EditDialog?
         this.handleClick = this.handleClick.bind(this);
         this.handleClose = this.handleClose.bind(this);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 
+// todo: loading icon while getting user info
 export default class Login extends React.Component {
     render() {
         let account_url = `${window.as['ORIGINAL_API_SERVER']}/account/index`;
@@ -10,7 +11,7 @@ export default class Login extends React.Component {
                 <form onSubmit={ e => {
                     e.preventDefault();
                     const api_key = document.getElementById("api_key").value;
-                    this.props.setApiKey(api_key);
+                    this.props.getUserInfo(api_key);
                 }}>
                     <div>
                         <label>API Key</label>
