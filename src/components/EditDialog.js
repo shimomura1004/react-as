@@ -24,7 +24,8 @@ export default class EditDialog extends React.Component {
     }
 
     handleUpdate() {
-        this.props.updateMessage(this.props.api_key, this.props.message);
+        let text_field = document.querySelector("#text_field_for_updating");
+        this.props.updateMessage(this.props.api_key, this.props.message.id, text_field.value);
         this.props.handleClose();
     }
 
@@ -70,12 +71,13 @@ export default class EditDialog extends React.Component {
                                             // ? <p>{message.body}</p>
                                             ?  <div>
                                                 <TextField
-                                                    placeholder="Placeholder"
+                                                    id="text_field_for_updating"
                                                     multiline
                                                     fullWidth
                                                     rows="3"
                                                     margin="normal"
                                                     variant="filled"
+                                                    defaultValue={message.body}
                                                 />
                                                 <Button variant="contained" color="primary" size="small" onClick={this.handleDelete}>
                                                     Delete

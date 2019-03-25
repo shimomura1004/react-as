@@ -38,8 +38,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    updateMessage: (api_key, message) => {
-        updateMessage(api_key, message)(dispatch);
+    updateMessage: (api_key, message_id, message_body) => {
+        updateMessage(api_key, message_id, message_body)(dispatch);
     },
     deleteMessage: (api_key, message_id) => {
         deleteMessage(api_key, message_id)(dispatch);

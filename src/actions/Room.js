@@ -69,14 +69,14 @@ export const appendMessageInView = (message) => {
 export const UPDATE_MESSAGE_REQUEST = 'UPDATE_MESSAGE_REQUEST';
 export const UPDATE_MESSAGE_SUCCESS = 'UPDATE_MESSAGE_SUCCESS';
 export const UPDATE_MESSAGE_FAILURE = 'UPDATE_MESSAGE_FAILURE';
-export const updateMessage = (api_key, message) => {
+export const updateMessage = (api_key, message_id, message_body) => {
     return async (dispatch) => {
         dispatch({type: UPDATE_MESSAGE_REQUEST});
 
         try {
-            await axios.put(`${window.as['API_SERVER']}${MESSAGE_ENDPOINT}/${message.id}.json`, {
-                params: { message, api_key }
-            });
+            await axios.put(`${window.as['API_SERVER']}${MESSAGE_ENDPOINT}/${message_id}.json`,
+                { message: message_body, api_key }
+            );
             dispatch({type: UPDATE_MESSAGE_SUCCESS});
         }
         catch(err) {
