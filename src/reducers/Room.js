@@ -1,5 +1,5 @@
 import { GET_MESSAGES_REQUEST, GET_MESSAGES_SUCCESS, GET_MESSAGES_FAILURE, POST_MESSAGE_REQUEST, POST_MESSAGE_SUCCESS, POST_MESSAGE_FAILURE } from '../actions/Message';
-import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE, SET_SCROLL_POSITION, APPEND_MESSAGE, UPDATE_MESSAGE, DELETE_MESSAGE, WEBSOCKET_CONNECTED, WEBSOCKET_DISCONNECTED } from '../actions/Room';
+import { GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS, GET_ROOMS_FAILURE, SET_SCROLL_POSITION, APPEND_MESSAGE_IN_VIEW, UPDATE_MESSAGE_IN_VIEW, DELETE_MESSAGE_IN_VIEW, WEBSOCKET_CONNECTED, WEBSOCKET_DISCONNECTED } from '../actions/Room';
 import { TEXT_FIELD_UPDATE } from '../actions/TextField';
 import { merge, combine, update, remove } from '../helpers/Message';
 
@@ -167,7 +167,7 @@ export default (state = initialState, action) => {
 		};
 	}
 
-	case APPEND_MESSAGE: {
+	case APPEND_MESSAGE_IN_VIEW: {
 		let room = state.rooms[action.message.room.id];
 
 		action.message.timestamp = action.timestamp;
@@ -186,7 +186,7 @@ export default (state = initialState, action) => {
 			}
 		}
 	}
-	case UPDATE_MESSAGE: {
+	case UPDATE_MESSAGE_IN_VIEW: {
 		let room = state.rooms[action.message.room.id];
 
 		action.message.timestamp = action.timestamp;
@@ -205,7 +205,7 @@ export default (state = initialState, action) => {
 			}
 		}
 	}
-	case DELETE_MESSAGE: {
+	case DELETE_MESSAGE_IN_VIEW: {
 		let room = state.rooms[action.room_id];
 		const merged_messages = remove(action.message_id, room.merged_messages);
 		const combined_messages = combine(merged_messages);

@@ -12,9 +12,9 @@ export default class Room extends React.Component {
         super(props);
 
         this.socket = new AsSocket(
-            this.props.appendMessage,
-            this.props.updateMessage,
-            this.props.deleteMessage,
+            this.props.appendMessageInView,
+            this.props.updateMessageInView,
+            this.props.deleteMessageInView,
             () => {
                 this.props.websocketConnected();
                 if (this.props.room_id) {

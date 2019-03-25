@@ -1,10 +1,10 @@
 import io from 'socket.io-client';
 
 export default class AsSocket {
-    constructor(appendMessage, updateMessage, deleteMessage, websocketConnected, websocketDisconnected) {
-        this.appendMessage = appendMessage;
-        this.updateMessage = updateMessage;
-        this.deleteMessage = deleteMessage;
+    constructor(appendMessageInView, updateMessageInView, deleteMessageInView, websocketConnected, websocketDisconnected) {
+        this.appendMessageInView = appendMessageInView;
+        this.updateMessageInView = updateMessageInView;
+        this.deleteMessageInView = deleteMessageInView;
         this.socket = io.connect(`${window.as['PUSHER_SERVER']}/?app=${window.as['PUSHER_APP_KEY']}`);
         this.channels = [];
         this.once_connected = false;
@@ -43,15 +43,15 @@ export default class AsSocket {
         this.socket.emit("subscribe", `as-${room_id}`);
         this.socket.on("message_create", (channel, data) => {
             let message = JSON.parse(data).content;
-            this.appendMessage(message);
+            this.appendMessageInView(message);
         });
         this.socket.on("message_update", (channel, data) => {
             let message = JSON.parse(data).content;
-            this.updateMessage(message);
+            this.updateMessageInView(message);
         });
         this.socket.on("message_delete", (channel, data) => {
             var message_id = JSON.parse(data).content.id;
-            this.deleteMessage(message_id, room_id);
+            this.deleteMessageInView(message_id, room_id);
         });
     }
 }

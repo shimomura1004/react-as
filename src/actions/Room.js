@@ -53,33 +53,33 @@ export const setScrollPosition = (room_id, scroll_position) => {
     }
 }
 
-export const APPEND_MESSAGE = 'APPEND_MESSAGE';
-export const appendMessage = (message) => {
+export const APPEND_MESSAGE_IN_VIEW = 'APPEND_MESSAGE_IN_VIEW';
+export const appendMessageInView = (message) => {
     return (dispatch) => {
         dispatch({
-            type: APPEND_MESSAGE,
+            type: APPEND_MESSAGE_IN_VIEW,
             message,
             timestamp: Date.now()
         })
     }
 };
 
-export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
-export const updateMessage = (message) => {
+export const UPDATE_MESSAGE_IN_VIEW = 'UPDATE_MESSAGE_IN_VIEW';
+export const updateMessageInView = (message) => {
     return (dispatch) => {
         dispatch({
-            type: UPDATE_MESSAGE,
+            type: UPDATE_MESSAGE_IN_VIEW,
             message,
             timestamp: Date.now()
         })
     }
 };
 
-export const DELETE_MESSAGE = 'DELETE_MESSAGE';
-export const deleteMessage = (message_id, room_id) => {
+export const DELETE_MESSAGE_IN_VIEW = 'DELETE_MESSAGE_IN_VIEW';
+export const deleteMessageInView = (message_id, room_id) => {
     return (dispatch) => {
         dispatch({
-            type: DELETE_MESSAGE,
+            type: DELETE_MESSAGE_IN_VIEW,
             message_id,
             room_id,
         })

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import Room from '../components/Room.js';
-import { setScrollPosition, appendMessage, updateMessage, deleteMessage, websocketConnected, websocketDisconnected } from '../actions/Room';
+import { setScrollPosition, appendMessageInView, updateMessageInView, deleteMessageInView, websocketConnected, websocketDisconnected } from '../actions/Room';
 import { getMessages, postMessage } from '../actions/Message';
 import { logout, setRoomId } from '../actions/App';
 
@@ -38,14 +38,14 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    appendMessage: (message) => {
-        appendMessage(message)(dispatch);
+    appendMessageInView: (message) => {
+        appendMessageInView(message)(dispatch);
     },
-    updateMessage: (message) => {
-        updateMessage(message)(dispatch);
+    updateMessageInView: (message) => {
+        updateMessageInView(message)(dispatch);
     },
-    deleteMessage: (message_id, room_id) => {
-        deleteMessage(message_id, room_id)(dispatch);
+    deleteMessageInView: (message_id, room_id) => {
+        deleteMessageInView(message_id, room_id)(dispatch);
     },
 
     websocketConnected: () => {
