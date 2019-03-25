@@ -2,8 +2,8 @@
   flex-grow: 1;
 }
 
-.root div {
-  padding: 0px;
+header div {
+  padding: 0px !important;
 }
 
 .grow {
