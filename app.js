@@ -25,11 +25,13 @@ const API_SERVER = process.env.REACT_APP_API_SERVER;
 const LIST_ENDPOINT = '/api/v1/message/list.json';
 const ROOM_ENDPOINT = '/api/v1/room/list.json';
 const POST_ENDPOINT = '/api/v1/message.json';
+const USER_ENDPOINT = '/api/v1/user.json';
+const MESSAGE_ENDPOINT = '/api/v1/message/:messageId.json';
 
 const createGetRoute = (endpoint) => {
   app.get(endpoint, async (req, res) => {
     try {
-      let response = await axios.get(API_SERVER + endpoint, {params: req.query});
+      let response = await axios.get(API_SERVER + req.originalUrl, {params: req.query});
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(response.data));
     }
@@ -42,11 +44,12 @@ const createGetRoute = (endpoint) => {
 
 createGetRoute(LIST_ENDPOINT);
 createGetRoute(ROOM_ENDPOINT);
+createGetRoute(USER_ENDPOINT);
 
 const createPostRoute = (endpoint) => {
   app.post(endpoint, async (req, res) => {
     try {
-      let response = await axios.post(API_SERVER + endpoint, req.body);
+      let response = await axios.post(API_SERVER + req.originalUrlreq.originalUrl.split("?")[0], req.query);
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(response.data));
     }
@@ -58,5 +61,38 @@ const createPostRoute = (endpoint) => {
 };
 
 createPostRoute(POST_ENDPOINT);
+createPostRoute(MESSAGE_ENDPOINT);
+
+const createPutRoute = (endpoint) => {
+  app.put(endpoint, async (req, res) => {
+    try {
+      let response = await axios.put(API_SERVER + req.originalUrl.split("?")[0], req.query);
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(response.data));
+    }
+    catch (error) {
+      console.log(error)
+      res.send(error);
+    }
+  });
+};
+
+createPutRoute(MESSAGE_ENDPOINT);
+
+const createDeleteRoute = (endpoint) => {
+  app.delete(endpoint, async (req, res) => {
+    try {
+      let response = await axios.delete(API_SERVER + req.originalUrlreq.originalUrl.split("?")[0], req.query);
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(response.data));
+    }
+    catch (error) {
+      console.log(error)
+      res.send(error);
+    }
+  });
+};
+
+createDeleteRoute(MESSAGE_ENDPOINT);
 
 app.listen(process.env.PORT || 8080);
