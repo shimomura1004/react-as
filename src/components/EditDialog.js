@@ -24,13 +24,12 @@ export default class EditDialog extends React.Component {
     }
 
     handleUpdate() {
-        // todo: connect to server!
-        // this.props.updateMessage(this.props.message);
+        this.props.updateMessage(this.props.api_key, this.props.message);
         this.props.handleClose();
     }
 
     handleDelete(message_id) {
-        // this.props.deleteMessage(this.props.message.id, this.props.message.room.id);
+        this.props.deleteMessage(this.props.api_key, this.props.message.id);
         this.props.handleClose();
     }
 

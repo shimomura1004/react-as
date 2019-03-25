@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 const ROOM_ENDPOINT = '/api/v1/room/list.json';
+// todo: move to messagejs
+const MESSAGE_ENDPOINT = '/api/v1/message';
 
 // action creators
 export const GET_ROOMS_REQUEST = 'GET_ROOMS_REQUEST';
@@ -61,6 +63,50 @@ export const appendMessageInView = (message) => {
             message,
             timestamp: Date.now()
         })
+    }
+};
+
+export const UPDATE_MESSAGE_REQUEST = 'UPDATE_MESSAGE_REQUEST';
+export const UPDATE_MESSAGE_SUCCESS = 'UPDATE_MESSAGE_SUCCESS';
+export const UPDATE_MESSAGE_FAILURE = 'UPDATE_MESSAGE_FAILURE';
+export const updateMessage = (api_key, message) => {
+    return async (dispatch) => {
+        dispatch({type: UPDATE_MESSAGE_REQUEST});
+
+        try {
+            await axios.put(`${window.as['API_SERVER']}${MESSAGE_ENDPOINT}/${message.id}.json`, {
+                params: { message, api_key }
+            });
+            dispatch({type: UPDATE_MESSAGE_SUCCESS});
+        }
+        catch(err) {
+            dispatch({
+                type: UPDATE_MESSAGE_FAILURE,
+                err,
+            });
+        }
+    }
+};
+
+export const DELETE_MESSAGE_REQUEST = 'DELETE_MESSAGE_REQUEST';
+export const DELETE_MESSAGE_SUCCESS = 'DELETE_MESSAGE_SUCCESS';
+export const DELETE_MESSAGE_FAILURE = 'DELETE_MESSAGE_FAILURE';
+export const deleteMessage = (api_key, message_id) => {
+    return async (dispatch) => {
+        dispatch({type: DELETE_MESSAGE_REQUEST});
+
+        try {
+            await axios.delete(`${window.as['API_SERVER']}${MESSAGE_ENDPOINT}/${message_id}.json`, {
+                params: { api_key }
+            });
+            dispatch({type: DELETE_MESSAGE_SUCCESS});
+        }
+        catch(err) {
+            dispatch({
+                type: DELETE_MESSAGE_FAILURE, 
+                err,
+            });
+        }
     }
 };
 

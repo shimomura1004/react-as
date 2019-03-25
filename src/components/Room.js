@@ -114,6 +114,7 @@ export default class Room extends React.Component {
 
                         <EditDialog
                             open={this.state.open}
+                            api_key={this.props.api_key}
                             screen_name={this.props.screen_name}
                             message={this.state.message}
                             handleClose={this.handleClose}
