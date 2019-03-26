@@ -49,7 +49,7 @@ createGetRoute(USER_ENDPOINT);
 const createPostRoute = (endpoint) => {
   app.post(endpoint, async (req, res) => {
     try {
-      let response = await axios.post(API_SERVER + req.originalUrlreq.originalUrl.split("?")[0], req.query);
+      let response = await axios.post(API_SERVER + req.originalUrl.split("?")[0], req.body);
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(response.data));
     }
@@ -66,7 +66,7 @@ createPostRoute(MESSAGE_ENDPOINT);
 const createPutRoute = (endpoint) => {
   app.put(endpoint, async (req, res) => {
     try {
-      let response = await axios.put(API_SERVER + req.originalUrl.split("?")[0], req.query);
+      let response = await axios.put(API_SERVER + req.originalUrl.split("?")[0], req.body);
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(response.data));
     }
@@ -82,7 +82,7 @@ createPutRoute(MESSAGE_ENDPOINT);
 const createDeleteRoute = (endpoint) => {
   app.delete(endpoint, async (req, res) => {
     try {
-      let response = await axios.delete(API_SERVER + req.originalUrlreq.originalUrl.split("?")[0], req.query);
+      let response = await axios.delete(API_SERVER + req.originalUrl.split("?")[0], {data: req.query});
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(response.data));
     }
