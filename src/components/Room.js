@@ -32,6 +32,8 @@ export default class Room extends React.Component {
             open: false,
             message: undefined,
         };
+
+        this.loadMoreMessages = this.loadMoreMessages.bind(this)
     }
 
     handleClick(message) {
@@ -81,8 +83,22 @@ export default class Room extends React.Component {
         }
     }
 
+    loadMoreMessages() {
+        let messages = this.props.messages;
+
+        if (messages.length > 0) {
+            this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id);
+        }
+        else {
+            this.props.getMessages(this.props.api_key, this.props.room_id);
+        }
+    }
+
     render() {
         let messages = this.props.messages;
+        let load_messages_tag = this.props.loading
+            ? <CircularProgress />
+            : <p>Load messages</p>;
 
         return (
             <div>
@@ -91,16 +107,8 @@ export default class Room extends React.Component {
                     ? <p>select a room in a menu</p>
                     : <div>
                         <div className="chat-body">
-                            <div className="messages-header" onClick={() => 
-                                (messages.length > 0)
-                                    ? this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id)
-                                    : this.props.getMessages(this.props.api_key, this.props.room_id)
-                            }>
-                                {
-                                    this.props.loading
-                                        ? <CircularProgress />
-                                        : <p>Load messages</p>
-                                }
+                            <div className="messages-header" onClick={this.loadMoreMessages}>
+                                { load_messages_tag }
                             </div>
                             <div>
                                 {messages.map(key_message =>
