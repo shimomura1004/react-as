@@ -85,16 +85,18 @@ export default class Room extends React.Component {
                 >
                     <List subheader={<ListSubheader component="div">Rooms</ListSubheader>}>
                         {this.props.rooms.map(room => (
-                            <ListItem button key={room.id || 123} onClick={() => this.onRoomSelected(room)}>
-                                <ListItemIcon>
-                                    {
-                                        room.text_field === ""
-                                            ? (room.user === null ? <ChatIcon /> : <LockIcon />)
-                                            : <Edit />
-                                    }
-                                </ListItemIcon>
-                                <ListItemText primary={room.name} />
-                            </ListItem>
+                            room.id
+                            ?   <ListItem button key={room.id || 123} onClick={() => this.onRoomSelected(room)}>
+                                    <ListItemIcon>
+                                        {
+                                            room.text_field === ""
+                                                ? (room.user === null ? <ChatIcon /> : <LockIcon />)
+                                                : <Edit />
+                                        }
+                                    </ListItemIcon>
+                                    <ListItemText primary={room.name} />
+                                </ListItem>
+                            :   <div key="1"/>
                         ))}
                     </List>
                     <Divider />
