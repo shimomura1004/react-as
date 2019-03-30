@@ -6,11 +6,16 @@ export const combine = messages => {
     }
 
     let screen_name = messages[0].screen_name;
+    let created_at = parseDateTime(messages[0].created_at);
     let buffer = [messages.shift()];
     let combined_messages = [];
 
     messages.forEach(message => {
-        if (message.screen_name === screen_name) {
+        let is_same_user = message.screen_name === screen_name;
+        let current_created_at = parseDateTime(message.created_at);
+        let is_near = current_created_at - created_at < 1000 * 60 * 3;
+
+        if (is_same_user && is_near) {
             buffer.push(message);
         }
         else {
@@ -20,6 +25,7 @@ export const combine = messages => {
 
             buffer = [message];
             screen_name = message.screen_name;
+            created_at = current_created_at;
         }
     });
 
@@ -30,6 +36,7 @@ export const combine = messages => {
     return combined_messages;
 };
 
+// todo: store created_at as Date class instance
 const parseDateTime = datetime => new Date(datetime.replace(/(\d)-/g, "$1/"))
 
 export const merge = (current_messages, new_messages) => {
