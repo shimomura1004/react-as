@@ -44,7 +44,6 @@ export default class Room extends React.Component {
 
     componentWillMount() {
         if (this.props.room_id !== '') {
-            this.props.getMessages(this.props.api_key, this.props.room_id);
             this.socket.subscribe(this.props.room_id);
         }
     }
