@@ -4,6 +4,8 @@ import { setScrollPosition, updateMessage, deleteMessage, appendMessageInView, u
 import { getMessages, postMessage } from '../actions/Message';
 import { logout, setRoomId } from '../actions/App';
 
+const NUMBER_OF_MESSAGES_TO_GET = 40;
+
 const mapStateToProps = state => {
     if (state.app.room_id === '' || Object.keys(state.room.rooms).length === 0) {
         return {
@@ -64,11 +66,11 @@ const mapDispatchToProps = (dispatch) => ({
 
     // todo: skip if already getting messages
     getMessages: (api_key, room_id) => {
-        getMessages(api_key, room_id)(dispatch);
+        getMessages(api_key, room_id, {count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
     },
     loadMessages: (loading, api_key, room_id, message_id) => {
         if (!loading) {
-            getMessages(api_key, room_id, {until_id: message_id, count: 20})(dispatch);
+            getMessages(api_key, room_id, {until_id: message_id, count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
         }
     },
     postMessage: (api_key, room_id, message) => {
