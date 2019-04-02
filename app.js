@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json())
 
-app.use(express.static(path.join(__dirname, "build"), {
+app.use(express.static(path.join(__dirname, "dist"), {
   setHeaders: (res, path, stat) => {
     // use cookie to pass environment variables to react app
     // let react app to access this express server as api server
@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, "build"), {
 }));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 const API_SERVER = process.env.REACT_APP_API_SERVER;
