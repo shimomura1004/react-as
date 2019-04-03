@@ -24,7 +24,7 @@ module.exports = {
       filename: "index.html"
     }),
     new CopyPlugin([
-      { from: 'public/*', to: '.', flatten: true }
+      { from: 'public/**/*', to: '.', flatten: true }
     ]),
     new InjectManifest({
       swSrc: './src/service-worker.js',
