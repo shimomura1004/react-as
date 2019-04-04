@@ -15,6 +15,11 @@ if (workbox) {
             ],
         })
     );
+
+    workbox.routing.registerRoute(
+        new RegExp('/api/v1/room/'),
+        new workbox.strategies.NetworkFirst()
+    );
 }
 else {
     console.log("Workbox didn't load");
