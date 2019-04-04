@@ -65,8 +65,10 @@ const mapDispatchToProps = (dispatch) => ({
     },
 
     // todo: skip if already getting messages
-    getMessages: (api_key, room_id) => {
-        getMessages(api_key, room_id, {count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
+    getMessages: (loading, api_key, room_id) => {
+        if (!loading) {
+            getMessages(api_key, room_id, {count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
+        }
     },
     loadMessages: (loading, api_key, room_id, message_id) => {
         if (!loading) {

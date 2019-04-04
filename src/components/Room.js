@@ -18,10 +18,10 @@ export default class Room extends React.Component {
             () => {
                 this.props.websocketConnected();
                 if (this.props.room_id) {
-                    this.props.getMessages(this.props.api_key, this.props.room_id);
+                    this.props.getMessages(this.props.loading, this.props.api_key, this.props.room_id);
                 }
             },
-            this.props.websocketDisconnected
+            this.props.websocketDisconnected()
         );
 
         // todo: move these functions to EditDialog?
@@ -47,6 +47,7 @@ export default class Room extends React.Component {
     componentWillMount() {
         if (this.props.room_id !== '') {
             this.socket.subscribe(this.props.room_id);
+            this.props.getMessages(this.props.loading, this.props.api_key, this.props.room_id);
         }
     }
 
@@ -56,7 +57,7 @@ export default class Room extends React.Component {
         const message_changed = JSON.stringify(prevProps.messages) !== JSON.stringify(this.props.messages);
 
         if (switching_room) {
-            this.props.getMessages(this.props.api_key, this.props.room_id);
+            this.props.getMessages(this.props.loading, this.props.api_key, this.props.room_id);
             this.socket.subscribe(this.props.room_id);
             window.scrollTo(0, this.props.scroll_position);
         }
@@ -90,7 +91,7 @@ export default class Room extends React.Component {
             this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, messages[0][1][0].id);
         }
         else {
-            this.props.getMessages(this.props.api_key, this.props.room_id);
+            this.props.getMessages(this.props.loading, this.props.api_key, this.props.room_id);
         }
     }
 
