@@ -2,6 +2,20 @@ import React from 'react';
 
 // todo: loading icon while getting user info
 export default class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.unregisterServiceWorker = this.unregisterServiceWorker.bind(this);
+    }
+
+    unregisterServiceWorker() {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for(let registration of registrations) {
+                registration.unregister()
+            }
+        });
+        alert("ServiceWorker is unregistered");
+    }
+
     render() {
         let account_url = `${window.as['ORIGINAL_API_SERVER']}/account/index`;
         return (
@@ -19,6 +33,7 @@ export default class Login extends React.Component {
                     </div>
                 <input type="submit" value="set" />
             </form>
+            <p onClick={this.unregisterServiceWorker}>CLEAR</p>
         </div>
         );
     }
