@@ -4,7 +4,8 @@ import {
 	SET_SCROLL_POSITION, APPEND_MESSAGE_IN_VIEW, UPDATE_MESSAGE_IN_VIEW, DELETE_MESSAGE_IN_VIEW,
 	UPDATE_MESSAGE_FAILURE,
 	DELETE_MESSAGE_FAILURE,
-	WEBSOCKET_CONNECTED, WEBSOCKET_DISCONNECTED
+	WEBSOCKET_CONNECTED, WEBSOCKET_DISCONNECTED,
+	HIDE_NOTIFICATION,
 } from '../actions/Room';
 import { TEXT_FIELD_UPDATE } from '../actions/TextField';
 import { merge, combine, update, remove } from '../helpers/Message';
@@ -58,7 +59,9 @@ export default (state = initialState, action) => {
 		console.log(action.error);
 		return {
 			...state,
-			loading: false
+			loading: false,
+			notification_open: true,
+			notification_content: "Failed to get room list",
 		};
 	}
 
@@ -118,7 +121,9 @@ export default (state = initialState, action) => {
 					...state.rooms[action.room_id],
 					loading: false,
 				}
-			}
+			},
+			notification_open: true,
+			notification_content: "Failed to get messages",
 		};
 	}
 
@@ -169,17 +174,27 @@ export default (state = initialState, action) => {
 					...state.rooms[action.room_id],
 					posting: false,
 				}
-			}
+			},
+			notification_open: true,
+			notification_content: "Failed to post messages",
 		};
 	}
 
 	case UPDATE_MESSAGE_FAILURE: {
 		console.log(action.error);
-		return state;
+		return {
+			...state,
+			notification_open: true,
+			notification_content: "Failed to update messages",
+		};
 	}
 	case DELETE_MESSAGE_FAILURE: {
 		console.log(action.error);
-		return state;
+		return {
+			...state,
+			notification_open: true,
+			notification_content: "Failed to delete messages",
+		};
 	}
 
 	case APPEND_MESSAGE_IN_VIEW: {
@@ -250,6 +265,14 @@ export default (state = initialState, action) => {
 			...state,
 			websocket_connected: false,
 		};
+	}
+
+	case HIDE_NOTIFICATION: {
+		return {
+			...state,
+			notification_open: false,
+			notification_content: "",
+		}
 	}
 
 	default:

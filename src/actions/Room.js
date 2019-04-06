@@ -40,6 +40,7 @@ export const getRooms = (api_key) => {
         }
         catch(err) {
             dispatch(getRoomsFailure(err));
+            hideNotification(dispatch);
         }
     }
 };
@@ -84,6 +85,7 @@ export const updateMessage = (api_key, message_id, message_body) => {
                 type: UPDATE_MESSAGE_FAILURE,
                 err,
             });
+            hideNotification(dispatch);
         }
     }
 };
@@ -106,6 +108,7 @@ export const deleteMessage = (api_key, message_id) => {
                 type: DELETE_MESSAGE_FAILURE, 
                 err,
             });
+            hideNotification(dispatch);
         }
     }
 };
@@ -148,4 +151,13 @@ export const websocketDisconnected = () => {
             type: WEBSOCKET_DISCONNECTED,
         })
     }
+}
+
+export const HIDE_NOTIFICATION = 'HIDE_NOTIFICATION';
+export const hideNotification = (dispatch, timeout) => {
+    setTimeout(() => {
+        dispatch({
+            type: HIDE_NOTIFICATION,
+        });
+    }, timeout || 3000);
 }

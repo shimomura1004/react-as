@@ -18,9 +18,11 @@ export default class Room extends React.Component {
                     rowsMax="3"
                     onChange={ e => this.props.updateTextField(this.props.room_id, e.currentTarget.value) }
                     onKeyDown={ e => {
-                        if (e.keyCode === 13 && !e.shiftKey && !this.props.posting && this.props.websocket_connected) {
+                        if (e.keyCode === 13 && !e.shiftKey) {
                             e.preventDefault();
-                            this.props.postMessage(this.props.api_key, this.props.room_id, this.props.text_field);
+                            if (!this.props.posting && this.props.websocket_connected) {
+                                this.props.postMessage(this.props.api_key, this.props.room_id, this.props.text_field);
+                            }
                         }
                     }}
                     value={this.props.text_field}

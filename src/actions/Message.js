@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { hideNotification } from './Room';
 
 const LIST_ENDPOINT = '/api/v1/message/list.json';
 const POST_ENDPOINT = '/api/v1/message.json';
@@ -52,6 +53,7 @@ export const getMessages = (api_key, room_id, options) => {
         }
         catch(err) {
             dispatch(getMessagesFailure(err, room_id));
+            hideNotification(dispatch);
         }
     }
 };
@@ -94,6 +96,7 @@ export const postMessage = (api_key, room_id, message) => {
         }
         catch (error) {
             dispatch(postMessageFailure(error, room_id));
+            hideNotification(dispatch);
         }
     }
 };

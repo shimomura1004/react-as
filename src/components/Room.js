@@ -5,6 +5,7 @@ import Message from './Message';
 import EditDialog from './EditDialog';
 import AsSocket from '../helpers/AsSocket';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '@material-ui/core/Snackbar';
 import '../styles/room.css';
 
 export default class Room extends React.Component {
@@ -131,6 +132,15 @@ export default class Room extends React.Component {
                         />
                     </div>
                 }
+                <Snackbar
+                    anchorOrigin={{vertical: "top", horizontal: "center"}}
+                    open={this.props.notification_open}
+                    onClose={this.handleSnackbarClose}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={this.props.notification_content}
+                    />
             </div>
         );
     }
