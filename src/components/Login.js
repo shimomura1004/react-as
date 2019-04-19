@@ -10,10 +10,15 @@ export default class Login extends React.Component {
     unregisterServiceWorker() {
         navigator.serviceWorker.getRegistrations().then(function(registrations) {
             for(let registration of registrations) {
-                registration.unregister()
+                registration.unregister();
+                localStorage.removeItem("api_server");
+                localStorage.removeItem("original_api_server");
+                localStorage.removeItem("pusher_server");
+                localStorage.removeItem("pusher_api_key");
             }
         });
         alert("ServiceWorker is unregistered");
+        location.reload();
     }
 
     render() {
