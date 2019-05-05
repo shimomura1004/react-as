@@ -41,38 +41,25 @@ const parseDateTime = datetime => new Date(datetime.replace(/(\d)-/g, "$1/"))
 
 export const merge = (current_messages, new_messages) => {
     current_messages = JSON.parse(JSON.stringify(current_messages));
+    const ids = current_messages.map(message => message.id);
+
     new_messages = JSON.parse(JSON.stringify(new_messages));
+    new_messages = new_messages.filter(message => !ids.includes(message.id));
 
     let merged_messages = [];
-    let message = undefined;
-    let last_message = undefined;
+    while (current_messages.length > 0 && new_messages.length > 0) {
+        const time1 = parseDateTime(current_messages[0].created_at);
+        const time2 = parseDateTime(new_messages[0].created_at);
 
-    while (current_messages.length > 0 || new_messages.length > 0) {
-        if(current_messages.length === 0) {
-            message = new_messages.shift();
-        }
-        else if (new_messages.length === 0) {
-            message = current_messages.shift();
+        if (time1 < time2) {
+            merged_messages.push(current_messages.shift());
         }
         else {
-            const time1 = parseDateTime(current_messages[0].created_at);
-            const time2 = parseDateTime(new_messages[0].created_at);
-
-            if (time1 < time2) {
-                message = current_messages.shift();
-            }
-            else {
-                message = new_messages.shift();
-            }
-        }
-
-        if ((last_message === undefined) || last_message.id !== message.id) {
-            merged_messages.push(message);
-            last_message = message;
+            merged_messages.push(new_messages.shift());
         }
     }
 
-    return merged_messages;
+    return merged_messages.concat(current_messages).concat(new_messages);
 }
 
 export const update = (message, messages) => {
