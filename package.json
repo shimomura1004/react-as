@@ -34,8 +34,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "build:dev": "webpack --progress --colors",
-    "build": "webpack --mode production"
+    "build:dev": "webpack --progress --colors --mode=development",
+    "build": "webpack --mode=production"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
