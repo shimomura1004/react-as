@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import TextField from '../components/TextField';
-import { updateTextField } from '../actions/TextField';
+import { updateTextField, updateTextFieldHeight } from '../actions/TextField';
 import { postMessage } from '../actions/Message';
 
 const mapStateToProps = state => {
@@ -24,6 +24,9 @@ const mapDispatchToProps = (dispatch) => ({
             postMessage(api_key, room_id, message)(dispatch);
         }
     },
+    updateTextFieldHeight: (room_id, height) => {
+        updateTextFieldHeight(room_id, height)(dispatch);
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TextField);

@@ -18,16 +18,18 @@ const mapStateToProps = state => {
             rooms: [],
             messages: [],
             scroll_position: 0,
+            text_field_height: 0,
             notification_open: false,
             notification_content: "",
         };
     }
 
-    let room = state.room.rooms[state.app.room_id];
-    let loading = state.app.room_id === '' ? false : room.loading;
-    let posting = state.app.room_id === '' ? false : room.posting;
-    let messages = state.app.room_id === '' ? [] : room.combined_messages;
-    let scroll_position = state.app.room_id === '' ? 0 : room.scroll_position;
+    const room = state.room.rooms[state.app.room_id];
+    const loading = state.app.room_id === '' ? false : room.loading;
+    const posting = state.app.room_id === '' ? false : room.posting;
+    const messages = state.app.room_id === '' ? [] : room.combined_messages;
+    const scroll_position = state.app.room_id === '' ? 0 : room.scroll_position;
+    const text_field_height = state.app.room_id === '' ? 0 : room.text_field_height;
 
     return {
         api_key: state.app.api_key,
@@ -38,6 +40,7 @@ const mapStateToProps = state => {
         room,
         messages,
         scroll_position,
+        text_field_height,
         notification_open: state.room.notification_open,
         notification_content: state.room.notification_content,
     };

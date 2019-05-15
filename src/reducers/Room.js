@@ -7,7 +7,7 @@ import {
 	WEBSOCKET_CONNECTED, WEBSOCKET_DISCONNECTED,
 	HIDE_NOTIFICATION,
 } from '../actions/Room';
-import { TEXT_FIELD_UPDATE } from '../actions/TextField';
+import { TEXT_FIELD_UPDATE, TEXT_FIELD_HEIGHT_UPDATE } from '../actions/TextField';
 import { merge, combine, update, remove } from '../helpers/Message';
 
 let createInitialRoomState = () => ({
@@ -16,6 +16,7 @@ let createInitialRoomState = () => ({
 	merged_messages: [],
 	combined_messages: [],
 	text_field: "",
+	text_field_height: 0,
 	scroll_position: 0,
 });	
 
@@ -95,6 +96,11 @@ export default (state = initialState, action) => {
 		let room = state.rooms[action.room_id];
 
 		let messages = action.messages.map(m => ({...m, timestamp: action.timestamp}));
+		let last_message = messages[messages.length - 1];
+		if (room.merged_messages.map(m => m.id).indexOf(last_message.id) >= 0) {
+			// duplicated
+		}
+
 		const merged_messages = merge(room.merged_messages, messages);
 		const combined_messages = combine(merged_messages);
 
@@ -135,6 +141,19 @@ export default (state = initialState, action) => {
 				[action.room_id]: {
 					...state.rooms[action.room_id],
 					text_field: action.text_field,
+				}
+			}
+		};
+	}
+
+	case TEXT_FIELD_HEIGHT_UPDATE: {
+		return {
+			...state,
+			rooms: {
+				...state.rooms,
+				[action.room_id]: {
+					...state.rooms[action.room_id],
+					text_field_height: action.height,
 				}
 			}
 		};
