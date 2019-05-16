@@ -55,7 +55,7 @@ export default class EditDialog extends React.Component {
                 </AppBar>
                 {
                     message
-                        ?   <div className="message" style={{marginTop: "3.5em"}}>
+                        ?   <div className="message" style={{marginTop: this.props.menu_height}}>
                                 <img className="icon" src={message.profile_image_url} alt={message.name} />
                                 <div className="content">
                                     <div className="profile">

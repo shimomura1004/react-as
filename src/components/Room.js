@@ -132,6 +132,7 @@ export default class Room extends React.Component {
                             api_key={this.props.api_key}
                             screen_name={this.props.screen_name}
                             message={this.state.message}
+                            menu_height={this.props.menu_height}
                             handleClose={this.handleClose}
                             updateMessage={this.props.updateMessage}
                             deleteMessage={this.props.deleteMessage}
