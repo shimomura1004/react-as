@@ -108,7 +108,7 @@ export default class Room extends React.Component {
                 { this.props.room_id === ''
                     ? <p>select a room in a menu</p>
                     : <div>
-                        <div className="chat-body" style={{marginBottom: this.props.text_field_height}}>
+                        <div className="chat-body" style={{marginBottom: this.props.text_field_height, marginTop: this.props.menu_height}}>
                             <div className="messages-header" onClick={this.loadMoreMessages}>
                                 { load_messages_tag }
                             </div>

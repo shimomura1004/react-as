@@ -51,6 +51,16 @@ export const getUserInfo = (api_key) => {
     }
 };
 
+export const UPDATE_MENU_HEIGHT = 'UPDATE_MENU_HEIGHT';
+export const updateMenuHeight = (menu_height) => {
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_MENU_HEIGHT,
+            menu_height,
+        })
+    }
+}
+
 export const LOGOUT = 'LOGOUT';
 export const logout = () => {
     return (dispatch) => {

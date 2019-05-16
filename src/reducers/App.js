@@ -1,9 +1,10 @@
-import { SET_ROOM_ID, GET_USER_INFO_REQUEST, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAILURE, LOGOUT } from '../actions/App';
+import { SET_ROOM_ID, GET_USER_INFO_REQUEST, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAILURE, UPDATE_MENU_HEIGHT, LOGOUT } from '../actions/App';
 
 const initialState = {
 	api_key: '',
 	room_id: '',
 	screen_name: '',
+	menu_height: 0,
 };
 
 // todo: check api key is valid or not by getting user information
@@ -32,6 +33,13 @@ export default (state = initialState, action) => {
 	case GET_USER_INFO_FAILURE: {
 		console.log(action.error);
 		return state;
+	}
+
+	case UPDATE_MENU_HEIGHT: {
+		return {
+			...state,
+			menu_height: action.menu_height,
+		};
 	}
 
 	case LOGOUT: {

@@ -15,10 +15,6 @@ header div {
   margin-right: 20;
 }
 
-.chat-body {
-  margin-top: 3.5em;
-}
-
 .messages-header {
   height: 3.5em;
   display: flex;

@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 import Menu from '../components/Menu';
-import { setRoomId, logout } from '../actions/App';
+import { setRoomId, updateMenuHeight, logout } from '../actions/App';
 import { getRooms, setScrollPosition } from '../actions/Room';
 
 const mapStateToProps = state => {
@@ -10,6 +10,7 @@ const mapStateToProps = state => {
     return {
         api_key: state.app.api_key,
         room_id: state.app.room_id,
+        menu_height: state.app.menu_height,
         rooms,
         room,
     };
@@ -24,6 +25,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     setScrollPosition: (room_id, scroll_position) => {
         setScrollPosition(room_id, scroll_position)(dispatch);
+    },
+    updateMenuHeight: (menu_height) => {
+        updateMenuHeight(menu_height)(dispatch);
     },
     logout: () => {
         logout()(dispatch);

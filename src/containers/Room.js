@@ -19,6 +19,7 @@ const mapStateToProps = state => {
             messages: [],
             scroll_position: 0,
             text_field_height: 0,
+            menu_height: state.app.menu_height,
             notification_open: false,
             notification_content: "",
         };
@@ -41,6 +42,7 @@ const mapStateToProps = state => {
         messages,
         scroll_position,
         text_field_height,
+        menu_height: state.app.menu_height,
         notification_open: state.room.notification_open,
         notification_content: state.room.notification_content,
     };
