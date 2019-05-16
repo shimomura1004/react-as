@@ -83,6 +83,12 @@ export default class Room extends React.Component {
                 }
             }
         }
+
+        // scroll messages when textfield expands
+        const height_diff = this.props.text_field_height - prevProps.text_field_height;
+        if (height_diff > 0) {
+            window.scrollBy(0, height_diff);
+        }
     }
 
     loadMoreMessages() {
