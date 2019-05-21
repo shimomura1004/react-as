@@ -35,6 +35,8 @@ export default class Room extends React.Component {
         };
 
         this.loadMoreMessages = this.loadMoreMessages.bind(this)
+
+        this.offset = 0;
     }
 
     handleClick(e, message) {
@@ -54,6 +56,10 @@ export default class Room extends React.Component {
             this.socket.subscribe(this.props.room_id);
             this.props.getMessages(this.props.loading, this.props.api_key, this.props.room_id);
         }
+    }
+
+    componentWillUpdate(prevProps) {
+        this.offset = document.body.clientHeight - window.pageYOffset;
     }
 
     componentDidUpdate(prevProps) {
@@ -86,6 +92,12 @@ export default class Room extends React.Component {
                     latest_message.scrollIntoView({behavior: "smooth"});
                 }
             }
+        }
+
+        // scroll to keep position when receiving old messages
+        // todo: better way to distinguish appending and "read more"
+        if (this.props.messages.length - prevProps.messages.length > 1) {
+            window.scrollTo(0, document.body.clientHeight - this.offset);
         }
 
         // scroll messages when textfield expands
