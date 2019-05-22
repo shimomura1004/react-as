@@ -32,7 +32,7 @@ export default class Message extends React.Component {
                                 <p
                                     className="body"
                                     dangerouslySetInnerHTML={{__html: message.html_body}}
-                                    onClick={() => this.props.handleClick(message)}
+                                    onClick={(e) => this.props.handleClick(e, message)}
                                 >
                                 </p>
                             </div>

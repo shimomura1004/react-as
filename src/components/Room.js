@@ -37,7 +37,11 @@ export default class Room extends React.Component {
         this.loadMoreMessages = this.loadMoreMessages.bind(this)
     }
 
-    handleClick(message) {
+    handleClick(e, message) {
+        if (e.target.tagName === "A" && e.target.href) {
+            return;
+        }
+
         this.setState({open: true, message});
     }
 
