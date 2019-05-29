@@ -8,7 +8,6 @@ import storage from 'redux-persist/lib/storage';
 import './styles/index.css';
 import App from './containers/App';
 import rootReducer from './reducers/reducers'
-import { SET_ENVIRONMENT_VARIABLE } from './actions/App';
 
 // persistent settings
 const persistConfig = {
@@ -24,22 +23,22 @@ const persistor = persistStore(store);
 
 // setup environment
 // in express environment, environment variables are stored in cookie
-let cookie = {};
+let cookie: any = {};
 document.cookie.split("; ")
   .map(c => c.split("="))
   .forEach(kv => cookie[kv[0]] = decodeURIComponent(kv[1]));
 
-window.as = {};
-window.as['API_SERVER'] = localStorage.getItem("api_server") || process.env['REACT_APP_API_SERVER'] || cookie["api_server"];
-window.as['ORIGINAL_API_SERVER'] = localStorage.getItem("original_api_server") || process.env['REACT_APP_API_SERVER'] || cookie["original_api_server"];
-window.as['PUSHER_SERVER'] = localStorage.getItem("pusher_server") || process.env['REACT_APP_PUSHER_SERVER'] || cookie["pusher_server"];
-window.as['PUSHER_APP_KEY'] = localStorage.getItem("pusher_api_key") || process.env['REACT_APP_PUSHER_APP_KEY'] || cookie["pusher_app_key"];
+(window as any).as = {};
+(window as any).as['API_SERVER'] = localStorage.getItem("api_server") || process.env['REACT_APP_API_SERVER'] || cookie["api_server"];
+(window as any).as['ORIGINAL_API_SERVER'] = localStorage.getItem("original_api_server") || process.env['REACT_APP_API_SERVER'] || cookie["original_api_server"];
+(window as any).as['PUSHER_SERVER'] = localStorage.getItem("pusher_server") || process.env['REACT_APP_PUSHER_SERVER'] || cookie["pusher_server"];
+(window as any).as['PUSHER_APP_KEY'] = localStorage.getItem("pusher_api_key") || process.env['REACT_APP_PUSHER_APP_KEY'] || cookie["pusher_app_key"];
 
 // store/restore variables to/from localStorage
-localStorage.setItem("api_server", window.as['API_SERVER']);
-localStorage.setItem("original_api_server", window.as['ORIGINAL_API_SERVER']);
-localStorage.setItem("pusher_server", window.as['PUSHER_SERVER']);
-localStorage.setItem("pusher_api_key", window.as['PUSHER_APP_KEY']);
+localStorage.setItem("api_server", (window as any).as['API_SERVER']);
+localStorage.setItem("original_api_server", (window as any).as['ORIGINAL_API_SERVER']);
+localStorage.setItem("pusher_server", (window as any).as['PUSHER_SERVER']);
+localStorage.setItem("pusher_api_key", (window as any).as['PUSHER_APP_KEY']);
 
 // render app
 ReactDOM.render(
