@@ -1,5 +1,7 @@
+const cloneJson = (json) => JSON.parse(JSON.stringify(json));
+
 export const combine = messages => {
-    messages = JSON.parse(JSON.stringify(messages))
+    messages = cloneJson(messages);
 
     if (messages.length === 0) {
         return [];
@@ -40,11 +42,29 @@ export const combine = messages => {
 // todo: store created_at as Date class instance
 const parseDateTime = datetime => new Date(datetime.replace(/(\d)-/g, "$1/"))
 
+const detectGap = (current_messages, new_messages) => {
+    if (current_messages.length === 0) {
+        return false;
+    }
+
+    let oldest_new_message_time = parseDateTime(new_messages[0].created_at);
+    let latest_current_message_time = parseDateTime(current_messages[current_messages.length - 1].created_at);
+
+    // if the oldest new_message is newer than the latest current_message,
+    // there is a gap
+    return oldest_new_message_time > latest_current_message_time;
+}
+
 export const merge = (current_messages, new_messages) => {
-    current_messages = JSON.parse(JSON.stringify(current_messages));
+    current_messages = cloneJson(current_messages);
+    new_messages = cloneJson(new_messages);
     const ids = current_messages.map(message => message.id);
 
-    new_messages = JSON.parse(JSON.stringify(new_messages));
+    if (detectGap(current_messages, new_messages)) {
+        let gap_marker = cloneJson(new_messages[0]);
+        new_messages.unshift({...gap_marker, gap_marker: true});
+    }
+
     new_messages = new_messages.filter(message => !ids.includes(message.id));
 
     let merged_messages = [];

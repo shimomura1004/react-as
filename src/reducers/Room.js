@@ -96,11 +96,6 @@ export default (state = initialState, action) => {
 		let room = state.rooms[action.room_id];
 
 		let messages = action.messages.map(m => ({...m, timestamp: action.timestamp}));
-		let last_message = messages[messages.length - 1];
-		if (room.merged_messages.map(m => m.id).indexOf(last_message.id) >= 0) {
-			// duplicated
-		}
-
 		const merged_messages = merge(room.merged_messages, messages);
 		const combined_messages = combine(merged_messages);
 

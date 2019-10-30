@@ -27,16 +27,26 @@ export default class Message extends React.Component {
                         <span className="time">{time_string}</span>
                     </div>
                     {
-                        this.messages.map(message => (
-                            <div key={message.id + message.timestamp}>
-                                <p
-                                    className="body"
-                                    dangerouslySetInnerHTML={{__html: message.html_body}}
-                                    onClick={(e) => this.props.handleClick(e, message)}
-                                >
-                                </p>
-                            </div>
-                        ))
+                        this.messages.map(message => {
+                            if (message.gap_marker) {
+                                return (
+                                    <div key={message.id + message.timestamp + "_gap"}>
+                                        <span>Load More!!!</span>
+                                    </div>
+                                )
+                            }
+
+                            return (
+                                <div key={message.id + message.timestamp}>
+                                    <p
+                                        className="body"
+                                        dangerouslySetInnerHTML={{__html: message.html_body}}
+                                        onClick={(e) => this.props.handleClick(e, message)}
+                                    >
+                                    </p>
+                                </div>
+                            );
+                        })
                     }
                 </div>
                 <span className="clear"></span>
