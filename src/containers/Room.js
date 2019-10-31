@@ -79,9 +79,16 @@ const mapDispatchToProps = (dispatch) => ({
             getMessages(api_key, room_id, {count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
         }
     },
+    // todo: rename loadMessagesUntil
     loadMessages: (loading, api_key, room_id, message_id) => {
         if (!loading) {
             getMessages(api_key, room_id, {until_id: message_id, count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
+        }
+    },
+    loadMessagesSince: (loading, api_key, room_id, message_id) => {
+        console.log("aaa");
+        if (!loading) {
+            getMessages(api_key, room_id, {since_id: message_id, count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
         }
     },
     postMessage: (api_key, room_id, message) => {

@@ -7,9 +7,23 @@ export default class Message extends React.Component {
 
         this.messages = props.message;
         this.first_message = this.messages[0];
+
+        this.loadMessagesInGap = this.loadMessagesInGap.bind(this);
+    }
+
+    loadMessagesInGap() {
+        this.props.handleLoading(this.first_message.id);
     }
 
     render() {
+        if (this.messages.length === 1 && this.first_message.gap_marker) {
+            return (
+                <div className="messages-header" onClick={this.loadMessagesInGap}>
+                    <p>Load messages</p>
+                </div>
+            )
+        }
+
         let date = new Date(this.first_message.created_at.replace(/(\d)-/g, "$1/"));
         //let yyyy = date.getFullYear();
         let MM = ("0" + date.getMonth()).slice(-2);
@@ -27,16 +41,7 @@ export default class Message extends React.Component {
                         <span className="time">{time_string}</span>
                     </div>
                     {
-                        this.messages.map(message => {
-                            if (message.gap_marker) {
-                                return (
-                                    <div key={message.id + message.timestamp + "_gap"}>
-                                        <span>Load More!!!</span>
-                                    </div>
-                                )
-                            }
-
-                            return (
+                        this.messages.map(message => (
                                 <div key={message.id + message.timestamp}>
                                     <p
                                         className="body"
@@ -45,8 +50,7 @@ export default class Message extends React.Component {
                                     >
                                     </p>
                                 </div>
-                            );
-                        })
+                        ))
                     }
                 </div>
                 <span className="clear"></span>

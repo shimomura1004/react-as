@@ -13,20 +13,25 @@ export const combine = messages => {
     let combined_messages = [];
 
     messages.forEach(message => {
+        let is_gap_marker = message.gap_marker;
         let is_same_user = message.screen_name === screen_name;
         let current_created_at = parseDateTime(message.created_at);
         let is_near = current_created_at - created_at < 1000 * 60 * 1;
 
-        if (is_same_user && is_near) {
+        if (is_same_user && is_near && !is_gap_marker) {
             buffer.push(message);
         }
         else {
             let key = buffer.map(m => m.id + m.timestamp).join();
-            let tuple = [key, buffer];
-            combined_messages.push(tuple);
+            combined_messages.push([key, buffer]);
 
             buffer = [message];
             screen_name = message.screen_name;
+
+            if (is_gap_marker) {
+                combined_messages.push(["", buffer]);
+                buffer = [];
+            }
         }
 
         created_at = current_created_at;
@@ -49,6 +54,12 @@ const detectGap = (current_messages, new_messages) => {
 
     let oldest_new_message_time = parseDateTime(new_messages[0].created_at);
     let latest_current_message_time = parseDateTime(current_messages[current_messages.length - 1].created_at);
+
+    // todo: fix bug
+    // if you have [10, 11, (gap), 20, 21] and you get [18, 19],
+    // then
+    // oldest_new_message is 18 and latest_current_message is 21.
+    // so the expression below returns false! (should be true)
 
     // if the oldest new_message is newer than the latest current_message,
     // there is a gap
