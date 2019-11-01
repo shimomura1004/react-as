@@ -8,14 +8,14 @@ export const combine = messages => {
     }
 
     let screen_name = messages[0].screen_name;
-    let created_at = parseDateTime(messages[0].created_at);
+    let created_at = messages[0].created_at;
     let buffer = [messages.shift()];
     let combined_messages = [];
 
     messages.forEach(message => {
         let is_gap_marker = message.gap_marker;
         let is_same_user = message.screen_name === screen_name;
-        let current_created_at = parseDateTime(message.created_at);
+        let current_created_at = message.created_at;
         let is_near = current_created_at - created_at < 1000 * 60 * 1;
 
         if (is_same_user && is_near && !is_gap_marker) {
@@ -44,16 +44,25 @@ export const combine = messages => {
     return combined_messages;
 };
 
-// todo: store created_at as Date class instance
-const parseDateTime = datetime => new Date(datetime.replace(/(\d)-/g, "$1/"))
+export const parseDateTime = datetime => new Date(datetime.replace(/(\d)-/g, "$1/")).getTime();
 
 const detectGap = (current_messages, new_messages) => {
     if (current_messages.length === 0) {
         return false;
     }
 
-    let oldest_new_message_time = parseDateTime(new_messages[0].created_at);
-    let latest_current_message_time = parseDateTime(current_messages[current_messages.length - 1].created_at);
+    let latest_new_message_time = new_messages[new_messages.length - 1].created_at;
+    current_messages = current_messages.filter(message => 
+        latest_new_message_time > message.created_at
+    );
+
+    let oldest_new_message_time = new_messages[0].created_at;
+    let latest_current_message_time = current_messages[current_messages.length - 1].created_at;
+
+    // [10,11,20,21] and get [17,18,19]
+    // -> 19 was the latest message I got
+    // -> remove 20 and 21
+    // -> compare [10,11] and [17,18,19]
 
     // todo: fix bug
     // if you have [10, 11, (gap), 20, 21] and you get [18, 19],
@@ -80,8 +89,8 @@ export const merge = (current_messages, new_messages) => {
 
     let merged_messages = [];
     while (current_messages.length > 0 && new_messages.length > 0) {
-        const time1 = parseDateTime(current_messages[0].created_at);
-        const time2 = parseDateTime(new_messages[0].created_at);
+        const time1 = current_messages[0].created_at;
+        const time2 = new_messages[0].created_at;
 
         if (time1 < time2) {
             merged_messages.push(current_messages.shift());

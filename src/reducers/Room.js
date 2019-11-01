@@ -8,7 +8,7 @@ import {
 	HIDE_NOTIFICATION,
 } from '../actions/Room';
 import { TEXT_FIELD_UPDATE, TEXT_FIELD_HEIGHT_UPDATE } from '../actions/TextField';
-import { merge, combine, update, remove } from '../helpers/Message';
+import { parseDateTime, merge, combine, update, remove } from '../helpers/Message';
 
 let createInitialRoomState = () => ({
 	loading: false,
@@ -94,8 +94,12 @@ export default (state = initialState, action) => {
 	}
 	case GET_MESSAGES_SUCCESS: {
 		let room = state.rooms[action.room_id];
+		let messages = action.messages.map(m => ({
+			...m,
+			created_at: parseDateTime(m.created_at),
+			timestamp: action.timestamp
+		}));
 
-		let messages = action.messages.map(m => ({...m, timestamp: action.timestamp}));
 		const merged_messages = merge(room.merged_messages, messages);
 		const combined_messages = combine(merged_messages);
 
