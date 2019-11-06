@@ -1,5 +1,22 @@
 const cloneJson = (json) => JSON.parse(JSON.stringify(json));
+const parseDateTime = datetime => new Date(datetime.replace(/(\d)-/g, "$1/")).getTime();
 
+export const addTimestamp = (messages, timestamp) => {
+    return messages.map(m => ({
+        ...m,
+        created_at: parseDateTime(m.created_at),
+        timestamp: timestamp
+    }));
+};
+
+export const sortToAscendingOrder = messages => {
+    if (messages[0].created_at > messages[messages.length - 1].created_at) {
+        messages.reverse();
+    }
+    return messages;
+};
+
+// todo: rename to divideIntoGroups
 export const combine = messages => {
     messages = cloneJson(messages);
 
@@ -44,8 +61,6 @@ export const combine = messages => {
     return combined_messages;
 };
 
-export const parseDateTime = datetime => new Date(datetime.replace(/(\d)-/g, "$1/")).getTime();
-
 const detectGap = (current_messages, new_messages) => {
     if (current_messages.length === 0) {
         return false;
@@ -56,22 +71,13 @@ const detectGap = (current_messages, new_messages) => {
         latest_new_message_time > message.created_at
     );
 
+    if (current_messages.length === 0) {
+        return false;
+    }
+
     let oldest_new_message_time = new_messages[0].created_at;
     let latest_current_message_time = current_messages[current_messages.length - 1].created_at;
 
-    // [10,11,20,21] and get [17,18,19]
-    // -> 19 was the latest message I got
-    // -> remove 20 and 21
-    // -> compare [10,11] and [17,18,19]
-
-    // todo: fix bug
-    // if you have [10, 11, (gap), 20, 21] and you get [18, 19],
-    // then
-    // oldest_new_message is 18 and latest_current_message is 21.
-    // so the expression below returns false! (should be true)
-
-    // if the oldest new_message is newer than the latest current_message,
-    // there is a gap
     return oldest_new_message_time > latest_current_message_time;
 }
 
