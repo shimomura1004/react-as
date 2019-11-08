@@ -22,6 +22,15 @@ const getMessagesSuccess = (messages, room_id) => {
         timestamp: Date.now()
     }
 };
+const getMessagesSuccess2 = (messages, room_id, message_id) => {  
+    return {
+        type: GET_MESSAGES_SUCCESS,
+        messages,
+        room_id,
+        timestamp: Date.now(),
+        remove: message_id,
+    }
+};
 
 export const GET_MESSAGES_FAILURE = 'GET_MESSAGES_FAILURE';
 const getMessagesFailure = (error, room_id) => {
@@ -58,6 +67,31 @@ export const getMessages = (api_key, room_id, options) => {
     }
 };
 
+export const getMessages2 = (api_key, room_id, message_id, options) => {
+    return async (dispatch) => {
+        dispatch(getMessagesRequest(room_id));
+
+        try {
+            let messages = await axios.get(`${window.as['API_SERVER']}${LIST_ENDPOINT}`, {
+                params: { api_key, room_id, ...options }
+            });
+
+            if (options && (options.until_id !== undefined)) {
+                // data is in reverse time order if until_id is specified
+                messages.data.reverse();
+
+                // remove message that is used for id
+                messages.data.pop();
+            }
+
+            dispatch(getMessagesSuccess2(messages.data, room_id, message_id));
+        }
+        catch(err) {
+            dispatch(getMessagesFailure(err, room_id));
+            hideNotification(dispatch);
+        }
+    }
+};
 
 export const POST_MESSAGE_REQUEST = 'POST_MESSAGE_REQUEST';
 const postMessageRequest = (room_id) => {

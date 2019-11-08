@@ -8,7 +8,8 @@ import {
 	HIDE_NOTIFICATION,
 } from '../actions/Room';
 import { TEXT_FIELD_UPDATE, TEXT_FIELD_HEIGHT_UPDATE } from '../actions/TextField';
-import { addTimestamp, sortToAscendingOrder, merge, combine, update, remove } from '../helpers/Message';
+import { addTimestamp, merge, combine, update, remove } from '../helpers/Message';
+import { removeDotSegments } from 'uri-js';
 
 let createInitialRoomState = () => ({
 	loading: false,
@@ -94,11 +95,18 @@ export default (state = initialState, action) => {
 	}
 	case GET_MESSAGES_SUCCESS: {
 		let room = state.rooms[action.room_id];
+		let current_messages = JSON.parse(JSON.stringify(room.merged_messages));
+console.log(current_messages)
+		if (action.remove) {
+			console.log(action.remove);
+			current_messages = current_messages.filter(m => (
+				// m.id !== action.remove || m.gap_marker
+				!(m.id === action.remove && m.gap_marker)
+			))
+		}
 
-		let messages = addTimestamp(action.messages, action.timestamp);
-		messages = sortToAscendingOrder(messages);
-
-		const merged_messages = merge(room.merged_messages, messages);
+		const messages = addTimestamp(action.messages, action.timestamp);
+		const merged_messages = merge(current_messages, messages);
 		const combined_messages = combine(merged_messages);
 
 		return {

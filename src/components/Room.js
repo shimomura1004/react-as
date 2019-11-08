@@ -49,7 +49,9 @@ export default class Room extends React.Component {
     }
 
     handleLoading(message_id) {
-        this.props.loadMessagesSince(this.props.loading, this.props.api_key, this.props.room_id, message_id);
+        // todo: remove gap_marker
+        // this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, message_id);
+        this.props.loadMessages2(this.props.loading, this.props.api_key, this.props.room_id, message_id);
     }
 
     handleClose() {

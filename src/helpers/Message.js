@@ -9,13 +9,6 @@ export const addTimestamp = (messages, timestamp) => {
     }));
 };
 
-export const sortToAscendingOrder = messages => {
-    if (messages[0].created_at > messages[messages.length - 1].created_at) {
-        messages.reverse();
-    }
-    return messages;
-};
-
 // todo: rename to divideIntoGroups
 export const combine = messages => {
     messages = cloneJson(messages);
