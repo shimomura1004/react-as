@@ -12,7 +12,7 @@ export default class Message extends React.Component {
     }
 
     loadMessagesInGap() {
-        this.props.handleLoading(this.first_message.id);
+        this.props.loadMessagesInGap(this.first_message.id);
     }
 
     render() {

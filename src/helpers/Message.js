@@ -74,14 +74,24 @@ const detectGap = (current_messages, new_messages) => {
     return oldest_new_message_time > latest_current_message_time;
 }
 
+const createGapMarker = (message) => {
+    return {
+        id: message.id,
+        timestamp: message.timestamp,
+        created_at: message.created_at,
+        screen_name: message.screen_name,
+        gap_marker: true
+    };
+}
+
 export const merge = (current_messages, new_messages) => {
     current_messages = cloneJson(current_messages);
     new_messages = cloneJson(new_messages);
     const ids = current_messages.map(message => message.id);
 
     if (detectGap(current_messages, new_messages)) {
-        let gap_marker = cloneJson(new_messages[0]);
-        new_messages.unshift({...gap_marker, gap_marker: true});
+        let gap_marker = createGapMarker(new_messages[0]);
+        new_messages.unshift(gap_marker);
     }
 
     new_messages = new_messages.filter(message => !ids.includes(message.id));

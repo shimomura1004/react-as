@@ -27,7 +27,7 @@ export default class Room extends React.Component {
 
         // todo: move these functions to EditDialog?
         this.handleClick = this.handleClick.bind(this);
-        this.handleLoading = this.handleLoading.bind(this);
+        this.loadMessagesInGap = this.loadMessagesInGap.bind(this);
         this.handleClose = this.handleClose.bind(this);
 
         this.state = {
@@ -48,9 +48,7 @@ export default class Room extends React.Component {
         this.setState({open: true, message});
     }
 
-    handleLoading(message_id) {
-        // todo: remove gap_marker
-        // this.props.loadMessages(this.props.loading, this.props.api_key, this.props.room_id, message_id);
+    loadMessagesInGap(message_id) {
         this.props.loadMessages2(this.props.loading, this.props.api_key, this.props.room_id, message_id);
     }
 
@@ -143,7 +141,7 @@ export default class Room extends React.Component {
                             </div>
                             <div>
                                 {messages.map(key_message =>
-                                    <Message key={key_message[0]} message={key_message[1]} handleClick={this.handleClick} handleLoading={this.handleLoading} />
+                                    <Message key={key_message[0]} message={key_message[1]} handleClick={this.handleClick} loadMessagesInGap={this.loadMessagesInGap} />
                                 )}
                             </div>
                         </div>
