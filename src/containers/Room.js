@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import Room from '../components/Room.js';
 import { setScrollPosition, updateMessage, deleteMessage, appendMessageInView, updateMessageInView, deleteMessageInView, websocketConnected, websocketDisconnected } from '../actions/Room';
-import { getMessages, getMessages2, postMessage } from '../actions/Message';
+import { getMessages, getMessagesInGap, postMessage } from '../actions/Message';
 import { logout, setRoomId } from '../actions/App';
 
 const NUMBER_OF_MESSAGES_TO_GET = 40;
@@ -79,14 +79,15 @@ const mapDispatchToProps = (dispatch) => ({
             getMessages(api_key, room_id, {count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
         }
     },
+    // todo: refactor these functions
     loadMessages: (loading, api_key, room_id, message_id) => {
         if (!loading) {
             getMessages(api_key, room_id, {until_id: message_id, count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
         }
     },
-    loadMessages2: (loading, api_key, room_id, message_id) => {
+    getMessagesInGap: (loading, api_key, room_id, gap_marker_id) => {
         if (!loading) {
-            getMessages2(api_key, room_id, message_id, {until_id: message_id, count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
+            getMessagesInGap(api_key, room_id, gap_marker_id, {until_id: gap_marker_id, count: NUMBER_OF_MESSAGES_TO_GET})(dispatch);
         }
     },
     postMessage: (api_key, room_id, message) => {

@@ -48,8 +48,8 @@ export default class Room extends React.Component {
         this.setState({open: true, message});
     }
 
-    loadMessagesInGap(message_id) {
-        this.props.loadMessages2(this.props.loading, this.props.api_key, this.props.room_id, message_id);
+    loadMessagesInGap(gap_marker_id) {
+        this.props.getMessagesInGap(this.props.loading, this.props.api_key, this.props.room_id, gap_marker_id);
     }
 
     handleClose() {

@@ -22,13 +22,14 @@ const getMessagesSuccess = (messages, room_id) => {
         timestamp: Date.now()
     }
 };
-const getMessagesSuccess2 = (messages, room_id, message_id) => {  
+const getMessagesInGapSuccess = (messages, room_id, gap_marker_id) => {  
     return {
+        // todo: separate action type? -> GET_MESSAGES_IN_GAP_SUCCESS
         type: GET_MESSAGES_SUCCESS,
         messages,
         room_id,
         timestamp: Date.now(),
-        remove: message_id,
+        gap_marker_id
     }
 };
 
@@ -67,7 +68,8 @@ export const getMessages = (api_key, room_id, options) => {
     }
 };
 
-export const getMessages2 = (api_key, room_id, message_id, options) => {
+// todo: merge with getMessages
+export const getMessagesInGap = (api_key, room_id, gap_marker_id, options) => {
     return async (dispatch) => {
         dispatch(getMessagesRequest(room_id));
 
@@ -84,7 +86,7 @@ export const getMessages2 = (api_key, room_id, message_id, options) => {
                 messages.data.pop();
             }
 
-            dispatch(getMessagesSuccess2(messages.data, room_id, message_id));
+            dispatch(getMessagesInGapSuccess(messages.data, room_id, gap_marker_id));
         }
         catch(err) {
             dispatch(getMessagesFailure(err, room_id));

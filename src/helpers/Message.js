@@ -83,6 +83,11 @@ const createGapMarker = (message) => {
         gap_marker: true
     };
 }
+export const removeGapMarker = (messages, gap_marker_id) => {
+    return messages.filter(m => (
+        !(m.id === gap_marker_id && m.gap_marker)
+    ))
+}
 
 export const merge = (current_messages, new_messages) => {
     current_messages = cloneJson(current_messages);
