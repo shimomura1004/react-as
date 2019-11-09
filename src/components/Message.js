@@ -15,6 +15,7 @@ export default class Message extends React.Component {
         this.props.loadMessagesInGap(this.first_message.id);
     }
 
+    // todo: create component for gap_marker, message and attached file
     render() {
         if (this.messages.length === 1 && this.first_message.gap_marker) {
             return (
@@ -40,7 +41,23 @@ export default class Message extends React.Component {
                         <span className="time">{time_string}</span>
                     </div>
                     {
-                        this.messages.map(message => (
+                        this.messages.map(message => {
+                            if (message.attachment.length > 0) {
+                                return (
+                                    <div>
+                                        {
+                                            message.attachment.map(file =>
+                                                <div key={file.url}>
+                                                    <img src={file.url} />
+                                                    <p>{file.filename}</p>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                );
+                            }
+
+                            return (
                                 <div key={message.id + message.timestamp}>
                                     <p
                                         className="body"
@@ -49,7 +66,8 @@ export default class Message extends React.Component {
                                     >
                                     </p>
                                 </div>
-                        ))
+                            );
+                        })
                     }
                 </div>
                 <span className="clear"></span>
