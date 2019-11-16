@@ -117,6 +117,12 @@ export const merge = (current_messages, new_messages) => {
     return merged_messages.concat(current_messages).concat(new_messages);
 }
 
+export const append = (current_messages, new_message) => {
+    current_messages = cloneJson(current_messages);
+    new_message = cloneJson(new_message);
+    return current_messages.concat(new_message);
+}
+
 export const update = (message, messages) => {
     let message_id = message.id;
     return messages.map(mes => (mes.id === message_id) ? message : mes);

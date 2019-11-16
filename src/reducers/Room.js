@@ -8,7 +8,7 @@ import {
 	HIDE_NOTIFICATION,
 } from '../actions/Room';
 import { TEXT_FIELD_UPDATE, TEXT_FIELD_HEIGHT_UPDATE } from '../actions/TextField';
-import { addTimestamp, removeGapMarker, merge, combine, update, remove } from '../helpers/Message';
+import { addTimestamp, removeGapMarker, merge, combine, append, update, remove } from '../helpers/Message';
 
 let createInitialRoomState = () => ({
 	loading: false,
@@ -218,8 +218,8 @@ export default (state = initialState, action) => {
 	case APPEND_MESSAGE_IN_VIEW: {
 		let room = state.rooms[action.message.room.id];
 
-		action.message.timestamp = action.timestamp;
-		const merged_messages = merge(room.merged_messages, [action.message]);
+		let message = addTimestamp([action.message], action.timestamp);
+		const merged_messages = append(room.merged_messages, message);
 		const combined_messages = combine(merged_messages);
 
 		return {
