@@ -8,11 +8,24 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import '../styles/room.css';
 
 export default class Room extends React.Component {
+    constructor(props) {
+        super(props);
+        this.text_field_height = 0;
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.room_id !== prevProps.room_id) {
+            // update height when user change the room
+            this.props.updateTextFieldHeight(this.props.room_id, this.text_field_height);
+        }
+    }
+
     render() {
         return (
             <Measure
                 bounds
                 onResize={contentRect => {
+                    this.text_field_height = contentRect.bounds.height;
                     this.props.updateTextFieldHeight(this.props.room_id, contentRect.bounds.height);
                 }}
             >
