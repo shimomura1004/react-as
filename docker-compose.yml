@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: script/dockerfiles/Dockerfile.app
+    ports:
+      - "8080:8080"
+    command: bash -c "yarn install && yarn build:dev --watch & yarn start"
+    volumes:
+      - .:/work
