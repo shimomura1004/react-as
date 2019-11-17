@@ -218,7 +218,7 @@ export default (state = initialState, action) => {
 	case APPEND_MESSAGE_IN_VIEW: {
 		let room = state.rooms[action.message.room.id];
 
-		let message = addTimestamp([action.message], action.timestamp);
+		const message = addTimestamp([action.message], action.timestamp)[0];
 		const merged_messages = append(room.merged_messages, message);
 		const combined_messages = combine(merged_messages);
 

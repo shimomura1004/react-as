@@ -40,6 +40,8 @@ export default class AsSocket {
         console.log("subscribe " + room_id)
         this.channels.push(room_id);
 
+        // todo: survey keima behavior
+        // subscribing other channel causes duplicated message notification?
         this.socket.emit("subscribe", `as-${room_id}`);
         this.socket.on("message_create", (channel, data) => {
             let message = JSON.parse(data).content;

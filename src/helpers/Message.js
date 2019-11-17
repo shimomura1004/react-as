@@ -119,8 +119,17 @@ export const merge = (current_messages, new_messages) => {
 
 export const append = (current_messages, new_message) => {
     current_messages = cloneJson(current_messages);
-    new_message = cloneJson(new_message);
-    return current_messages.concat(new_message);
+
+    const ids = current_messages.map(message => message.id);
+    const isDupulicated = ids.includes(new_message.id);
+
+    if (isDupulicated) {
+        return current_messages;
+    }
+    else {
+        new_message = cloneJson(new_message);
+        return current_messages.concat(new_message);
+    }
 }
 
 export const update = (message, messages) => {
