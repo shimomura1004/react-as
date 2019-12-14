@@ -3,6 +3,9 @@
 # glitch
 calico-texture
 
+# config
+src/config.js
+
 # dependencies
 /node_modules
 /.pnp

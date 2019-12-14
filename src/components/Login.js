@@ -1,4 +1,5 @@
 import React from 'react';
+import { API_SERVER } from '../config';
 
 // todo: loading icon while getting user info
 export default class Login extends React.Component {
@@ -12,7 +13,6 @@ export default class Login extends React.Component {
             for(let registration of registrations) {
                 registration.unregister();
                 localStorage.removeItem("api_server");
-                localStorage.removeItem("original_api_server");
                 localStorage.removeItem("pusher_server");
                 localStorage.removeItem("pusher_api_key");
             }
@@ -22,7 +22,7 @@ export default class Login extends React.Component {
     }
 
     render() {
-        let account_url = `${window.as['ORIGINAL_API_SERVER']}/account/index`;
+        let account_url = `${API_SERVER}/account/index`;
         return (
             <div>
                 <p>Access your account and get API key</p>

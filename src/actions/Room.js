@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_SERVER } from '../config';
 
 const ROOM_ENDPOINT = '/api/v1/room/list.json';
 // todo: move to messagejs
@@ -33,7 +34,7 @@ export const getRooms = (api_key) => {
         dispatch(getRoomsRequest());
 
         try {
-            let rooms = await axios.get(`${window.as['API_SERVER']}${ROOM_ENDPOINT}`, {
+            let rooms = await axios.get(`${API_SERVER}${ROOM_ENDPOINT}`, {
                 params: { api_key }
             });
             dispatch(getRoomsSuccess(rooms.data));
@@ -75,7 +76,7 @@ export const updateMessage = (api_key, message_id, message_body) => {
         dispatch({type: UPDATE_MESSAGE_REQUEST});
 
         try {
-            await axios.put(`${window.as['API_SERVER']}${MESSAGE_ENDPOINT}/${message_id}.json`,
+            await axios.put(`${API_SERVER}${MESSAGE_ENDPOINT}/${message_id}.json`,
                 { message: message_body, api_key }
             );
             dispatch({type: UPDATE_MESSAGE_SUCCESS});
@@ -98,7 +99,7 @@ export const deleteMessage = (api_key, message_id) => {
         dispatch({type: DELETE_MESSAGE_REQUEST});
 
         try {
-            await axios.delete(`${window.as['API_SERVER']}${MESSAGE_ENDPOINT}/${message_id}.json`, {
+            await axios.delete(`${API_SERVER}${MESSAGE_ENDPOINT}/${message_id}.json`, {
                 params: { api_key }
             });
             dispatch({type: DELETE_MESSAGE_SUCCESS});

@@ -1,11 +1,12 @@
 import io from 'socket.io-client';
+import { PUSHER_SERVER, PUSHER_APP_KEY } from '../config';
 
 export default class AsSocket {
     constructor(appendMessageInView, updateMessageInView, deleteMessageInView, websocketConnected, websocketDisconnected) {
         this.appendMessageInView = appendMessageInView;
         this.updateMessageInView = updateMessageInView;
         this.deleteMessageInView = deleteMessageInView;
-        this.socket = io.connect(`${window.as['PUSHER_SERVER']}/?app=${window.as['PUSHER_APP_KEY']}`);
+        this.socket = io.connect(`${PUSHER_SERVER}/?app=${PUSHER_APP_KEY}`);
         this.channels = [];
         this.once_connected = false;
 

@@ -22,25 +22,6 @@ const store = createStore(persistedReducer);
 const persistor = persistStore(store);
 // persistor.purge()
 
-// setup environment
-// in express environment, environment variables are stored in cookie
-let cookie = {};
-document.cookie.split("; ")
-  .map(c => c.split("="))
-  .forEach(kv => cookie[kv[0]] = decodeURIComponent(kv[1]));
-
-window.as = {};
-window.as['API_SERVER'] = localStorage.getItem("api_server") || process.env['REACT_APP_API_SERVER'] || cookie["api_server"];
-window.as['ORIGINAL_API_SERVER'] = localStorage.getItem("original_api_server") || process.env['REACT_APP_API_SERVER'] || cookie["original_api_server"];
-window.as['PUSHER_SERVER'] = localStorage.getItem("pusher_server") || process.env['REACT_APP_PUSHER_SERVER'] || cookie["pusher_server"];
-window.as['PUSHER_APP_KEY'] = localStorage.getItem("pusher_api_key") || process.env['REACT_APP_PUSHER_APP_KEY'] || cookie["pusher_app_key"];
-
-// store/restore variables to/from localStorage
-localStorage.setItem("api_server", window.as['API_SERVER']);
-localStorage.setItem("original_api_server", window.as['ORIGINAL_API_SERVER']);
-localStorage.setItem("pusher_server", window.as['PUSHER_SERVER']);
-localStorage.setItem("pusher_api_key", window.as['PUSHER_APP_KEY']);
-
 // render app
 ReactDOM.render(
   <Provider store={store}>

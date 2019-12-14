@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_SERVER } from '../config';
 import { hideNotification } from './Room';
 
 const LIST_ENDPOINT = '/api/v1/message/list.json';
@@ -14,7 +15,7 @@ const getMessagesRequest = (room_id) => {
 };
 
 export const GET_MESSAGES_SUCCESS = 'GET_MESSAGES_SUCCESS';
-const getMessagesSuccess = (messages, room_id) => {  
+const getMessagesSuccess = (messages, room_id) => {
     return {
         type: GET_MESSAGES_SUCCESS,
         messages,
@@ -22,7 +23,7 @@ const getMessagesSuccess = (messages, room_id) => {
         timestamp: Date.now()
     }
 };
-const getMessagesInGapSuccess = (messages, room_id, gap_marker_id) => {  
+const getMessagesInGapSuccess = (messages, room_id, gap_marker_id) => {
     return {
         // todo: separate action type? -> GET_MESSAGES_IN_GAP_SUCCESS
         type: GET_MESSAGES_SUCCESS,
@@ -47,7 +48,7 @@ export const getMessages = (api_key, room_id, options) => {
         dispatch(getMessagesRequest(room_id));
 
         try {
-            let messages = await axios.get(`${window.as['API_SERVER']}${LIST_ENDPOINT}`, {
+            let messages = await axios.get(`${API_SERVER}${LIST_ENDPOINT}`, {
                 params: { api_key, room_id, ...options }
             });
 
@@ -74,7 +75,7 @@ export const getMessagesInGap = (api_key, room_id, gap_marker_id, options) => {
         dispatch(getMessagesRequest(room_id));
 
         try {
-            let messages = await axios.get(`${window.as['API_SERVER']}${LIST_ENDPOINT}`, {
+            let messages = await axios.get(`${API_SERVER}${LIST_ENDPOINT}`, {
                 params: { api_key, room_id, ...options }
             });
 
@@ -104,7 +105,7 @@ const postMessageRequest = (room_id) => {
 };
 
 export const POST_MESSAGE_SUCCESS = 'POST_MESSAGE_SUCCESS';
-const postMessageSuccess = (room_id) => {  
+const postMessageSuccess = (room_id) => {
     return {
         type: POST_MESSAGE_SUCCESS,
         room_id,
@@ -125,7 +126,7 @@ export const postMessage = (api_key, room_id, message) => {
         dispatch(postMessageRequest(room_id));
 
         try {
-            await axios.post(`${window.as['API_SERVER']}${POST_ENDPOINT}`, {
+            await axios.post(`${API_SERVER}${POST_ENDPOINT}`, {
                 api_key, room_id, message
             });
             dispatch(postMessageSuccess(room_id));

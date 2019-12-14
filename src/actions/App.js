@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_SERVER } from '../config';
 
 const USER_ENDPOINT = '/api/v1/user.json';
 
@@ -40,7 +41,7 @@ export const getUserInfo = (api_key) => {
         dispatch(getUserInfoRequest());
 
         try {
-            let user_info = await axios.get(`${window.as['API_SERVER']}${USER_ENDPOINT}`, {
+            let user_info = await axios.get(`${API_SERVER}${USER_ENDPOINT}`, {
                 params: { api_key }
             });
             dispatch(getUserInfoSuccess(api_key, user_info.data));
