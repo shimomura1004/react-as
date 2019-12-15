@@ -8,7 +8,6 @@ import storage from 'redux-persist/lib/storage';
 import './styles/index.css';
 import App from './containers/App';
 import rootReducer from './reducers/reducers'
-import { SET_ENVIRONMENT_VARIABLE } from './actions/App';
 
 // persistent settings
 const persistConfig = {

@@ -14,7 +14,8 @@ src/config.js
 # testing
 /coverage
 
-# production
+# webpack output
+/prod
 /dist
 
 # misc
