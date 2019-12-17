@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "favicon.ico"
   },
   {
-    "revision": "e496055dfd5d740a99fdfc292cefdf2b",
+    "revision": "cf7d9267bf0d6c22d97d9d6a2d2fe549",
     "url": "index.html"
   },
   {
@@ -52,7 +52,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "iphonexsmax_splash.png"
   },
   {
-    "revision": "4dfd9e50552ede4fec8a",
+    "revision": "9c50233e1ca61cbb7ec2",
     "url": "main.js"
   },
   {
