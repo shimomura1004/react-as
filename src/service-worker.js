@@ -15,15 +15,6 @@ if (workbox) {
             ],
         })
     );
-
-    workbox.routing.registerRoute(
-        new RegExp('/api/v1/room/list.json'),
-        new workbox.strategies.NetworkFirst()
-    );
-    workbox.routing.registerRoute(
-        new RegExp('/api/v1/message/list.json'),
-        new workbox.strategies.NetworkFirst()
-    );
 }
 else {
     console.log("Workbox didn't load");
