@@ -22,7 +22,7 @@ export default class Message extends React.Component {
         case 'image':
             return <img src={src} />;
         case 'video':
-            return <video src={src} />;
+            return <video src={src} controls />;
         default:
             console.log("Unknown content type: ", content_type);
             return
@@ -67,7 +67,7 @@ export default class Message extends React.Component {
                                             message.attachment.map(file =>
                                                 <div key={file.url}>
                                                     { this.createTagForAttachment(file.content_type, file.url) }
-                                                    <p>{file.filename}</p>
+                                                    <p><a href={file.url}>{file.filename}</a></p>
                                                 </div>
                                             )
                                         }
