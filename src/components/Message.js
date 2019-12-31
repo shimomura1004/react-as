@@ -9,10 +9,28 @@ export default class Message extends React.Component {
         this.first_message = this.messages[0];
 
         this.loadMessagesInGap = this.loadMessagesInGap.bind(this);
+        this.createTagForAttachment = this.createTagForAttachment.bind(this);
     }
 
     loadMessagesInGap() {
         this.props.loadMessagesInGap(this.first_message.id);
+    }
+
+    createTagForAttachment(content_type, src) {
+        const type = content_type.split("/")[0];
+        switch (type) {
+        case 'image':
+            return <img src={src} />;
+        case 'video':
+            return <video src={src} />;
+        default:
+            console.log("Unknown content type: ", content_type);
+            return
+                <div>
+                    <p>Unknown type: {content_type}</p>
+                    <p>{src}</p>
+                </div>;
+        }
     }
 
     // todo: create component for gap_marker, message and attached file
@@ -48,7 +66,7 @@ export default class Message extends React.Component {
                                         {
                                             message.attachment.map(file =>
                                                 <div key={file.url}>
-                                                    <img src={file.url} />
+                                                    { this.createTagForAttachment(file.content_type, file.url) }
                                                     <p>{file.filename}</p>
                                                 </div>
                                             )
