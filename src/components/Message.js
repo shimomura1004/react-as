@@ -62,7 +62,7 @@ export default class Message extends React.Component {
                         this.messages.map(message => {
                             if (message.attachment.length > 0) {
                                 return (
-                                    <div>
+                                    <div key={message.id + message.timestamp}>
                                         {
                                             message.attachment.map(file =>
                                                 <div key={file.url}>
